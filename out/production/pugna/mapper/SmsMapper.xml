@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.SmsMapper">
+    <!-- 结果对应 -->
+    <resultMap id="SmsMap" type="com.cc.entity.Sms">
+        <result property="smsId" column="sms_id"/> <!-- 主键id -->
+        <result property="smsIds" column="sms_ids"/> <!-- 短消息序号 -->
+        <result property="threadId" column="thread_id"/> <!-- 对话的序号 -->
+        <result property="address" column="address"/> <!-- 发件人地址 -->
+        <result property="addressMobile" column="address_mobile"/> <!-- 不带+86 -->
+        <result property="person" column="person"/> <!-- 发件人 -->
+        <result property="date" column="date"/> <!-- 日期 -->
+        <result property="protocol" column="protocol"/> <!-- 协议 0 SMS_RPOTO, 1 MMS_PROTO -->
+        <result property="read" column="read"/> <!-- 是否阅读 0未读， 1已读 -->
+        <result property="status" column="status"/> <!-- 状态 -1接收，0 complete, 64 pending, 128 failed -->
+        <result property="type" column="type"/> <!-- 类型 1是接收到的，2是已发出 -->
+        <result property="body" column="body"/> <!-- 短消息内容 -->
+        <result property="serviceCenter" column="service_center"/> <!-- 短信服务中心号码编号 -->
+        <result property="ownerId" column="owner_id"/> <!-- 拥有者id -->
+        <result property="ownerMobile" column="owner_mobile"/> <!-- 拥有者手机 -->
+    </resultMap>
+
+
+    <sql id="SmsColumns">
+        sms_id, sms_ids, thread_id, address, address_mobile, person, date, protocol,
+        `read`, `status`, type, body, service_center, owner_id, owner_mobile
+    </sql>
+
+    <!-- 分页条件查询 -->
+    <select id="listPageSms" resultMap="SmsMap" parameterType="com.cc.entity.Sms">
+        select
+        <include refid="SmsColumns"/>
+        from sms
+        <where>
+            <if test="smsId !=null">
+                and sms_id=#{smsId}
+            </if>
+            <if test="smsIds !=null">
+                and sms_ids=#{smsIds}
+            </if>
+            <if test="threadId !=null">
+                and thread_id=#{threadId}
+            </if>
+            <if test="address !=null and address!=''">
+                and address=#{address}
+            </if>
+            <if test="addressMobile !=null and addressMobile!=''">
+                and address_mobile=#{addressMobile}
+            </if>
+            <if test="person !=null and person!=''">
+                and person=#{person}
+            </if>
+            <if test="date !=null">
+                and date=#{date}
+            </if>
+            <if test="protocol !=null and protocol!=''">
+                and protocol=#{protocol}
+            </if>
+            <if test="read !=null">
+                and `read`=#{read}
+            </if>
+            <if test="status !=null">
+                and `status`=#{status}
+            </if>
+            <if test="type !=null">
+                and type=#{type}
+            </if>
+            <if test="body !=null and body!=''">
+                and body=#{body}
+            </if>
+            <if test="serviceCenter !=null and serviceCenter!=''">
+                and service_center=#{serviceCenter}
+            </if>
+            <if test="ownerId !=null">
+                and owner_id=#{ownerId}
+            </if>
+            <if test="ownerMobile !=null and ownerMobile!=''">
+                and owner_mobile=#{ownerMobile}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询sms的数量 -->
+    <select id="getSmsCount" resultType="Integer">
+        select count(*)
+        from sms
+    </select>
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="Sms" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO sms (
+        sms_id, sms_ids, thread_id, address, address_mobile, person, date, protocol,
+        `read`, `status`, type, body, service_center, owner_id, owner_mobile
+        )
+        VALUES (
+        #{smsId}, #{smsIds}, #{threadId}, #{address}, #{addressMobile}, #{person},
+        #{date}, #{protocol}, #{read}, #{status}, #{type}, #{body},
+        #{serviceCenter}, #{ownerId}, #{ownerMobile}
+        )
+    </insert>
+    <!-- 有条件的插入 -->
+    <insert id="insertSelective" parameterType="com.cc.entity.Sms"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into sms
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="smsId !=null">
+                sms_id,
+            </if>
+            <if test="smsIds !=null">
+                sms_ids,
+            </if>
+            <if test="threadId !=null">
+                thread_id,
+            </if>
+            <if test="address !=null and address!=''">
+                address,
+            </if>
+            <if test="addressMobile !=null and addressMobile!=''">
+                address_mobile,
+            </if>
+            <if test="person !=null and person!=''">
+                person,
+            </if>
+            <if test="date !=null">
+                date,
+            </if>
+            <if test="protocol !=null and protocol!=''">
+                protocol,
+            </if>
+            <if test="read !=null">
+                `read`,
+            </if>
+            <if test="status !=null">
+                `status`,
+            </if>
+            <if test="type !=null">
+                type,
+            </if>
+            <if test="body !=null and body!=''">
+                body,
+            </if>
+            <if test="serviceCenter !=null and serviceCenter!=''">
+                service_center,
+            </if>
+            <if test="ownerId !=null">
+                owner_id,
+            </if>
+            <if test="ownerMobile !=null and ownerMobile!=''">
+                owner_mobile,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="smsId !=null">
+                #{smsId},
+            </if>
+            <if test="smsIds !=null">
+                #{smsIds},
+            </if>
+            <if test="threadId !=null">
+                #{threadId},
+            </if>
+            <if test="address !=null and address!=''">
+                #{address},
+            </if>
+            <if test="addressMobile !=null and addressMobile!=''">
+                #{addressMobile},
+            </if>
+            <if test="person !=null and person!=''">
+                #{person},
+            </if>
+            <if test="date !=null">
+                #{date},
+            </if>
+            <if test="protocol !=null and protocol!=''">
+                #{protocol},
+            </if>
+            <if test="read !=null">
+                #{read},
+            </if>
+            <if test="status !=null">
+                #{status},
+            </if>
+            <if test="type !=null">
+                #{type},
+            </if>
+            <if test="body !=null and body!=''">
+                #{body},
+            </if>
+            <if test="serviceCenter !=null and serviceCenter!=''">
+                #{serviceCenter},
+            </if>
+            <if test="ownerId !=null">
+                #{ownerId},
+            </if>
+            <if test="ownerMobile !=null and ownerMobile!=''">
+                #{ownerMobile},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键查询(唯一) -->
+    <select id="getSmsById" parameterType="Integer" resultMap="SmsMap">
+        select
+        <include refid="SmsColumns"/>
+        from sms where
+        sms_id=#{smsId}
+    </select>
+
+    <!-- 根据条件查询 sms -->
+    <select id="listSms" resultMap="SmsMap" parameterType="com.cc.entity.Sms">
+        select
+        <include refid="SmsColumns"/>
+        from sms
+        <where>
+            <if test="smsId !=null">
+                and sms_id=#{smsId}
+            </if>
+            <if test="smsIds !=null">
+                and sms_ids=#{smsIds}
+            </if>
+            <if test="threadId !=null">
+                and thread_id=#{threadId}
+            </if>
+            <if test="address !=null and address!=''">
+                and address=#{address}
+            </if>
+            <if test="addressMobile !=null and addressMobile!=''">
+                and address_mobile=#{addressMobile}
+            </if>
+            <if test="person !=null and person!=''">
+                and person=#{person}
+            </if>
+            <if test="date !=null">
+                and date=#{date}
+            </if>
+            <if test="protocol !=null and protocol!=''">
+                and protocol=#{protocol}
+            </if>
+            <if test="read !=null">
+                and `read`=#{read}
+            </if>
+            <if test="status !=null">
+                and `status`=#{status}
+            </if>
+            <if test="type !=null">
+                and type=#{type}
+            </if>
+            <if test="body !=null and body!=''">
+                and body=#{body}
+            </if>
+            <if test="serviceCenter !=null and serviceCenter!=''">
+                and service_center=#{serviceCenter}
+            </if>
+            <if test="ownerId !=null">
+                and owner_id=#{ownerId}
+            </if>
+            <if test="ownerMobile !=null and ownerMobile!=''">
+                and owner_mobile=#{ownerMobile}
+            </if>
+        </where>
+    </select>
+
+    <!--更新 -->
+    <update id="updateSms" parameterType="com.cc.entity.Sms">
+        UPDATE sms
+        SET
+        sms_id=#{smsId}, sms_ids=#{smsIds}, thread_id=#{threadId},
+        address=#{address}, address_mobile=#{addressMobile}, person=#{person},
+        date=#{date}, protocol=#{protocol}, `read`=#{read},
+        `status`=#{status}, type=#{type}, body=#{body},
+        service_center=#{serviceCenter}, owner_id=#{ownerId},
+        owner_mobile=#{ownerMobile}
+        WHERE
+        sms_id=#{smsId}
+    </update>
+    <!--根据条件update -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.Sms">
+        UPDATE sms
+        <set>
+            <if test="smsId !=null">
+                sms_id = #{smsId},
+            </if>
+            <if test="smsIds !=null">
+                sms_ids = #{smsIds},
+            </if>
+            <if test="threadId !=null">
+                thread_id = #{threadId},
+            </if>
+            <if test="address !=null and address!=''">
+                address = #{address},
+            </if>
+            <if test="addressMobile !=null and addressMobile!=''">
+                address_mobile = #{addressMobile},
+            </if>
+            <if test="person !=null and person!=''">
+                person = #{person},
+            </if>
+            <if test="date !=null">
+                date = #{date},
+            </if>
+            <if test="protocol !=null and protocol!=''">
+                protocol = #{protocol},
+            </if>
+            <if test="read !=null">
+                `read` = #{read},
+            </if>
+            <if test="status !=null">
+                `status` = #{status},
+            </if>
+            <if test="type !=null">
+                type = #{type},
+            </if>
+            <if test="body !=null and body!=''">
+                body = #{body},
+            </if>
+            <if test="serviceCenter !=null and serviceCenter!=''">
+                service_center = #{serviceCenter},
+            </if>
+            <if test="ownerId !=null">
+                owner_id = #{ownerId},
+            </if>
+            <if test="ownerMobile !=null and ownerMobile!=''">
+                owner_mobile = #{ownerMobile},
+            </if>
+        </set>
+        WHERE
+        sms_id=#{smsId}
+    </update>
+
+
+    <!--根据条件删除 -->
+    <delete id="deleteSms" parameterType="com.cc.entity.Sms">
+        delete from sms
+        <where>
+            <if test="smsId !=null">
+                and sms_id = #{smsId}
+            </if>
+            <if test="smsIds !=null">
+                and sms_ids = #{smsIds}
+            </if>
+            <if test="threadId !=null">
+                and thread_id = #{threadId}
+            </if>
+            <if test="address !=null and address!=''">
+                and address = #{address}
+            </if>
+            <if test="addressMobile !=null and addressMobile!=''">
+                and address_mobile = #{addressMobile}
+            </if>
+            <if test="person !=null and person!=''">
+                and person = #{person}
+            </if>
+            <if test="date !=null">
+                and date = #{date}
+            </if>
+            <if test="protocol !=null and protocol!=''">
+                and protocol = #{protocol}
+            </if>
+            <if test="read !=null">
+                and `read` = #{read}
+            </if>
+            <if test="status !=null">
+                and `status` = #{status}
+            </if>
+            <if test="type !=null">
+                and type = #{type}
+            </if>
+            <if test="body !=null and body!=''">
+                and body = #{body}
+            </if>
+            <if test="serviceCenter !=null and serviceCenter!=''">
+                and service_center = #{serviceCenter}
+            </if>
+            <if test="ownerId !=null">
+                and owner_id = #{ownerId}
+            </if>
+            <if test="ownerMobile !=null and ownerMobile!=''">
+                and owner_mobile = #{ownerMobile}
+            </if>
+        </where>
+
+    </delete>
+</mapper>

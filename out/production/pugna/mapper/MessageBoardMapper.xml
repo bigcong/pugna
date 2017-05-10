@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.MessageBoardMapper">
+    <!-- 结果对应-->
+    <resultMap id="MessageBoardMap" type="com.cc.entity.MessageBoard">
+        <result property="boardId" column="board_id"/> <!-- 主键id-->
+        <result property="messageContent" column="message_content"/> <!-- 留言板内容-->
+        <result property="creatTime" column="creat_time"/> <!-- 创建时间-->
+        <result property="ip" column="ip"/> <!-- -->
+        <result property="ipCity" column="ip_city"/> <!-- 城市-->
+        <result property="userId" column="user_id"/> <!-- 关联user表-->
+        <result property="ipCountry" column="ip_country"/> <!-- 国家-->
+        <result property="lat" column="lat"/> <!-- 纬度-->
+        <result property="lon" column="lon"/> <!-- 经度-->
+        <result property="countryCode" column="country_code"/> <!-- 国家编号-->
+        <result property="region" column="region"/> <!-- 地区-->
+        <result property="regionName" column="regionName"/> <!-- 地区名字-->
+        <result property="status" column="status"/> <!-- 状态-->
+        <result property="statusType" column="status_type"/> <!-- 状态类型 关联config表-->
+    </resultMap>
+
+
+    <sql id="MessageBoardColumns">
+        board_id, message_content, creat_time, ip, ip_city, user_id, ip_country, lat, lon, country_code, region,
+        regionName, status, status_type
+    </sql>
+
+    <!-- 分页条件查询-->
+    <select id="listPageMessageBoard" resultMap="MessageBoardMap"
+            parameterType="com.cc.entity.MessageBoard">
+        select
+        <include refid="MessageBoardColumns"/>
+        from message_board
+        <where>
+            <if test="boardId !=null">
+                and board_id=#{boardId}
+            </if>
+            <if test="messageContent !=null and messageContent!=''">
+                and message_content=#{messageContent}
+            </if>
+            <if test="creatTime !=null and creatTime!=''">
+                and creat_time=#{creatTime}
+            </if>
+            <if test="ip !=null and ip!=''">
+                and ip=#{ip}
+            </if>
+            <if test="ipCity !=null and ipCity!=''">
+                and ip_city=#{ipCity}
+            </if>
+            <if test="userId !=null">
+                and user_id=#{userId}
+            </if>
+            <if test="ipCountry !=null and ipCountry!=''">
+                and ip_country=#{ipCountry}
+            </if>
+            <if test="lat !=null and lat!=''">
+                and lat=#{lat}
+            </if>
+            <if test="lon !=null and lon!=''">
+                and lon=#{lon}
+            </if>
+            <if test="countryCode !=null and countryCode!=''">
+                and country_code=#{countryCode}
+            </if>
+            <if test="region !=null and region!=''">
+                and region=#{region}
+            </if>
+            <if test="regionName !=null and regionName!=''">
+                and regionName=#{regionName}
+            </if>
+            <if test="status !=null and statusType!=''">
+                and status=#{status}
+            </if>
+            <if test="statusType !=null and statusType!=''">
+                and status_type=#{statusType}
+            </if>
+        </where>
+        order by creat_time desc
+    </select>
+
+    <!-- 查询message_board的数量-->
+    <select id="getMessageBoardCount" resultType="Integer">
+        select count(*)
+        from message_board
+    </select>
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="MessageBoard"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO message_board (
+        board_id, message_content, creat_time, ip, ip_city, user_id, ip_country, lat, lon, country_code, region,
+        regionName, status, status_type
+        ) VALUES (
+        #{boardId}, #{messageContent}, #{creatTime}, #{ip}, #{ipCity}, #{userId}, #{ipCountry}, #{lat}, #{lon},
+        #{countryCode}, #{region}, #{regionName}, #{status}, #{statusType}
+        )
+    </insert>
+    <!-- 有条件的插入 -->
+    <insert id="insertSelective" parameterType="com.cc.entity.MessageBoard" useGeneratedKeys="true" keyProperty="id">
+        insert into message_board
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="boardId !=null">
+                board_id,
+            </if>
+            <if test="messageContent !=null and messageContent!=''">
+                message_content,
+            </if>
+            <if test="creatTime !=null and creatTime!=''">
+                creat_time,
+            </if>
+            <if test="ip !=null and ip!=''">
+                ip,
+            </if>
+            <if test="ipCity !=null and ipCity!=''">
+                ip_city,
+            </if>
+            <if test="userId !=null">
+                user_id,
+            </if>
+            <if test="ipCountry !=null and ipCountry!=''">
+                ip_country,
+            </if>
+            <if test="lat !=null and lat!=''">
+                lat,
+            </if>
+            <if test="lon !=null and lon!=''">
+                lon,
+            </if>
+            <if test="countryCode !=null and countryCode!=''">
+                country_code,
+            </if>
+            <if test="region !=null and region!=''">
+                region,
+            </if>
+            <if test="regionName !=null and regionName!=''">
+                regionName,
+            </if>
+            <if test="status !=null and statusType!=''">
+                status,
+            </if>
+            <if test="statusType !=null and statusType!=''">
+                status_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="boardId !=null">
+                #{boardId},
+            </if>
+            <if test="messageContent !=null and messageContent!=''">
+                #{messageContent},
+            </if>
+            <if test="creatTime !=null and creatTime!=''">
+                #{creatTime},
+            </if>
+            <if test="ip !=null and ip!=''">
+                #{ip},
+            </if>
+            <if test="ipCity !=null and ipCity!=''">
+                #{ipCity},
+            </if>
+            <if test="userId !=null">
+                #{userId},
+            </if>
+            <if test="ipCountry !=null and ipCountry!=''">
+                #{ipCountry},
+            </if>
+            <if test="lat !=null and lat!=''">
+                #{lat},
+            </if>
+            <if test="lon !=null and lon!=''">
+                #{lon},
+            </if>
+            <if test="countryCode !=null and countryCode!=''">
+                #{countryCode},
+            </if>
+            <if test="region !=null and region!=''">
+                #{region},
+            </if>
+            <if test="regionName !=null and regionName!=''">
+                #{regionName},
+            </if>
+            <if test="status !=null and statusType!=''">
+                #{status},
+            </if>
+            <if test="statusType !=null and statusType!=''">
+                #{statusType},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键查询(唯一)-->
+    <select id="getMessageBoardById" parameterType="Integer" resultMap="MessageBoardMap">
+        select
+        <include refid="MessageBoardColumns"/>
+        from message_board where
+        board_id=#{boardId}
+    </select>
+
+    <!-- 根据条件查询 message_board  -->
+    <select id="listMessageBoard" resultMap="MessageBoardMap" parameterType="com.cc.entity.MessageBoard">
+        select
+        <include refid="MessageBoardColumns"/>
+        from message_board
+        <where>
+            <if test="boardId !=null">
+                and board_id=#{boardId}
+            </if>
+            <if test="messageContent !=null and messageContent!=''">
+                and message_content=#{messageContent}
+            </if>
+            <if test="creatTime !=null and creatTime!=''">
+                and creat_time=#{creatTime}
+            </if>
+            <if test="ip !=null and ip!=''">
+                and ip=#{ip}
+            </if>
+            <if test="ipCity !=null and ipCity!=''">
+                and ip_city=#{ipCity}
+            </if>
+            <if test="userId !=null">
+                and user_id=#{userId}
+            </if>
+            <if test="ipCountry !=null and ipCountry!=''">
+                and ip_country=#{ipCountry}
+            </if>
+            <if test="lat !=null and lat!=''">
+                and lat=#{lat}
+            </if>
+            <if test="lon !=null and lon!=''">
+                and lon=#{lon}
+            </if>
+            <if test="countryCode !=null and countryCode!=''">
+                and country_code=#{countryCode}
+            </if>
+            <if test="region !=null and region!=''">
+                and region=#{region}
+            </if>
+            <if test="regionName !=null and regionName!=''">
+                and regionName=#{regionName}
+            </if>
+            <if test="status !=null and statusType!=''  and status!=''">
+                and status=#{status}
+            </if>
+            <if test="statusType !=null ">
+                and status_type=#{statusType}
+            </if>
+        </where>
+    </select>
+
+    <!--更新  -->
+    <update id="updateMessageBoard" parameterType="com.cc.entity.MessageBoard">
+        UPDATE message_board
+        SET
+        board_id=#{boardId}, message_content=#{messageContent}, creat_time=#{creatTime}, ip=#{ip}, ip_city=#{ipCity},
+        user_id=#{userId}, ip_country=#{ipCountry}, lat=#{lat}, lon=#{lon}, country_code=#{countryCode},
+        region=#{region}, regionName=#{regionName}, status=#{status}, status_type=#{statusType}
+        WHERE
+        board_id=#{boardId}
+    </update>
+    <!--根据条件update  -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.MessageBoard">
+        UPDATE message_board
+        <set>
+            <if test="boardId !=null">
+                board_id = #{boardId},
+            </if>
+            <if test="messageContent !=null and messageContent!=''">
+                message_content = #{messageContent},
+            </if>
+            <if test="creatTime !=null and creatTime!=''">
+                creat_time = #{creatTime},
+            </if>
+            <if test="ip !=null and ip!=''">
+                ip = #{ip},
+            </if>
+            <if test="ipCity !=null and ipCity!=''">
+                ip_city = #{ipCity},
+            </if>
+            <if test="userId !=null">
+                user_id = #{userId},
+            </if>
+            <if test="ipCountry !=null and ipCountry!=''">
+                ip_country = #{ipCountry},
+            </if>
+            <if test="lat !=null and lat!=''">
+                lat = #{lat},
+            </if>
+            <if test="lon !=null and lon!=''">
+                lon = #{lon},
+            </if>
+            <if test="countryCode !=null and countryCode!=''">
+                country_code = #{countryCode},
+            </if>
+            <if test="region !=null and region!=''">
+                region = #{region},
+            </if>
+            <if test="regionName !=null and regionName!=''">
+                regionName = #{regionName},
+            </if>
+            <if test="status !=null and statusType!=''">
+                status = #{status},
+            </if>
+            <if test="statusType !=null and statusType!=''">
+                status_type = #{statusType},
+            </if>
+        </set>
+        WHERE
+        board_id=#{boardId}
+    </update>
+
+
+    <!--根据条件删除  -->
+    <delete id="deleteMessageBoard" parameterType="com.cc.entity.MessageBoard">
+        delete from message_board
+        <where>
+            <if test="boardId !=null">
+                and board_id = #{boardId}
+            </if>
+            <if test="messageContent !=null and messageContent!=''">
+                and message_content = #{messageContent}
+            </if>
+            <if test="creatTime !=null and creatTime!=''">
+                and creat_time = #{creatTime}
+            </if>
+            <if test="ip !=null and ip!=''">
+                and ip = #{ip}
+            </if>
+            <if test="ipCity !=null and ipCity!=''">
+                and ip_city = #{ipCity}
+            </if>
+            <if test="userId !=null">
+                and user_id = #{userId}
+            </if>
+            <if test="ipCountry !=null and ipCountry!=''">
+                and ip_country = #{ipCountry}
+            </if>
+            <if test="lat !=null and lat!=''">
+                and lat = #{lat}
+            </if>
+            <if test="lon !=null and lon!=''">
+                and lon = #{lon}
+            </if>
+            <if test="countryCode !=null and countryCode!=''">
+                and country_code = #{countryCode}
+            </if>
+            <if test="region !=null and region!=''">
+                and region = #{region}
+            </if>
+            <if test="regionName !=null and regionName!=''">
+                and regionName = #{regionName}
+            </if>
+            <if test="status !=null and statusType!=''">
+                and status = #{status}
+            </if>
+            <if test="statusType !=null and statusType!=''">
+                and status_type = #{statusType}
+            </if>
+        </where>
+    </delete>
+
+    
+    
+    
+    
+    
+</mapper>

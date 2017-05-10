@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.BlogMapper">
+
+    <resultMap id="BlogMap" type="com.cc.entity.Blog">
+        <result property="blogId" column="blog_id"/>
+        <result property="blogTitle" column="blog_title"/>
+        <result property="blogDescription" column="blog_description"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="blogger" column="blogger"/>
+        <result property="blogType" column="blog_type"/>
+        <result property="start" column="start"/>
+        <result property="blogContent" column="blog_content"/>
+    </resultMap>
+
+
+    <sql id="BlogColumns">
+        blog_id, blog_title, blog_description, create_user, create_time, update_user, update_time, blogger, blog_type,
+        start, blog_content
+    </sql>
+
+    <!-- 很据条件查询店铺的全部 -->
+    <select id="listPageBlog" resultMap="BlogMap"
+            parameterType="com.cc.entity.Blog">
+        select
+        <include refid="BlogColumns"/>
+        from blog where 1=1
+        <if test="blogId !=null and blogId!=''">
+            and blog_id=#{blogId}
+        </if>
+        <if test="blogTitle !=null and blogTitle!=''">
+            and blog_title like '%${blogTitle}%'
+        </if>
+        <if test="blogDescription !=null and blogDescription!=''">
+            and blog_description=#{blogDescription}
+        </if>
+        <if test="createUser !=null and createUser!=''">
+            and create_user=#{createUser}
+        </if>
+        <if test="createTime !=null and createTime!=''">
+            and create_time=#{createTime}
+        </if>
+        <if test="updateUser !=null and updateUser!=''">
+            and update_user=#{updateUser}
+        </if>
+        <if test="updateTime !=null and updateTime!=''">
+            and update_time=#{updateTime}
+        </if>
+        <if test="blogger !=null and blogger!=''">
+            and blogger=#{blogger}
+        </if>
+        <if test="blogType !=null and blogType!=''">
+            and blog_type=#{blogType}
+        </if>
+        <if test="start !=null and start!=''">
+            and start=#{start}
+        </if>
+        <if test="blogContent !=null and blogContent!=''">
+            and blog_content=#{blogContent}
+        </if>
+        order by create_time desc
+    </select>
+
+    <!-- 查询blog的数量-->
+    <select id="getBlogCount" resultType="Integer">
+        select count(*)
+        from blog
+    </select>
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.cc.entity.Blog"
+            useGeneratedKeys="true" keyProperty="blog_id">
+        INSERT INTO blog (
+        blog_id, blog_title, blog_description, create_user, create_time, update_user, update_time, blogger, blog_type,
+        start, blog_content
+        ) VALUES (
+        #{blogId}, #{blogTitle}, #{blogDescription}, #{createUser}, #{createTime}, #{updateUser}, #{updateTime},
+        #{blogger}, #{blogType}, #{start}, #{blogContent}
+        )
+    </insert>
+
+    <!-- 根据主键查询(唯一)-->
+    <select id="getBlogById" parameterType="Integer" resultType="com.cc.entity.Blog">
+        select
+        <include refid="BlogColumns"/>
+        from blog where
+        blog_id=#{blogId}
+    </select>
+
+    <!-- 根据条件查询 blog  -->
+    <select id="getBlog" resultMap="BlogMap" parameterType="com.cc.entity.Blog">
+        select
+        <include refid="BlogColumns"/>
+        from blog where 1=1
+        <if test="blogId !=null and blogId!=''">
+            and blog_id=#{blogId}
+        </if>
+        <if test="blogTitle !=null and blogTitle!=''">
+            and blog_title=#{blogTitle}
+        </if>
+        <if test="blogDescription !=null and blogDescription!=''">
+            and blog_description=#{blogDescription}
+        </if>
+        <if test="createUser !=null and createUser!=''">
+            and create_user=#{createUser}
+        </if>
+        <if test="createTime !=null and createTime!=''">
+            and create_time=#{createTime}
+        </if>
+        <if test="updateUser !=null and updateUser!=''">
+            and update_user=#{updateUser}
+        </if>
+        <if test="updateTime !=null and updateTime!=''">
+            and update_time=#{updateTime}
+        </if>
+        <if test="blogger !=null and blogger!=''">
+            and blogger=#{blogger}
+        </if>
+        <if test="blogType !=null and blogType!=''">
+            and blog_type=#{blogType}
+        </if>
+        <if test="start !=null and start!=''">
+            and start=#{start}
+        </if>
+        <if test="blogContent !=null and blogContent!=''">
+            and blog_content=#{blogContent}
+        </if>
+    </select>
+
+    <!--更新  -->
+    <update id="updateBlog" parameterType="com.cc.entity.Blog">
+        UPDATE blog
+        SET
+        blog_id=#{blogId}, blog_title=#{blogTitle}, blog_description=#{blogDescription}, create_user=#{createUser},
+        create_time=#{createTime}, update_user=#{updateUser}, update_time=#{updateTime}, blogger=#{blogger},
+        blog_type=#{blogType}, start=#{start}, blog_content=#{blogContent}
+        WHERE
+        blog_id=#{blogId}
+    </update>
+
+
+    <!--根据条件删除  -->
+    <delete id="deleteBlog" parameterType="com.cc.entity.Blog">
+        delete from blog
+        where 1=1
+        <if test="blogId !=null and blogId!=''">
+            and blog_id = #{blogId}
+        </if>
+        <if test="blogTitle !=null and blogTitle!=''">
+            and blog_title = #{blogTitle}
+        </if>
+        <if test="blogDescription !=null and blogDescription!=''">
+            and blog_description = #{blogDescription}
+        </if>
+        <if test="createUser !=null and createUser!=''">
+            and create_user = #{createUser}
+        </if>
+        <if test="createTime !=null and createTime!=''">
+            and create_time = #{createTime}
+        </if>
+        <if test="updateUser !=null and updateUser!=''">
+            and update_user = #{updateUser}
+        </if>
+        <if test="updateTime !=null and updateTime!=''">
+            and update_time = #{updateTime}
+        </if>
+        <if test="blogger !=null and blogger!=''">
+            and blogger = #{blogger}
+        </if>
+        <if test="blogType !=null and blogType!=''">
+            and blog_type = #{blogType}
+        </if>
+        <if test="start !=null and start!=''">
+            and start = #{start}
+        </if>
+        <if test="blogContent !=null and blogContent!=''">
+            and blog_content = #{blogContent}
+        </if>
+    </delete>
+</mapper>

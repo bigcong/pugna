@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.SystemLogMapper">
+    <!-- 结果对应-->
+    <resultMap id="SystemLogMap" type="com.cc.entity.SystemLog">
+        <result property="logId" column="log_id"/> <!-- 主键-->
+        <result property="logContent" column="log_content"/> <!-- 日志内容-->
+        <result property="userId" column="user_id"/> <!-- 登录人-->
+        <result property="logDate" column="log_date"/> <!-- 日志日期-->
+        <result property="logLevel" column="log_level"/> <!-- 日志级别-->
+        <result property="logType" column="log_type"/> <!-- 日志类型-->
+        <result property="logUrl" column="log_url"/> <!-- 日志发生路径-->
+        <result property="createPeople" column="create_people"/> <!-- 创建人-->
+        <result property="createDate" column="create_date"/> <!-- 日志创建日期-->
+        <result property="updateDate" column="update_date"/> <!-- 更新日期-->
+        <result property="updatePeople" column="update_people"/> <!-- 更新人-->
+    </resultMap>
+
+
+    <sql id="SystemLogColumns">
+        log_id, log_content, user_id, log_date, log_level, log_type, log_url, create_people, create_date, update_date,
+        update_people
+    </sql>
+
+    <!-- 分页条件查询-->
+    <select id="listPageSystemLog" resultMap="SystemLogMap"
+            parameterType="com.cc.entity.SystemLog">
+        select
+        <include refid="SystemLogColumns"/>
+        from system_log
+        <where>
+            <if test="logId !=null">
+                and log_id=#{logId}
+            </if>
+            <if test="logContent !=null and logContent!=''">
+                and log_content=#{logContent}
+            </if>
+            <if test="userId !=null">
+                and user_id=#{userId}
+            </if>
+            <if test="logDate !=null and logDate!=''">
+                and log_date=#{logDate}
+            </if>
+            <if test="logLevel !=null">
+                and log_level=#{logLevel}
+            </if>
+            <if test="logType !=null and logType!=''">
+                and log_type=#{logType}
+            </if>
+            <if test="logUrl !=null and logUrl!=''">
+                and log_url=#{logUrl}
+            </if>
+            <if test="createPeople !=null">
+                and create_people=#{createPeople}
+            </if>
+            <if test="createDate !=null and createDate!=''">
+                and create_date=#{createDate}
+            </if>
+            <if test="updateDate !=null and updateDate!=''">
+                and update_date=#{updateDate}
+            </if>
+            <if test="updatePeople !=null">
+                and update_people=#{updatePeople}
+            </if>
+        </where>
+        order by log_date desc
+    </select>
+
+    <!-- 查询system_log的数量-->
+    <select id="getSystemLogCount" resultType="Integer">
+        select count(*)
+        from system_log
+    </select>
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="SystemLog"
+            useGeneratedKeys="true" keyProperty="logId">
+        INSERT INTO system_log (
+        log_id, log_content, user_id, log_date, log_level, log_type, log_url, create_people, create_date, update_date,
+        update_people
+        ) VALUES (
+        #{logId}, #{logContent}, #{userId}, #{logDate}, #{logLevel}, #{logType}, #{logUrl}, #{createPeople},
+        #{createDate}, #{updateDate}, #{updatePeople}
+        )
+    </insert>
+    <!-- 有条件的插入 -->
+    <insert id="insertSelective" parameterType="com.cc.entity.SystemLog" useGeneratedKeys="true" keyProperty="id">
+        insert into system_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logId !=null">
+                log_id,
+            </if>
+            <if test="logContent !=null and logContent!=''">
+                log_content,
+            </if>
+            <if test="userId !=null">
+                user_id,
+            </if>
+            <if test="logDate !=null and logDate!=''">
+                log_date,
+            </if>
+            <if test="logLevel !=null">
+                log_level,
+            </if>
+            <if test="logType !=null and logType!=''">
+                log_type,
+            </if>
+            <if test="logUrl !=null and logUrl!=''">
+                log_url,
+            </if>
+            <if test="createPeople !=null">
+                create_people,
+            </if>
+            <if test="createDate !=null and createDate!=''">
+                create_date,
+            </if>
+            <if test="updateDate !=null and updateDate!=''">
+                update_date,
+            </if>
+            <if test="updatePeople !=null">
+                update_people,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logId !=null">
+                #{logId},
+            </if>
+            <if test="logContent !=null and logContent!=''">
+                #{logContent},
+            </if>
+            <if test="userId !=null">
+                #{userId},
+            </if>
+            <if test="logDate !=null and logDate!=''">
+                #{logDate},
+            </if>
+            <if test="logLevel !=null">
+                #{logLevel},
+            </if>
+            <if test="logType !=null and logType!=''">
+                #{logType},
+            </if>
+            <if test="logUrl !=null and logUrl!=''">
+                #{logUrl},
+            </if>
+            <if test="createPeople !=null">
+                #{createPeople},
+            </if>
+            <if test="createDate !=null and createDate!=''">
+                #{createDate},
+            </if>
+            <if test="updateDate !=null and updateDate!=''">
+                #{updateDate},
+            </if>
+            <if test="updatePeople !=null">
+                #{updatePeople},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键查询(唯一)-->
+    <select id="getSystemLogById" parameterType="Integer" resultMap="SystemLogMap">
+        select
+        <include refid="SystemLogColumns"/>
+        from system_log where
+        log_id=#{logId}
+    </select>
+
+    <!-- 根据条件查询 system_log  -->
+    <select id="listSystemLog" resultMap="SystemLogMap" parameterType="com.cc.entity.SystemLog">
+        select
+        <include refid="SystemLogColumns"/>
+        from system_log
+        <where>
+            <if test="logId !=null">
+                and log_id=#{logId}
+            </if>
+            <if test="logContent !=null and logContent!=''">
+                and log_content=#{logContent}
+            </if>
+            <if test="userId !=null">
+                and user_id=#{userId}
+            </if>
+            <if test="logDate !=null and logDate!=''">
+                and log_date=#{logDate}
+            </if>
+            <if test="logLevel !=null">
+                and log_level=#{logLevel}
+            </if>
+            <if test="logType !=null and logType!=''">
+                and log_type=#{logType}
+            </if>
+            <if test="logUrl !=null and logUrl!=''">
+                and log_url=#{logUrl}
+            </if>
+            <if test="createPeople !=null">
+                and create_people=#{createPeople}
+            </if>
+            <if test="createDate !=null and createDate!=''">
+                and create_date=#{createDate}
+            </if>
+            <if test="updateDate !=null and updateDate!=''">
+                and update_date=#{updateDate}
+            </if>
+            <if test="updatePeople !=null">
+                and update_people=#{updatePeople}
+            </if>
+        </where>
+    </select>
+
+    <!--更新  -->
+    <update id="updateSystemLog" parameterType="com.cc.entity.SystemLog">
+        UPDATE system_log
+        SET
+        log_id=#{logId}, log_content=#{logContent}, user_id=#{userId}, log_date=#{logDate}, log_level=#{logLevel},
+        log_type=#{logType}, log_url=#{logUrl}, create_people=#{createPeople}, create_date=#{createDate},
+        update_date=#{updateDate}, update_people=#{updatePeople}
+        WHERE
+        log_id=#{logId}
+    </update>
+    <!--根据条件update  -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.SystemLog">
+        UPDATE system_log
+        <set>
+            <if test="logId !=null">
+                log_id = #{logId},
+            </if>
+            <if test="logContent !=null and logContent!=''">
+                log_content = #{logContent},
+            </if>
+            <if test="userId !=null">
+                user_id = #{userId},
+            </if>
+            <if test="logDate !=null and logDate!=''">
+                log_date = #{logDate},
+            </if>
+            <if test="logLevel !=null">
+                log_level = #{logLevel},
+            </if>
+            <if test="logType !=null and logType!=''">
+                log_type = #{logType},
+            </if>
+            <if test="logUrl !=null and logUrl!=''">
+                log_url = #{logUrl},
+            </if>
+            <if test="createPeople !=null">
+                create_people = #{createPeople},
+            </if>
+            <if test="createDate !=null and createDate!=''">
+                create_date = #{createDate},
+            </if>
+            <if test="updateDate !=null and updateDate!=''">
+                update_date = #{updateDate},
+            </if>
+            <if test="updatePeople !=null">
+                update_people = #{updatePeople},
+            </if>
+        </set>
+        WHERE
+        log_id=#{logId}
+    </update>
+
+
+    <!--根据条件删除  -->
+    <delete id="deleteSystemLog" parameterType="com.cc.entity.SystemLog">
+        delete from system_log
+        <where>
+            <if test="logId !=null">
+                and log_id = #{logId}
+            </if>
+            <if test="logContent !=null and logContent!=''">
+                and log_content = #{logContent}
+            </if>
+            <if test="userId !=null">
+                and user_id = #{userId}
+            </if>
+            <if test="logDate !=null and logDate!=''">
+                and log_date = #{logDate}
+            </if>
+            <if test="logLevel !=null">
+                and log_level = #{logLevel}
+            </if>
+            <if test="logType !=null and logType!=''">
+                and log_type = #{logType}
+            </if>
+            <if test="logUrl !=null and logUrl!=''">
+                and log_url = #{logUrl}
+            </if>
+            <if test="createPeople !=null">
+                and create_people = #{createPeople}
+            </if>
+            <if test="createDate !=null and createDate!=''">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateDate !=null and updateDate!=''">
+                and update_date = #{updateDate}
+            </if>
+            <if test="updatePeople !=null">
+                and update_people = #{updatePeople}
+            </if>
+        </where>
+
+    </delete>
+
+    <resultMap id="Day7ChartMap" type="com.cc.entity.Day7Chart">
+        <result property="day7" column="day7"/>
+        <result property="day6" column="day6"/>
+        <result property="day5" column="day5"/>
+        <result property="day4" column="day4"/>
+        <result property="day3" column="day3"/>
+        <result property="day2" column="day2"/>
+        <result property="day1" column="day1"/>
+
+        <result property="date1" column="date1"/>
+        <result property="date2" column="date2"/>
+        <result property="date3" column="date3"/>
+        <result property="date4" column="date4"/>
+        <result property="date5" column="date5"/>
+        <result property="date6" column="date6"/>
+        <result property="date7" column="date7"/>
+    </resultMap>
+
+
+    <select id="count7Day" resultMap="Day7ChartMap">
+        SELECT
+        count(CASE WHEN DAYOFYEAR(NOW())-DAYOFYEAR(t.log_date)=1 THEN 1 END) day1,
+        count(CASE WHEN DAYOFYEAR(NOW())-DAYOFYEAR(t.log_date)=2 THEN 1 END) day2,
+        count(CASE WHEN DAYOFYEAR(NOW())-DAYOFYEAR(t.log_date)=3 THEN 1 END) day3,
+        count(CASE WHEN DAYOFYEAR(NOW())-DAYOFYEAR(t.log_date)=4 THEN 1 END) day4,
+        count(CASE WHEN DAYOFYEAR(NOW())-DAYOFYEAR(t.log_date)=5 THEN 1 END) day5,
+        count(CASE WHEN DAYOFYEAR(NOW())-DAYOFYEAR(t.log_date)=6 THEN 1 END) day6,
+        count(CASE WHEN DAYOFYEAR(NOW())-DAYOFYEAR(t.log_date)=7 THEN 1 END) day7,
+        DATE_SUB(CURDATE(), INTERVAL 1 DAY) date1,
+        DATE_SUB(CURDATE(), INTERVAL 2 DAY) date2,
+        DATE_SUB(CURDATE(), INTERVAL 3 DAY) date3,
+        DATE_SUB(CURDATE(), INTERVAL 4 DAY) date4,
+        DATE_SUB(CURDATE(), INTERVAL 5 DAY) date5,
+        DATE_SUB(CURDATE(), INTERVAL 6 DAY) date6,
+        DATE_SUB(CURDATE(), INTERVAL 7 DAY) date7
+        FROM
+        system_log t
+        WHERE
+        t.log_url = '/pugna/blog/list'
+        and DATE_SUB(CURDATE(), INTERVAL 7 DAY)&lt;=t.log_date
+    </select>
+
+
+    <select id="sum" resultType="java.lang.Integer" parameterType="com.cc.entity.SystemLog">
+        select
+        count(1)
+        from system_log
+        <where>
+            <if test="logId !=null">
+                and log_id=#{logId}
+            </if>
+            <if test="logContent !=null and logContent!=''">
+                and log_content=#{logContent}
+            </if>
+            <if test="userId !=null">
+                and user_id=#{userId}
+            </if>
+            <if test="logDate !=null and logDate!=''">
+                and log_date=#{logDate}
+            </if>
+            <if test="logLevel !=null">
+                and log_level=#{logLevel}
+            </if>
+            <if test="logType !=null and logType!=''">
+                and log_type=#{logType}
+            </if>
+            <if test="logUrl !=null and logUrl!=''">
+                and log_url=#{logUrl}
+            </if>
+            <if test="createPeople !=null">
+                and create_people=#{createPeople}
+            </if>
+            <if test="createDate !=null and createDate!=''">
+                and create_date=#{createDate}
+            </if>
+            <if test="updateDate !=null and updateDate!=''">
+                and update_date=#{updateDate}
+            </if>
+            <if test="updatePeople !=null">
+                and update_people=#{updatePeople}
+            </if>
+        </where>
+
+    </select>
+
+
+</mapper>

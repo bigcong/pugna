@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.ConfigAttributeMapper">
+	     <!-- 结果对应-->
+	<resultMap id="ConfigAttributeMap" type="com.cc.entity.ConfigAttribute">
+		   <result property="attributeId" column="attribute_id" /> <!-- 主键-->
+		   <result property="attributeKey" column="attribute_key" /> <!-- key 列名-->
+		   <result property="attributeValue" column="attribute_value" /> <!-- 列值-->
+		   <result property="configId" column="config_id" /> <!-- 外键-->
+		   <result property="attributeName" column="attribute_name" /> <!-- key 的 中文描述-->
+	</resultMap>
+	
+	
+	<sql id="ConfigAttributeColumns">
+		  attribute_id, attribute_key, attribute_value, config_id, attribute_name
+    </sql>
+	
+    <!-- 分页条件查询-->
+	<select id="listPageConfigAttribute" resultMap="ConfigAttributeMap" 
+	parameterType="com.cc.entity.ConfigAttribute">
+		select
+		<include refid="ConfigAttributeColumns" />
+		from config_attribute 
+		 <where>
+                  <if test="attributeId !=null">
+			           and attribute_id=#{attributeId}
+			      </if>
+                  <if test="attributeKey !=null and attributeKey!=''">
+			           and attribute_key=#{attributeKey}
+			      </if>
+                  <if test="attributeValue !=null and attributeValue!=''">
+			           and attribute_value=#{attributeValue}
+			      </if>
+                  <if test="configId !=null">
+			           and config_id=#{configId}
+			      </if>
+                  <if test="attributeName !=null and attributeName!=''">
+			           and attribute_name=#{attributeName}
+			      </if>
+		</where>
+	</select>
+	
+	<!-- 查询config_attribute的数量-->
+	<select id="getConfigAttributeCount" resultType="Integer">
+		select count(*)
+		from config_attribute
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="ConfigAttribute" 
+	  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO config_attribute (
+			attribute_id, attribute_key, attribute_value, config_id, attribute_name
+		) VALUES (
+			#{attributeId}, #{attributeKey}, #{attributeValue}, #{configId}, #{attributeName}
+		)
+	</insert>
+	<!-- 有条件的插入 -->
+	<insert id="insertSelective" parameterType="com.cc.entity.ConfigAttribute" useGeneratedKeys="true" keyProperty="attributeId">
+		insert into config_attribute
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+                  <if test="attributeId !=null">
+		      attribute_id,
+		    </if>
+                  <if test="attributeKey !=null and attributeKey!=''">
+		      attribute_key,
+		    </if>
+                  <if test="attributeValue !=null and attributeValue!=''">
+		      attribute_value,
+		    </if>
+                  <if test="configId !=null">
+		      config_id,
+		    </if>
+                  <if test="attributeName !=null and attributeName!=''">
+		      attribute_name,
+		    </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		     <if test="attributeId !=null">
+		     #{attributeId},
+		    </if>
+		    <if test="attributeKey !=null and attributeKey!=''">
+		     #{attributeKey},
+		    </if>
+		    <if test="attributeValue !=null and attributeValue!=''">
+		     #{attributeValue},
+		    </if>
+		     <if test="configId !=null">
+		     #{configId},
+		    </if>
+		    <if test="attributeName !=null and attributeName!=''">
+		     #{attributeName},
+		    </if>
+		</trim>
+	</insert>	
+	
+	<!-- 根据主键查询(唯一)-->
+	<select id="getConfigAttributeById" parameterType="Integer" resultMap="ConfigAttributeMap">
+		select 
+		<include refid="ConfigAttributeColumns" /> 
+		from config_attribute where 
+		  	attribute_id=#{attributeId}
+	</select>
+	
+	<!-- 根据条件查询 config_attribute  -->
+	<select id="listConfigAttribute" resultMap="ConfigAttributeMap" parameterType="com.cc.entity.ConfigAttribute">
+		select
+		<include refid="ConfigAttributeColumns" />
+		from config_attribute 
+		<where>
+                  <if test="attributeId !=null">
+				and attribute_id=#{attributeId}
+			</if>
+                  <if test="attributeKey !=null and attributeKey!=''">
+				and attribute_key=#{attributeKey}
+			</if>
+                  <if test="attributeValue !=null and attributeValue!=''">
+				and attribute_value=#{attributeValue}
+			</if>
+                  <if test="configId !=null">
+				and config_id=#{configId}
+			</if>
+                  <if test="attributeName !=null and attributeName!=''">
+				and attribute_name=#{attributeName}
+			</if>
+		</where>
+	</select>
+	
+	<!--更新  -->
+	<update id="updateConfigAttribute" parameterType="com.cc.entity.ConfigAttribute">
+		UPDATE config_attribute 
+		SET
+		attribute_id=#{attributeId}, attribute_key=#{attributeKey}, attribute_value=#{attributeValue}, config_id=#{configId}, attribute_name=#{attributeName}
+		WHERE
+		attribute_id=#{attributeId}
+	</update>
+		<!--根据条件update  -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.ConfigAttribute" >
+	  UPDATE config_attribute 
+		<set>
+                  <if test="attributeId !=null">
+			    attribute_id =  #{attributeId},
+			</if>
+                  <if test="attributeKey !=null and attributeKey!=''">
+			    attribute_key =  #{attributeKey},
+			</if>
+                  <if test="attributeValue !=null and attributeValue!=''">
+			    attribute_value =  #{attributeValue},
+			</if>
+                  <if test="configId !=null">
+			    config_id =  #{configId},
+			</if>
+                  <if test="attributeName !=null and attributeName!=''">
+			    attribute_name =  #{attributeName},
+			</if>
+	   </set>
+		WHERE
+	attribute_id=#{attributeId}
+	</update>
+	
+	
+	<!--根据条件删除  -->
+	<delete id="deleteConfigAttribute" parameterType="com.cc.entity.ConfigAttribute">
+		delete from config_attribute 
+	<where>
+                  <if test="attributeId !=null">
+				and attribute_id =  #{attributeId}
+			</if>
+                  <if test="attributeKey !=null and attributeKey!=''">
+				and attribute_key =  #{attributeKey}
+			</if>
+                  <if test="attributeValue !=null and attributeValue!=''">
+				and attribute_value =  #{attributeValue}
+			</if>
+                  <if test="configId !=null">
+				and config_id =  #{configId}
+			</if>
+                  <if test="attributeName !=null and attributeName!=''">
+				and attribute_name =  #{attributeName}
+			</if>
+		</where> 
+		 
+	</delete>
+</mapper>

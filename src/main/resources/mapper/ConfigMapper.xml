@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.ConfigMapper">
+	     <!-- 结果对应-->
+	<resultMap id="ConfigMap" type="com.cc.entity.Config">
+		   <result property="configId" column="config_id" /> <!-- 主键自增-->
+		   <result property="type" column="type" /> <!-- -->
+		   <result property="typeName" column="type_name" /> <!-- type  中文描述-->
+		   <result property="valueName" column="value_name" /> <!-- value 中文描述-->
+		   <result property="value" column="value" /> <!-- -->
+	</resultMap>
+	
+	
+	<sql id="ConfigColumns">
+		  config_id, type, type_name, value_name, value
+    </sql>
+	
+    <!-- 分页条件查询-->
+	<select id="listPageConfig" resultMap="ConfigMap" 
+	parameterType="com.cc.entity.Config">
+		select
+		<include refid="ConfigColumns" />
+		from config 
+		 <where>
+                  <if test="configId !=null">
+			           and config_id=#{configId}
+			      </if>
+                  <if test="type !=null and type!=''">
+			           and type=#{type}
+			      </if>
+                  <if test="typeName !=null and typeName!=''">
+			           and type_name=#{typeName}
+			      </if>
+                  <if test="valueName !=null and valueName!=''">
+			           and value_name=#{valueName}
+			      </if>
+                  <if test="value !=null and value!=''">
+			           and value=#{value}
+			      </if>
+		</where>
+	</select>
+	
+	<!-- 查询config的数量-->
+	<select id="getConfigCount" resultType="Integer">
+		select count(*)
+		from config
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="Config" 
+	  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO config (
+			config_id, type, type_name, value_name, value
+		) VALUES (
+			#{configId}, #{type}, #{typeName}, #{valueName}, #{value}
+		)
+	</insert>
+	<!-- 有条件的插入 -->
+	<insert id="insertSelective" parameterType="com.cc.entity.Config" useGeneratedKeys="true" keyProperty="configId">
+		insert into config
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+                  <if test="configId !=null">
+		      config_id,
+		    </if>
+                  <if test="type !=null and type!=''">
+		      type,
+		    </if>
+                  <if test="typeName !=null and typeName!=''">
+		      type_name,
+		    </if>
+                  <if test="valueName !=null and valueName!=''">
+		      value_name,
+		    </if>
+                  <if test="value !=null and value!=''">
+		      value,
+		    </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		     <if test="configId !=null">
+		     #{configId},
+		    </if>
+		    <if test="type !=null and type!=''">
+		     #{type},
+		    </if>
+		    <if test="typeName !=null and typeName!=''">
+		     #{typeName},
+		    </if>
+		    <if test="valueName !=null and valueName!=''">
+		     #{valueName},
+		    </if>
+		    <if test="value !=null and value!=''">
+		     #{value},
+		    </if>
+		</trim>
+	</insert>	
+	
+	<!-- 根据主键查询(唯一)-->
+	<select id="getConfigById" parameterType="Integer" resultMap="ConfigMap">
+		select 
+		<include refid="ConfigColumns" /> 
+		from config where 
+		  	config_id=#{configId}
+	</select>
+	
+	<!-- 根据条件查询 config  -->
+	<select id="listConfig" resultMap="ConfigMap" parameterType="com.cc.entity.Config">
+		select
+		<include refid="ConfigColumns" />
+		from config 
+		<where>
+                  <if test="configId !=null">
+				and config_id=#{configId}
+			</if>
+                  <if test="type !=null and type!=''">
+				and type=#{type}
+			</if>
+                  <if test="typeName !=null and typeName!=''">
+				and type_name=#{typeName}
+			</if>
+                  <if test="valueName !=null and valueName!=''">
+				and value_name=#{valueName}
+			</if>
+                  <if test="value !=null and value!=''">
+				and value=#{value}
+			</if>
+		</where>
+	</select>
+	
+	<!--更新  -->
+	<update id="updateConfig" parameterType="com.cc.entity.Config">
+		UPDATE config 
+		SET
+		config_id=#{configId}, type=#{type}, type_name=#{typeName}, value_name=#{valueName}, value=#{value}
+		WHERE
+		config_id=#{configId}
+	</update>
+		<!--根据条件update  -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.Config" >
+	  UPDATE config 
+		<set>
+                  <if test="configId !=null">
+			    config_id =  #{configId},
+			</if>
+                  <if test="type !=null and type!=''">
+			    type =  #{type},
+			</if>
+                  <if test="typeName !=null and typeName!=''">
+			    type_name =  #{typeName},
+			</if>
+                  <if test="valueName !=null and valueName!=''">
+			    value_name =  #{valueName},
+			</if>
+                  <if test="value !=null and value!=''">
+			    value =  #{value},
+			</if>
+	   </set>
+		WHERE
+	config_id=#{configId}
+	</update>
+	
+	
+	<!--根据条件删除  -->
+	<delete id="deleteConfig" parameterType="com.cc.entity.Config">
+		delete from config 
+	<where>
+                  <if test="configId !=null">
+				and config_id =  #{configId}
+			</if>
+                  <if test="type !=null and type!=''">
+				and type =  #{type}
+			</if>
+                  <if test="typeName !=null and typeName!=''">
+				and type_name =  #{typeName}
+			</if>
+                  <if test="valueName !=null and valueName!=''">
+				and value_name =  #{valueName}
+			</if>
+                  <if test="value !=null and value!=''">
+				and value =  #{value}
+			</if>
+		</where> 
+		 
+	</delete>
+</mapper>

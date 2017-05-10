@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.CommentsMapper">
+
+    <resultMap id="CommentsMap" type="com.cc.entity.Comments">
+        <result property="commentsId" column="comments_id"/>
+        <result property="blogId" column="blog_id"/>
+        <result property="commentsTitle" column="comments_title"/>
+        <result property="commentContent" column="comment_content"/>
+        <result property="reportNum" column="report_num"/>
+        <result property="startNum" column="start_num"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="commentsUrl" column="comments_url"/>
+        <result property="status" column="status"/>
+        <result property="ip" column="ip"/>
+        <result property="commentUser" column="comment_user"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUser" column="update_user"/>
+    </resultMap>
+
+
+    <sql id="CommentsColumns">
+        comments_id, blog_id, comments_title, comment_content, report_num, start_num,
+        parent_id, comments_url, status, ip, comment_user, create_time,
+        create_user, update_time, update_user
+    </sql>
+
+    <!-- 很据条件查询店铺的全部 -->
+    <select id="listPageComments" resultMap="CommentsMap"
+            parameterType="com.cc.entity.Comments">
+        select
+        <include refid="CommentsColumns"/>
+        from comments where 1=1
+        <if test="commentsId !=null and commentsId!=''">
+            and comments_id=#{commentsId}
+        </if>
+        <if test="blogId !=null and blogId!=''">
+            and blog_id=#{blogId}
+        </if>
+        <if test="commentsTitle !=null and commentsTitle!=''">
+            and comments_title=#{commentsTitle}
+        </if>
+        <if test="commentContent !=null and commentContent!=''">
+            and comment_content=#{commentContent}
+        </if>
+        <if test="reportNum !=null and reportNum!=''">
+            and report_num=#{reportNum}
+        </if>
+        <if test="startNum !=null and startNum!=''">
+            and start_num=#{startNum}
+        </if>
+        <if test="parentId !=null and parentId!=''">
+            and parent_id=#{parentId}
+        </if>
+        <if test="commentsUrl !=null and commentsUrl!=''">
+            and comments_url=#{commentsUrl}
+        </if>
+        <if test="status !=null and status!=''">
+            and status=#{status}
+        </if>
+        <if test="ip !=null and ip!=''">
+            and ip=#{ip}
+        </if>
+        <if test="commentUser !=null and commentUser!=''">
+            and comment_user=#{commentUser}
+        </if>
+        <if test="createTime !=null and createTime!=''">
+            and create_time=#{createTime}
+        </if>
+        <if test="createUser !=null and createUser!=''">
+            and create_user=#{createUser}
+        </if>
+        <if test="updateTime !=null and updateTime!=''">
+            and update_time=#{updateTime}
+        </if>
+        <if test="updateUser !=null and updateUser!=''">
+            and update_user=#{updateUser}
+        </if>
+    </select>
+
+    <!-- 查询comments的数量 -->
+    <select id="getCommentsCount" resultType="Integer">
+        select count(*)
+        from
+        comments
+    </select>
+
+    <!-- 插入 -->
+    <insert id="insertComments" parameterType="com.cc.entity.Comments"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO comments (
+        comments_id, blog_id, comments_title, comment_content, report_num,
+        start_num, parent_id, comments_url, status, ip, comment_user,
+        create_time, create_user, update_time, update_user
+        ) VALUES (
+        #{commentsId}, #{blogId}, #{commentsTitle}, #{commentContent},
+        #{reportNum}, #{startNum}, #{parentId}, #{commentsUrl}, #{status},
+        #{ip}, #{commentUser}, #{createTime}, #{createUser}, #{updateTime},
+        #{updateUser}
+        )
+    </insert>
+
+    <!-- 根据主键查询(唯一) -->
+    <select id="getCommentsById" parameterType="Integer"
+            resultType="com.cc.entity.Comments">
+        select
+        <include refid="CommentsColumns"/>
+        from comments where
+        comments_id=#{commentsId}
+    </select>
+
+    <!-- 根据条件查询 comments -->
+    <select id="getComments" resultMap="CommentsMap" parameterType="com.cc.entity.Comments">
+        select
+        <include refid="CommentsColumns"/>
+        from comments where 1=1
+        <if test="commentsId !=null and commentsId!=''">
+            and comments_id=#{commentsId}
+        </if>
+        <if test="blogId !=null and blogId!=''">
+            and blog_id=#{blogId}
+        </if>
+        <if test="commentsTitle !=null and commentsTitle!=''">
+            and comments_title=#{commentsTitle}
+        </if>
+        <if test="commentContent !=null and commentContent!=''">
+            and comment_content=#{commentContent}
+        </if>
+        <if test="reportNum !=null and reportNum!=''">
+            and report_num=#{reportNum}
+        </if>
+        <if test="startNum !=null and startNum!=''">
+            and start_num=#{startNum}
+        </if>
+        <if test="parentId !=null and parentId!=''">
+            and parent_id=#{parentId}
+        </if>
+        <if test="commentsUrl !=null and commentsUrl!=''">
+            and comments_url=#{commentsUrl}
+        </if>
+        <if test="status !=null and status!=''">
+            and status=#{status}
+        </if>
+        <if test="ip !=null and ip!=''">
+            and ip=#{ip}
+        </if>
+        <if test="commentUser !=null and commentUser!=''">
+            and comment_user=#{commentUser}
+        </if>
+        <if test="createTime !=null and createTime!=''">
+            and create_time=#{createTime}
+        </if>
+        <if test="createUser !=null and createUser!=''">
+            and create_user=#{createUser}
+        </if>
+        <if test="updateTime !=null and updateTime!=''">
+            and update_time=#{updateTime}
+        </if>
+        <if test="updateUser !=null and updateUser!=''">
+            and update_user=#{updateUser}
+        </if>
+    </select>
+
+    <!--更新 -->
+    <update id="updateComments" parameterType="com.cc.entity.Comments">
+        UPDATE comments
+        SET
+        comments_id=#{commentsId}, blog_id=#{blogId},
+        comments_title=#{commentsTitle}, comment_content=#{commentContent},
+        report_num=#{reportNum}, start_num=#{startNum}, parent_id=#{parentId},
+        comments_url=#{commentsUrl}, status=#{status}, ip=#{ip},
+        comment_user=#{commentUser}, create_time=#{createTime},
+        create_user=#{createUser}, update_time=#{updateTime},
+        update_user=#{updateUser}
+        WHERE
+        comments_id=#{commentsId}
+    </update>
+
+
+    <!--根据条件删除 -->
+    <delete id="deleteComments" parameterType="com.cc.entity.Comments">
+        delete from comments
+        where 1=1
+        <if test="commentsId !=null and commentsId!=''">
+            and comments_id = #{commentsId}
+        </if>
+        <if test="blogId !=null and blogId!=''">
+            and blog_id = #{blogId}
+        </if>
+        <if test="commentsTitle !=null and commentsTitle!=''">
+            and comments_title = #{commentsTitle}
+        </if>
+        <if test="commentContent !=null and commentContent!=''">
+            and comment_content = #{commentContent}
+        </if>
+        <if test="reportNum !=null and reportNum!=''">
+            and report_num = #{reportNum}
+        </if>
+        <if test="startNum !=null and startNum!=''">
+            and start_num = #{startNum}
+        </if>
+        <if test="parentId !=null and parentId!=''">
+            and parent_id = #{parentId}
+        </if>
+        <if test="commentsUrl !=null and commentsUrl!=''">
+            and comments_url = #{commentsUrl}
+        </if>
+        <if test="status !=null and status!=''">
+            and status = #{status}
+        </if>
+        <if test="ip !=null and ip!=''">
+            and ip = #{ip}
+        </if>
+        <if test="commentUser !=null and commentUser!=''">
+            and comment_user = #{commentUser}
+        </if>
+        <if test="createTime !=null and createTime!=''">
+            and create_time = #{createTime}
+        </if>
+        <if test="createUser !=null and createUser!=''">
+            and create_user = #{createUser}
+        </if>
+        <if test="updateTime !=null and updateTime!=''">
+            and update_time = #{updateTime}
+        </if>
+        <if test="updateUser !=null and updateUser!=''">
+            and update_user = #{updateUser}
+        </if>
+    </delete>
+</mapper>
