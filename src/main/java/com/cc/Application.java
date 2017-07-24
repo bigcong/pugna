@@ -22,6 +22,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.annotation.PreDestroy;
@@ -30,6 +31,7 @@ import javax.annotation.PreDestroy;
 @MapperScan("com.cc.mapper")
 @SpringBootApplication
 @EnableCaching
+@EnableScheduling
 public class Application {
     private final RedisSerializer serializer = new StringRedisSerializer();
 

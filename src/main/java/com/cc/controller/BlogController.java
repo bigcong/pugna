@@ -23,8 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/blog")
 public class BlogController {
-    @Value("${my.secret}")
-    private String a;
+
 
     @Autowired
     private BlogService blogService;
