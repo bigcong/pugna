@@ -2,14 +2,14 @@
  Navicat MySQL Data Transfer
 
  Source Server         : localhost
- Source Server Version : 50709
+ Source Server Version : 50718
  Source Host           : localhost
  Source Database       : pugna
 
- Target Server Version : 50709
+ Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 01/04/2017 11:41:45 AM
+ Date: 07/26/2017 21:25:18 PM
 */
 
 SET NAMES utf8;
@@ -89,7 +89,7 @@ CREATE TABLE `config` (
   `config_value` varchar(20) DEFAULT NULL COMMENT '值',
   `config_status` varchar(10) NOT NULL COMMENT '是否启用',
   PRIMARY KEY (`config_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `config_detail`
@@ -105,7 +105,7 @@ CREATE TABLE `config_detail` (
   `note` varchar(10) NOT NULL COMMENT '备注',
   `sort` int(10) NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `contact`
@@ -118,6 +118,48 @@ CREATE TABLE `contact` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`contact_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+--  Table structure for `dota2_match_details`
+-- ----------------------------
+DROP TABLE IF EXISTS `dota2_match_details`;
+CREATE TABLE `dota2_match_details` (
+  `match_id` bigint(20) NOT NULL COMMENT '比赛id',
+  `radiant_win` char(2) DEFAULT NULL,
+  `duration` smallint(6) DEFAULT NULL,
+  `season` varchar(255) DEFAULT NULL,
+  `start_time` int(10) DEFAULT NULL,
+  `match_seq_num` bigint(20) DEFAULT NULL,
+  `tower_status_radiant` int(10) DEFAULT NULL,
+  `tower_status_dire` int(10) DEFAULT NULL,
+  `barracks_status_radiant` int(11) DEFAULT NULL,
+  `barracks_status_dire` smallint(6) DEFAULT NULL,
+  `cluster` smallint(6) DEFAULT NULL,
+  `first_blood_time` smallint(6) DEFAULT NULL,
+  `lobby_type` bit(1) DEFAULT NULL,
+  `human_players` smallint(2) DEFAULT NULL,
+  `leagueid` smallint(6) DEFAULT NULL,
+  `positive_votes` smallint(6) DEFAULT NULL,
+  `negative_votes` smallint(6) DEFAULT NULL,
+  `game_mode` smallint(2) DEFAULT NULL,
+  `flags` int(2) DEFAULT NULL,
+  `engine` int(2) DEFAULT NULL,
+  `radiant_score` int(3) DEFAULT NULL,
+  `dire_score` int(3) DEFAULT NULL,
+  `radiant_team_id` int(11) DEFAULT NULL,
+  `radiant_name` varchar(50) DEFAULT NULL,
+  `radiant_logo` bigint(20) DEFAULT NULL,
+  `radiant_team_complete` smallint(2) DEFAULT NULL,
+  `dire_team_id` smallint(6) DEFAULT NULL,
+  `dire_name` varchar(50) DEFAULT NULL,
+  `dire_logo` bigint(20) DEFAULT NULL,
+  `dire_team_complete` smallint(2) DEFAULT NULL,
+  `radiant_captain` int(11) DEFAULT NULL,
+  `dire_captain` int(11) DEFAULT NULL,
+  `players` json DEFAULT NULL,
+  `picks_bans` json DEFAULT NULL,
+  PRIMARY KEY (`match_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `file`
@@ -140,7 +182,7 @@ CREATE TABLE `file` (
   `is_enable` int(10) DEFAULT NULL COMMENT '是否启用',
   `file_size` decimal(20,0) DEFAULT NULL COMMENT '文件大小',
   PRIMARY KEY (`file_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `hour`
@@ -164,7 +206,7 @@ CREATE TABLE `location` (
   `createtime` datetime DEFAULT NULL COMMENT '创建时间',
   `address` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户足迹表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户足迹表';
 
 -- ----------------------------
 --  Table structure for `menu`
@@ -183,7 +225,7 @@ CREATE TABLE `menu` (
   `enable_flag` varchar(10) DEFAULT NULL COMMENT '是否可用',
   `menu_sort` varchar(10) DEFAULT NULL COMMENT '菜单排序',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `message_board`
@@ -205,7 +247,7 @@ CREATE TABLE `message_board` (
   `status` varchar(255) DEFAULT NULL COMMENT '状态',
   `status_type` varchar(255) DEFAULT NULL COMMENT '状态类型 关联config表',
   PRIMARY KEY (`board_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `module`
@@ -230,7 +272,7 @@ CREATE TABLE `permissions` (
   `pri_name` varchar(100) DEFAULT NULL COMMENT '权限名字',
   `enable_flag` varchar(10) DEFAULT NULL COMMENT '是否可用',
   PRIMARY KEY (`pri_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `plan`
@@ -259,7 +301,7 @@ CREATE TABLE `role` (
   `enable_flag` varchar(100) DEFAULT '' COMMENT '是否可用',
   `is_locked` varchar(10) DEFAULT '' COMMENT '是否锁住（能否能被修改和删除）',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `role_menu`
@@ -272,7 +314,7 @@ CREATE TABLE `role_menu` (
   `permission_type` int(11) DEFAULT NULL COMMENT '操作权限  1：录入 2：浏览 3：修改 4：删除 ',
   `remark` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`menu_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `sms`
@@ -314,7 +356,7 @@ CREATE TABLE `system_log` (
   `update_date` datetime DEFAULT NULL COMMENT '更新日期',
   `update_people` int(10) DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=309 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `user`
@@ -333,7 +375,7 @@ CREATE TABLE `user` (
   `tel` varchar(100) DEFAULT NULL COMMENT '电话号',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_name` (`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `user_role`
@@ -344,6 +386,6 @@ CREATE TABLE `user_role` (
   `user_id` int(11) NOT NULL COMMENT '用户id',
   `role_id` int(11) NOT NULL COMMENT '角色id',
   PRIMARY KEY (`user_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -18,8 +18,8 @@ class Dota2Controller {
 
   @GetMapping(Array("cc"))
   def test = {
-    val g = dota2Util.matchHistoryBySequenceNum()
-    System.out.println(g)
+    val url = "http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1?key=" + steamKey + "&match_id=3282763119";
+    val g = dota2Util.get("GetMatchDetails", Map("match_id" -> "3282763119"))
     g
 
 
