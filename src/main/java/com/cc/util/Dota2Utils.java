@@ -1,20 +1,23 @@
 package com.cc.util;
 
-import com.cc.entity.Account;
-import com.cc.entity.User;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * Created by cong on 2017/7/27.
  */
+@Component
 public class Dota2Utils {
-
+    @Value("${steam.key}")
+    String steamKey = "";
 
     public static Object toBean(String json, Object o) {
         System.out.println(json);
@@ -96,6 +99,19 @@ public class Dota2Utils {
     }
 
 
+    public String get(String u, Map<String, Object> map) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = "http://api.steampowered.com/IDOTA2Match_570/" + u + "/v1?key=" + steamKey;
+        StringBuilder str = new StringBuilder();
+        str.append(url);
+
+        map.entrySet().stream().map(t -> str.append("&" + t.getKey() + "=" + t.getValue()));
+
+        return restTemplate.getForObject(str.toString(), String.class);
+
+
+    }
 
 
 }
