@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.cc.entity.CallRecords;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.cc.entity.Sms;
 import com.cc.service.SmsService;
-import sun.rmi.runtime.Log;
 
 @RestController
 @RequestMapping(value = "/sms")
