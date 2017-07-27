@@ -9,7 +9,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 07/26/2017 21:25:18 PM
+ Date: 07/27/2017 16:02:29 PM
 */
 
 SET NAMES utf8;
@@ -125,7 +125,7 @@ CREATE TABLE `contact` (
 DROP TABLE IF EXISTS `dota2_match_details`;
 CREATE TABLE `dota2_match_details` (
   `match_id` bigint(20) NOT NULL COMMENT '比赛id',
-  `radiant_win` char(2) DEFAULT NULL,
+  `radiant_win` char(5) DEFAULT NULL,
   `duration` smallint(6) DEFAULT NULL,
   `season` varchar(255) DEFAULT NULL,
   `start_time` int(10) DEFAULT NULL,
@@ -156,8 +156,8 @@ CREATE TABLE `dota2_match_details` (
   `dire_team_complete` smallint(2) DEFAULT NULL,
   `radiant_captain` int(11) DEFAULT NULL,
   `dire_captain` int(11) DEFAULT NULL,
-  `players` json DEFAULT NULL,
-  `picks_bans` json DEFAULT NULL,
+  `player` json DEFAULT NULL,
+  `picks_ban` json DEFAULT NULL,
   PRIMARY KEY (`match_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
