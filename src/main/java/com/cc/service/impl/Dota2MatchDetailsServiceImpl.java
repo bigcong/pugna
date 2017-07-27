@@ -109,7 +109,7 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
         map.put("game_mode", 16);
         map.put("min_players", 10);
         map.put("skill", 3);
-        map.put("start_at_match_id", avg.longValue());
+        //map.put("start_at_match_id", avg.longValue());
 
 
         String g = dota2Utils.get("GetMatchHistory", map);

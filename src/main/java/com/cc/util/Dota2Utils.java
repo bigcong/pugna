@@ -106,7 +106,7 @@ public class Dota2Utils {
         StringBuilder str = new StringBuilder();
         str.append(url);
 
-        map.entrySet().stream().map(t -> str.append("&" + t.getKey() + "=" + t.getValue()));
+        map.entrySet().stream().forEach(t -> str.append("&" + t.getKey() + "=" + t.getValue()));
 
         return restTemplate.getForObject(str.toString(), String.class);
 
