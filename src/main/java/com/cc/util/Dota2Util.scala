@@ -15,7 +15,7 @@ class Dota2Util {
   val steamKey: String = "";
 
 
-  def get(u: String, map: Map[String, String]) = {
+  def get(u: String, map: Map[String, Any]) = {
 
     val url = "http://api.steampowered.com/IDOTA2Match_570/" + u + "/v1?key=" + steamKey;
     val str = new StringBuilder;

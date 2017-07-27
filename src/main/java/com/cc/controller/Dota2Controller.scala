@@ -1,10 +1,8 @@
 package com.cc.controller
 
-import com.cc.entity.Dota2MatchDetails
-import com.cc.service.Dota2MatchDetailsService
-import com.cc.util.Dota2Util
-import com.google.gson.{Gson, JsonObject}
-import org.springframework.beans.factory.annotation.{Autowired, Value}
+
+import com.cc.service.impl.Dota2Service
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.{GetMapping, RequestMapping, RestController}
 
 
@@ -14,43 +12,16 @@ import org.springframework.web.bind.annotation.{GetMapping, RequestMapping, Rest
 @RestController
 @RequestMapping(Array("/dota2"))
 class Dota2Controller {
-  @Value("${steam.key}")
-  val steamKey: String = "";
+
+
   @Autowired
-  val dota2Util: Dota2Util = null;
-  @Autowired
-  val dota2MatchDetailsService: Dota2MatchDetailsService = null;
+  val dota2Service: Dota2Service = null;
 
 
-  @GetMapping(Array("cc"))
-  def test = {
-    val url = "http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1?key=" + steamKey + "&match_id=3282763119";
-    val g = dota2Util.get("GetMatchDetails", Map("match_id" -> "3282763119"))
-
-
-    val gg = new Gson();
-
-    val s = gg.fromJson(g, classOf[JsonObject])
-
-    System.out.println(g)
-
-
-    val result = s.get("result").getAsJsonObject
-
-
-    val j = gg.fromJson(result.toString, classOf[Dota2MatchDetails])
-    val play = result.get("players")
-    if (play != null) {
-      j.setPlayer(play.getAsJsonArray.toString)
-    }
-    val picksBan = result.get("picks_bans")
-    if (picksBan != null) {
-      j.setPicksBan(picksBan.getAsJsonArray.toString)
-
-    }
-
-    dota2MatchDetailsService.insertSelective(j)
-    j
+  @GetMapping(Array("gg"))
+  def gg = {
+    val re = dota2Service.matchHistory
+    "成功"
 
 
   }
