@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     username: root
-    password: cc
+    password:
     driver-class-name: com.mysql.jdbc.Driver
     url:  jdbc:mysql://localhost:3306/pugna?Unicode=true&autoReconnect=true&characterEncoding=UTF-8
   redis:
@@ -13,3 +13,12 @@ spring:
     port: 6379
 steam:
   key: 8CD1268BDB73A449446863EEC2DE17D0
+
+
+
+
+mybatis:
+  configLocation: classpath:mybatis-config.xml
+  mapperLocations: classpath:mapper/*.xml
+  typeAliasesPackage: com.cc.entity
+

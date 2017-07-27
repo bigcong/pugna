@@ -1,8 +1,8 @@
-package com.cc.dota2.service.impl;
+package com.cc.service.impl;
 import java.util.*;
-import com.cc.dota2.mapper.Dota2MatchDetailsMapper;
-import com.cc.dota2.entity.Dota2MatchDetails;
-import com.cc.dota2.service.Dota2MatchDetailsService;
+import com.cc.mapper.Dota2MatchDetailsMapper;
+import com.cc.entity.Dota2MatchDetails;
+import com.cc.service.Dota2MatchDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

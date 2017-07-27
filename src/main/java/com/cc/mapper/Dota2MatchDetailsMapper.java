@@ -1,11 +1,10 @@
-package com.cc.dota2.service;
+package com.cc.mapper;
 import java.util.*;
-import com.cc.dota2.entity.Dota2MatchDetails;
-
+import com.cc.entity.Dota2MatchDetails;
 /**
  * dota2_match_details
  */
-public interface Dota2MatchDetailsService{
+public interface Dota2MatchDetailsMapper{
    
 	
 	/**
@@ -19,10 +18,18 @@ public interface Dota2MatchDetailsService{
 	 */
 	public Integer getDota2MatchDetailsCount();
 	
-	/**
-	 *插入
-	 */
+	
 	public void insert(Dota2MatchDetails dota2MatchDetails);
+	/**
+	 *有条件的更新
+	 */
+	
+	public void insertSelective(Dota2MatchDetails dota2MatchDetails);
+	/**
+	 *根据主键有条件的更新
+	 */
+	
+	public void updateByPrimaryKeySelective(Dota2MatchDetails dota2MatchDetails);
 	
 	/**
 	 * 根据主键查询(唯一)
@@ -48,16 +55,6 @@ public interface Dota2MatchDetailsService{
 	 /**
 	 * 根据主键删除
 	 */
-	public void  deleteDota2MatchDetailsByIds (String[] ids);
-	/**
-	 *有条件的更新
-	 */
-	
-	public void insertSelective(Dota2MatchDetails dota2MatchDetails);
-	/**
-	 *根据主键有条件的更新
-	 */
-	
-	public void updateByPrimaryKeySelective(Dota2MatchDetails dota2MatchDetails);
+	public void  deleteDota2MatchDetailsByIds (String[] id);
 	
 }

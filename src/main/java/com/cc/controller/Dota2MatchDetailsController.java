@@ -1,7 +1,7 @@
-package com.cc.dota2.controller;
+package com.cc.controller;
 
-import com.cc.dota2.entity.Dota2MatchDetails;
-import com.cc.dota2.service.Dota2MatchDetailsService;
+import com.cc.entity.Dota2MatchDetails;
+import com.cc.service.Dota2MatchDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.ui.ModelMap;

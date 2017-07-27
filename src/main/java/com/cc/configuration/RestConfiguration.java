@@ -19,10 +19,10 @@ public class RestConfiguration {
     @Bean
     public RestTemplate restOperations() {
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-        requestFactory.setReadTimeout(5000);
-        requestFactory.setConnectTimeout(5000);
+        requestFactory.setReadTimeout(10000);
+        requestFactory.setConnectTimeout(10000);
 
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
+        RestTemplate restTemplate = new RestTemplate();
         //HttpHeaders headers = new HttpHeaders();
         // MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
         // headers.setContentType(type);

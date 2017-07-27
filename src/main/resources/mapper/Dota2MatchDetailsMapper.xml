@@ -2,62 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cc.dota2.mapper.Dota2MatchDetailsMapper">
+<mapper namespace="com.cc.mapper.Dota2MatchDetailsMapper">
 	     <!-- 结果对应-->
-	<resultMap id="Dota2MatchDetailsMap" type="com.cc.dota2.entity.Dota2MatchDetails">
-		   <result property="matchId" column="match_id" /> <!-- 比赛id-->
-		   <result property="radiantWin" column="radiant_win" /> <!-- -->
+	<resultMap id="Dota2MatchDetailsMap" type="com.cc.entity.Dota2MatchDetails">
+		   <result property="match_id" column="match_id" /> <!-- 比赛id-->
+		   <result property="radiant_win" column="radiant_win" /> <!-- -->
 		   <result property="duration" column="duration" /> <!-- -->
 		   <result property="season" column="season" /> <!-- -->
-		   <result property="startTime" column="start_time" /> <!-- -->
-		   <result property="matchSeqNum" column="match_seq_num" /> <!-- -->
-		   <result property="towerStatusRadiant" column="tower_status_radiant" /> <!-- -->
-		   <result property="towerStatusDire" column="tower_status_dire" /> <!-- -->
-		   <result property="barracksStatusRadiant" column="barracks_status_radiant" /> <!-- -->
-		   <result property="barracksStatusDire" column="barracks_status_dire" /> <!-- -->
+		   <result property="start_time" column="start_time" /> <!-- -->
+		   <result property="match_seq_num" column="match_seq_num" /> <!-- -->
+		   <result property="tower_status_radiant" column="tower_status_radiant" /> <!-- -->
+		   <result property="tower_status_dire" column="tower_status_dire" /> <!-- -->
+		   <result property="barracks_status_radiant" column="barracks_status_radiant" /> <!-- -->
+		   <result property="barracks_status_dire" column="barracks_status_dire" /> <!-- -->
 		   <result property="cluster" column="cluster" /> <!-- -->
-		   <result property="firstBloodTime" column="first_blood_time" /> <!-- -->
-		   <result property="lobbyType" column="lobby_type" /> <!-- -->
-		   <result property="humanPlayers" column="human_players" /> <!-- -->
+		   <result property="first_blood_time" column="first_blood_time" /> <!-- -->
+		   <result property="lobby_type" column="lobby_type" /> <!-- -->
+		   <result property="human_players" column="human_players" /> <!-- -->
 		   <result property="leagueid" column="leagueid" /> <!-- -->
-		   <result property="positiveVotes" column="positive_votes" /> <!-- -->
-		   <result property="negativeVotes" column="negative_votes" /> <!-- -->
-		   <result property="gameMode" column="game_mode" /> <!-- -->
+		   <result property="positive_votes" column="positive_votes" /> <!-- -->
+		   <result property="negative_votes" column="negative_votes" /> <!-- -->
+		   <result property="game_mode" column="game_mode" /> <!-- -->
 		   <result property="flags" column="flags" /> <!-- -->
 		   <result property="engine" column="engine" /> <!-- -->
-		   <result property="radiantScore" column="radiant_score" /> <!-- -->
-		   <result property="direScore" column="dire_score" /> <!-- -->
-		   <result property="radiantTeamId" column="radiant_team_id" /> <!-- -->
-		   <result property="radiantName" column="radiant_name" /> <!-- -->
-		   <result property="radiantLogo" column="radiant_logo" /> <!-- -->
-		   <result property="radiantTeamComplete" column="radiant_team_complete" /> <!-- -->
-		   <result property="direTeamId" column="dire_team_id" /> <!-- -->
-		   <result property="direName" column="dire_name" /> <!-- -->
-		   <result property="direLogo" column="dire_logo" /> <!-- -->
-		   <result property="direTeamComplete" column="dire_team_complete" /> <!-- -->
-		   <result property="radiantCaptain" column="radiant_captain" /> <!-- -->
-		   <result property="direCaptain" column="dire_captain" /> <!-- -->
-		   <result property="players" column="players" /> <!-- -->
-		   <result property="picksBans" column="picks_bans" /> <!-- -->
+		   <result property="radiant_score" column="radiant_score" /> <!-- -->
+		   <result property="dire_score" column="dire_score" /> <!-- -->
+		   <result property="radiant_team_id" column="radiant_team_id" /> <!-- -->
+		   <result property="radiant_name" column="radiant_name" /> <!-- -->
+		   <result property="radiant_logo" column="radiant_logo" /> <!-- -->
+		   <result property="radiant_team_complete" column="radiant_team_complete" /> <!-- -->
+		   <result property="dire_team_id" column="dire_team_id" /> <!-- -->
+		   <result property="dire_name" column="dire_name" /> <!-- -->
+		   <result property="dire_logo" column="dire_logo" /> <!-- -->
+		   <result property="dire_team_complete" column="dire_team_complete" /> <!-- -->
+		   <result property="radiant_captain" column="radiant_captain" /> <!-- -->
+		   <result property="dire_captain" column="dire_captain" /> <!-- -->
+		   <result property="player" column="player" /> <!-- -->
+		   <result property="picks_ban" column="picks_ban" /> <!-- -->
 	</resultMap>
 	
 	
 	<sql id="Dota2MatchDetailsColumns">
-		  match_id, radiant_win, duration, season, start_time, match_seq_num, tower_status_radiant, tower_status_dire, barracks_status_radiant, barracks_status_dire, cluster, first_blood_time, lobby_type, human_players, leagueid, positive_votes, negative_votes, game_mode, flags, engine, radiant_score, dire_score, radiant_team_id, radiant_name, radiant_logo, radiant_team_complete, dire_team_id, dire_name, dire_logo, dire_team_complete, radiant_captain, dire_captain, players, picks_bans
+		  match_id, radiant_win, duration, season, start_time, match_seq_num, tower_status_radiant, tower_status_dire, barracks_status_radiant, barracks_status_dire, cluster, first_blood_time, lobby_type, human_players, leagueid, positive_votes, negative_votes, game_mode, flags, engine, radiant_score, dire_score, radiant_team_id, radiant_name, radiant_logo, radiant_team_complete, dire_team_id, dire_name, dire_logo, dire_team_complete, radiant_captain, dire_captain, player, picks_ban
     </sql>
 	
     <!-- 分页条件查询-->
 	<select id="listPageDota2MatchDetails" resultMap="Dota2MatchDetailsMap" 
-	parameterType="com.cc.dota2.entity.Dota2MatchDetails">
+	parameterType="com.cc.entity.Dota2MatchDetails">
 		select
 		<include refid="Dota2MatchDetailsColumns" />
 		from dota2_match_details 
 		 <where>
-                  <if test="matchId !=null">
-			           and match_id=#{matchId}
+                  <if test="match_id !=null">
+			           and match_id=#{match_id}
 			      </if>
-                  <if test="radiantWin !=null and radiantWin!=''">
-			           and radiant_win=#{radiantWin}
+                  <if test="radiant_win !=null and radiant_win!=''">
+			           and radiant_win=#{radiant_win}
 			      </if>
                   <if test="duration !=null">
 			           and duration=#{duration}
@@ -65,47 +65,47 @@
                   <if test="season !=null and season!=''">
 			           and season=#{season}
 			      </if>
-                  <if test="startTime !=null">
-			           and start_time=#{startTime}
+                  <if test="start_time !=null">
+			           and start_time=#{start_time}
 			      </if>
-                  <if test="matchSeqNum !=null">
-			           and match_seq_num=#{matchSeqNum}
+                  <if test="match_seq_num !=null">
+			           and match_seq_num=#{match_seq_num}
 			      </if>
-                  <if test="towerStatusRadiant !=null">
-			           and tower_status_radiant=#{towerStatusRadiant}
+                  <if test="tower_status_radiant !=null">
+			           and tower_status_radiant=#{tower_status_radiant}
 			      </if>
-                  <if test="towerStatusDire !=null">
-			           and tower_status_dire=#{towerStatusDire}
+                  <if test="tower_status_dire !=null">
+			           and tower_status_dire=#{tower_status_dire}
 			      </if>
-                  <if test="barracksStatusRadiant !=null">
-			           and barracks_status_radiant=#{barracksStatusRadiant}
+                  <if test="barracks_status_radiant !=null">
+			           and barracks_status_radiant=#{barracks_status_radiant}
 			      </if>
-                  <if test="barracksStatusDire !=null">
-			           and barracks_status_dire=#{barracksStatusDire}
+                  <if test="barracks_status_dire !=null">
+			           and barracks_status_dire=#{barracks_status_dire}
 			      </if>
                   <if test="cluster !=null">
 			           and cluster=#{cluster}
 			      </if>
-                  <if test="firstBloodTime !=null">
-			           and first_blood_time=#{firstBloodTime}
+                  <if test="first_blood_time !=null">
+			           and first_blood_time=#{first_blood_time}
 			      </if>
-                  <if test="lobbyType !=null">
-			           and lobby_type=#{lobbyType}
+                  <if test="lobby_type !=null">
+			           and lobby_type=#{lobby_type}
 			      </if>
-                  <if test="humanPlayers !=null">
-			           and human_players=#{humanPlayers}
+                  <if test="human_players !=null">
+			           and human_players=#{human_players}
 			      </if>
                   <if test="leagueid !=null">
 			           and leagueid=#{leagueid}
 			      </if>
-                  <if test="positiveVotes !=null">
-			           and positive_votes=#{positiveVotes}
+                  <if test="positive_votes !=null">
+			           and positive_votes=#{positive_votes}
 			      </if>
-                  <if test="negativeVotes !=null">
-			           and negative_votes=#{negativeVotes}
+                  <if test="negative_votes !=null">
+			           and negative_votes=#{negative_votes}
 			      </if>
-                  <if test="gameMode !=null">
-			           and game_mode=#{gameMode}
+                  <if test="game_mode !=null">
+			           and game_mode=#{game_mode}
 			      </if>
                   <if test="flags !=null">
 			           and flags=#{flags}
@@ -113,47 +113,47 @@
                   <if test="engine !=null">
 			           and engine=#{engine}
 			      </if>
-                  <if test="radiantScore !=null">
-			           and radiant_score=#{radiantScore}
+                  <if test="radiant_score !=null">
+			           and radiant_score=#{radiant_score}
 			      </if>
-                  <if test="direScore !=null">
-			           and dire_score=#{direScore}
+                  <if test="dire_score !=null">
+			           and dire_score=#{dire_score}
 			      </if>
-                  <if test="radiantTeamId !=null">
-			           and radiant_team_id=#{radiantTeamId}
+                  <if test="radiant_team_id !=null">
+			           and radiant_team_id=#{radiant_team_id}
 			      </if>
-                  <if test="radiantName !=null and radiantName!=''">
-			           and radiant_name=#{radiantName}
+                  <if test="radiant_name !=null and radiant_name!=''">
+			           and radiant_name=#{radiant_name}
 			      </if>
-                  <if test="radiantLogo !=null">
-			           and radiant_logo=#{radiantLogo}
+                  <if test="radiant_logo !=null">
+			           and radiant_logo=#{radiant_logo}
 			      </if>
-                  <if test="radiantTeamComplete !=null">
-			           and radiant_team_complete=#{radiantTeamComplete}
+                  <if test="radiant_team_complete !=null">
+			           and radiant_team_complete=#{radiant_team_complete}
 			      </if>
-                  <if test="direTeamId !=null">
-			           and dire_team_id=#{direTeamId}
+                  <if test="dire_team_id !=null">
+			           and dire_team_id=#{dire_team_id}
 			      </if>
-                  <if test="direName !=null and direName!=''">
-			           and dire_name=#{direName}
+                  <if test="dire_name !=null and dire_name!=''">
+			           and dire_name=#{dire_name}
 			      </if>
-                  <if test="direLogo !=null">
-			           and dire_logo=#{direLogo}
+                  <if test="dire_logo !=null">
+			           and dire_logo=#{dire_logo}
 			      </if>
-                  <if test="direTeamComplete !=null">
-			           and dire_team_complete=#{direTeamComplete}
+                  <if test="dire_team_complete !=null">
+			           and dire_team_complete=#{dire_team_complete}
 			      </if>
-                  <if test="radiantCaptain !=null">
-			           and radiant_captain=#{radiantCaptain}
+                  <if test="radiant_captain !=null">
+			           and radiant_captain=#{radiant_captain}
 			      </if>
-                  <if test="direCaptain !=null">
-			           and dire_captain=#{direCaptain}
+                  <if test="dire_captain !=null">
+			           and dire_captain=#{dire_captain}
 			      </if>
-                  <if test="players !=null and players!=''">
-			           and players=#{players}
+                  <if test="player !=null and player!=''">
+			           and player=#{player}
 			      </if>
-                  <if test="picksBans !=null and picksBans!=''">
-			           and picks_bans=#{picksBans}
+                  <if test="picks_ban !=null and picks_ban!=''">
+			           and picks_ban=#{picks_ban}
 			      </if>
 		</where>
 	</select>
@@ -168,19 +168,19 @@
 	<insert id="insert" parameterType="Dota2MatchDetails" 
 	  useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO dota2_match_details (
-			match_id, radiant_win, duration, season, start_time, match_seq_num, tower_status_radiant, tower_status_dire, barracks_status_radiant, barracks_status_dire, cluster, first_blood_time, lobby_type, human_players, leagueid, positive_votes, negative_votes, game_mode, flags, engine, radiant_score, dire_score, radiant_team_id, radiant_name, radiant_logo, radiant_team_complete, dire_team_id, dire_name, dire_logo, dire_team_complete, radiant_captain, dire_captain, players, picks_bans
+			match_id, radiant_win, duration, season, start_time, match_seq_num, tower_status_radiant, tower_status_dire, barracks_status_radiant, barracks_status_dire, cluster, first_blood_time, lobby_type, human_players, leagueid, positive_votes, negative_votes, game_mode, flags, engine, radiant_score, dire_score, radiant_team_id, radiant_name, radiant_logo, radiant_team_complete, dire_team_id, dire_name, dire_logo, dire_team_complete, radiant_captain, dire_captain, player, picks_ban
 		) VALUES (
-			#{matchId}, #{radiantWin}, #{duration}, #{season}, #{startTime}, #{matchSeqNum}, #{towerStatusRadiant}, #{towerStatusDire}, #{barracksStatusRadiant}, #{barracksStatusDire}, #{cluster}, #{firstBloodTime}, #{lobbyType}, #{humanPlayers}, #{leagueid}, #{positiveVotes}, #{negativeVotes}, #{gameMode}, #{flags}, #{engine}, #{radiantScore}, #{direScore}, #{radiantTeamId}, #{radiantName}, #{radiantLogo}, #{radiantTeamComplete}, #{direTeamId}, #{direName}, #{direLogo}, #{direTeamComplete}, #{radiantCaptain}, #{direCaptain}, #{players}, #{picksBans}
+			#{match_id}, #{radiant_win}, #{duration}, #{season}, #{start_time}, #{match_seq_num}, #{tower_status_radiant}, #{tower_status_dire}, #{barracks_status_radiant}, #{barracks_status_dire}, #{cluster}, #{first_blood_time}, #{lobby_type}, #{human_players}, #{leagueid}, #{positive_votes}, #{negative_votes}, #{game_mode}, #{flags}, #{engine}, #{radiant_score}, #{dire_score}, #{radiant_team_id}, #{radiant_name}, #{radiant_logo}, #{radiant_team_complete}, #{dire_team_id}, #{dire_name}, #{dire_logo}, #{dire_team_complete}, #{radiant_captain}, #{dire_captain}, #{player}, #{picks_ban}
 		)
 	</insert>
 	<!-- 有条件的插入 -->
-	<insert id="insertSelective" parameterType="com.cc.dota2.entity.Dota2MatchDetails" useGeneratedKeys="true" keyProperty="matchId">
+	<insert id="insertSelective" parameterType="com.cc.entity.Dota2MatchDetails" useGeneratedKeys="true" keyProperty="matchId">
 		insert into dota2_match_details
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-                  <if test="matchId !=null">
+                  <if test="match_id !=null">
 		      match_id,
 		    </if>
-                  <if test="radiantWin !=null and radiantWin!=''">
+                  <if test="radiant_win !=null and radiant_win!=''">
 		      radiant_win,
 		    </if>
                   <if test="duration !=null">
@@ -189,46 +189,46 @@
                   <if test="season !=null and season!=''">
 		      season,
 		    </if>
-                  <if test="startTime !=null">
+                  <if test="start_time !=null">
 		      start_time,
 		    </if>
-                  <if test="matchSeqNum !=null">
+                  <if test="match_seq_num !=null">
 		      match_seq_num,
 		    </if>
-                  <if test="towerStatusRadiant !=null">
+                  <if test="tower_status_radiant !=null">
 		      tower_status_radiant,
 		    </if>
-                  <if test="towerStatusDire !=null">
+                  <if test="tower_status_dire !=null">
 		      tower_status_dire,
 		    </if>
-                  <if test="barracksStatusRadiant !=null">
+                  <if test="barracks_status_radiant !=null">
 		      barracks_status_radiant,
 		    </if>
-                  <if test="barracksStatusDire !=null">
+                  <if test="barracks_status_dire !=null">
 		      barracks_status_dire,
 		    </if>
                   <if test="cluster !=null">
 		      cluster,
 		    </if>
-                  <if test="firstBloodTime !=null">
+                  <if test="first_blood_time !=null">
 		      first_blood_time,
 		    </if>
-                  <if test="lobbyType !=null">
+                  <if test="lobby_type !=null">
 		      lobby_type,
 		    </if>
-                  <if test="humanPlayers !=null">
+                  <if test="human_players !=null">
 		      human_players,
 		    </if>
                   <if test="leagueid !=null">
 		      leagueid,
 		    </if>
-                  <if test="positiveVotes !=null">
+                  <if test="positive_votes !=null">
 		      positive_votes,
 		    </if>
-                  <if test="negativeVotes !=null">
+                  <if test="negative_votes !=null">
 		      negative_votes,
 		    </if>
-                  <if test="gameMode !=null">
+                  <if test="game_mode !=null">
 		      game_mode,
 		    </if>
                   <if test="flags !=null">
@@ -237,55 +237,55 @@
                   <if test="engine !=null">
 		      engine,
 		    </if>
-                  <if test="radiantScore !=null">
+                  <if test="radiant_score !=null">
 		      radiant_score,
 		    </if>
-                  <if test="direScore !=null">
+                  <if test="dire_score !=null">
 		      dire_score,
 		    </if>
-                  <if test="radiantTeamId !=null">
+                  <if test="radiant_team_id !=null">
 		      radiant_team_id,
 		    </if>
-                  <if test="radiantName !=null and radiantName!=''">
+                  <if test="radiant_name !=null and radiant_name!=''">
 		      radiant_name,
 		    </if>
-                  <if test="radiantLogo !=null">
+                  <if test="radiant_logo !=null">
 		      radiant_logo,
 		    </if>
-                  <if test="radiantTeamComplete !=null">
+                  <if test="radiant_team_complete !=null">
 		      radiant_team_complete,
 		    </if>
-                  <if test="direTeamId !=null">
+                  <if test="dire_team_id !=null">
 		      dire_team_id,
 		    </if>
-                  <if test="direName !=null and direName!=''">
+                  <if test="dire_name !=null and dire_name!=''">
 		      dire_name,
 		    </if>
-                  <if test="direLogo !=null">
+                  <if test="dire_logo !=null">
 		      dire_logo,
 		    </if>
-                  <if test="direTeamComplete !=null">
+                  <if test="dire_team_complete !=null">
 		      dire_team_complete,
 		    </if>
-                  <if test="radiantCaptain !=null">
+                  <if test="radiant_captain !=null">
 		      radiant_captain,
 		    </if>
-                  <if test="direCaptain !=null">
+                  <if test="dire_captain !=null">
 		      dire_captain,
 		    </if>
-                  <if test="players !=null and players!=''">
-		      players,
+                  <if test="player !=null and player!=''">
+		      player,
 		    </if>
-                  <if test="picksBans !=null and picksBans!=''">
-		      picks_bans,
+                  <if test="picks_ban !=null and picks_ban!=''">
+		      picks_ban,
 		    </if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-		     <if test="matchId !=null">
-		     #{matchId},
+		     <if test="match_id !=null">
+		     #{match_id},
 		    </if>
-		    <if test="radiantWin !=null and radiantWin!=''">
-		     #{radiantWin},
+		    <if test="radiant_win !=null and radiant_win!=''">
+		     #{radiant_win},
 		    </if>
 		     <if test="duration !=null">
 		     #{duration},
@@ -293,47 +293,47 @@
 		    <if test="season !=null and season!=''">
 		     #{season},
 		    </if>
-		     <if test="startTime !=null">
-		     #{startTime},
+		     <if test="start_time !=null">
+		     #{start_time},
 		    </if>
-		     <if test="matchSeqNum !=null">
-		     #{matchSeqNum},
+		     <if test="match_seq_num !=null">
+		     #{match_seq_num},
 		    </if>
-		     <if test="towerStatusRadiant !=null">
-		     #{towerStatusRadiant},
+		     <if test="tower_status_radiant !=null">
+		     #{tower_status_radiant},
 		    </if>
-		     <if test="towerStatusDire !=null">
-		     #{towerStatusDire},
+		     <if test="tower_status_dire !=null">
+		     #{tower_status_dire},
 		    </if>
-		     <if test="barracksStatusRadiant !=null">
-		     #{barracksStatusRadiant},
+		     <if test="barracks_status_radiant !=null">
+		     #{barracks_status_radiant},
 		    </if>
-		     <if test="barracksStatusDire !=null">
-		     #{barracksStatusDire},
+		     <if test="barracks_status_dire !=null">
+		     #{barracks_status_dire},
 		    </if>
 		     <if test="cluster !=null">
 		     #{cluster},
 		    </if>
-		     <if test="firstBloodTime !=null">
-		     #{firstBloodTime},
+		     <if test="first_blood_time !=null">
+		     #{first_blood_time},
 		    </if>
-		     <if test="lobbyType !=null">
-		     #{lobbyType},
+		     <if test="lobby_type !=null">
+		     #{lobby_type},
 		    </if>
-		     <if test="humanPlayers !=null">
-		     #{humanPlayers},
+		     <if test="human_players !=null">
+		     #{human_players},
 		    </if>
 		     <if test="leagueid !=null">
 		     #{leagueid},
 		    </if>
-		     <if test="positiveVotes !=null">
-		     #{positiveVotes},
+		     <if test="positive_votes !=null">
+		     #{positive_votes},
 		    </if>
-		     <if test="negativeVotes !=null">
-		     #{negativeVotes},
+		     <if test="negative_votes !=null">
+		     #{negative_votes},
 		    </if>
-		     <if test="gameMode !=null">
-		     #{gameMode},
+		     <if test="game_mode !=null">
+		     #{game_mode},
 		    </if>
 		     <if test="flags !=null">
 		     #{flags},
@@ -341,47 +341,47 @@
 		     <if test="engine !=null">
 		     #{engine},
 		    </if>
-		     <if test="radiantScore !=null">
-		     #{radiantScore},
+		     <if test="radiant_score !=null">
+		     #{radiant_score},
 		    </if>
-		     <if test="direScore !=null">
-		     #{direScore},
+		     <if test="dire_score !=null">
+		     #{dire_score},
 		    </if>
-		     <if test="radiantTeamId !=null">
-		     #{radiantTeamId},
+		     <if test="radiant_team_id !=null">
+		     #{radiant_team_id},
 		    </if>
-		    <if test="radiantName !=null and radiantName!=''">
-		     #{radiantName},
+		    <if test="radiant_name !=null and radiant_name!=''">
+		     #{radiant_name},
 		    </if>
-		     <if test="radiantLogo !=null">
-		     #{radiantLogo},
+		     <if test="radiant_logo !=null">
+		     #{radiant_logo},
 		    </if>
-		     <if test="radiantTeamComplete !=null">
-		     #{radiantTeamComplete},
+		     <if test="radiant_team_complete !=null">
+		     #{radiant_team_complete},
 		    </if>
-		     <if test="direTeamId !=null">
-		     #{direTeamId},
+		     <if test="dire_team_id !=null">
+		     #{dire_team_id},
 		    </if>
-		    <if test="direName !=null and direName!=''">
-		     #{direName},
+		    <if test="dire_name !=null and dire_name!=''">
+		     #{dire_name},
 		    </if>
-		     <if test="direLogo !=null">
-		     #{direLogo},
+		     <if test="dire_logo !=null">
+		     #{dire_logo},
 		    </if>
-		     <if test="direTeamComplete !=null">
-		     #{direTeamComplete},
+		     <if test="dire_team_complete !=null">
+		     #{dire_team_complete},
 		    </if>
-		     <if test="radiantCaptain !=null">
-		     #{radiantCaptain},
+		     <if test="radiant_captain !=null">
+		     #{radiant_captain},
 		    </if>
-		     <if test="direCaptain !=null">
-		     #{direCaptain},
+		     <if test="dire_captain !=null">
+		     #{dire_captain},
 		    </if>
-		    <if test="players !=null and players!=''">
-		     #{players},
+		    <if test="player !=null and player!=''">
+		     #{player},
 		    </if>
-		    <if test="picksBans !=null and picksBans!=''">
-		     #{picksBans},
+		    <if test="picks_ban !=null and picks_ban!=''">
+		     #{picks_ban},
 		    </if>
 		</trim>
 	</insert>	
@@ -395,16 +395,16 @@
 	</select>
 	
 	<!-- 根据条件查询 dota2_match_details  -->
-	<select id="listDota2MatchDetails" resultMap="Dota2MatchDetailsMap" parameterType="com.cc.dota2.entity.Dota2MatchDetails">
+	<select id="listDota2MatchDetails" resultMap="Dota2MatchDetailsMap" parameterType="com.cc.entity.Dota2MatchDetails">
 		select
 		<include refid="Dota2MatchDetailsColumns" />
 		from dota2_match_details 
 		<where>
-                  <if test="matchId !=null">
-				and match_id=#{matchId}
+                  <if test="match_id !=null">
+				and match_id=#{match_id}
 			</if>
-                  <if test="radiantWin !=null and radiantWin!=''">
-				and radiant_win=#{radiantWin}
+                  <if test="radiant_win !=null and radiant_win!=''">
+				and radiant_win=#{radiant_win}
 			</if>
                   <if test="duration !=null">
 				and duration=#{duration}
@@ -412,47 +412,47 @@
                   <if test="season !=null and season!=''">
 				and season=#{season}
 			</if>
-                  <if test="startTime !=null">
-				and start_time=#{startTime}
+                  <if test="start_time !=null">
+				and start_time=#{start_time}
 			</if>
-                  <if test="matchSeqNum !=null">
-				and match_seq_num=#{matchSeqNum}
+                  <if test="match_seq_num !=null">
+				and match_seq_num=#{match_seq_num}
 			</if>
-                  <if test="towerStatusRadiant !=null">
-				and tower_status_radiant=#{towerStatusRadiant}
+                  <if test="tower_status_radiant !=null">
+				and tower_status_radiant=#{tower_status_radiant}
 			</if>
-                  <if test="towerStatusDire !=null">
-				and tower_status_dire=#{towerStatusDire}
+                  <if test="tower_status_dire !=null">
+				and tower_status_dire=#{tower_status_dire}
 			</if>
-                  <if test="barracksStatusRadiant !=null">
-				and barracks_status_radiant=#{barracksStatusRadiant}
+                  <if test="barracks_status_radiant !=null">
+				and barracks_status_radiant=#{barracks_status_radiant}
 			</if>
-                  <if test="barracksStatusDire !=null">
-				and barracks_status_dire=#{barracksStatusDire}
+                  <if test="barracks_status_dire !=null">
+				and barracks_status_dire=#{barracks_status_dire}
 			</if>
                   <if test="cluster !=null">
 				and cluster=#{cluster}
 			</if>
-                  <if test="firstBloodTime !=null">
-				and first_blood_time=#{firstBloodTime}
+                  <if test="first_blood_time !=null">
+				and first_blood_time=#{first_blood_time}
 			</if>
-                  <if test="lobbyType !=null">
-				and lobby_type=#{lobbyType}
+                  <if test="lobby_type !=null">
+				and lobby_type=#{lobby_type}
 			</if>
-                  <if test="humanPlayers !=null">
-				and human_players=#{humanPlayers}
+                  <if test="human_players !=null">
+				and human_players=#{human_players}
 			</if>
                   <if test="leagueid !=null">
 				and leagueid=#{leagueid}
 			</if>
-                  <if test="positiveVotes !=null">
-				and positive_votes=#{positiveVotes}
+                  <if test="positive_votes !=null">
+				and positive_votes=#{positive_votes}
 			</if>
-                  <if test="negativeVotes !=null">
-				and negative_votes=#{negativeVotes}
+                  <if test="negative_votes !=null">
+				and negative_votes=#{negative_votes}
 			</if>
-                  <if test="gameMode !=null">
-				and game_mode=#{gameMode}
+                  <if test="game_mode !=null">
+				and game_mode=#{game_mode}
 			</if>
                   <if test="flags !=null">
 				and flags=#{flags}
@@ -460,68 +460,68 @@
                   <if test="engine !=null">
 				and engine=#{engine}
 			</if>
-                  <if test="radiantScore !=null">
-				and radiant_score=#{radiantScore}
+                  <if test="radiant_score !=null">
+				and radiant_score=#{radiant_score}
 			</if>
-                  <if test="direScore !=null">
-				and dire_score=#{direScore}
+                  <if test="dire_score !=null">
+				and dire_score=#{dire_score}
 			</if>
-                  <if test="radiantTeamId !=null">
-				and radiant_team_id=#{radiantTeamId}
+                  <if test="radiant_team_id !=null">
+				and radiant_team_id=#{radiant_team_id}
 			</if>
-                  <if test="radiantName !=null and radiantName!=''">
-				and radiant_name=#{radiantName}
+                  <if test="radiant_name !=null and radiant_name!=''">
+				and radiant_name=#{radiant_name}
 			</if>
-                  <if test="radiantLogo !=null">
-				and radiant_logo=#{radiantLogo}
+                  <if test="radiant_logo !=null">
+				and radiant_logo=#{radiant_logo}
 			</if>
-                  <if test="radiantTeamComplete !=null">
-				and radiant_team_complete=#{radiantTeamComplete}
+                  <if test="radiant_team_complete !=null">
+				and radiant_team_complete=#{radiant_team_complete}
 			</if>
-                  <if test="direTeamId !=null">
-				and dire_team_id=#{direTeamId}
+                  <if test="dire_team_id !=null">
+				and dire_team_id=#{dire_team_id}
 			</if>
-                  <if test="direName !=null and direName!=''">
-				and dire_name=#{direName}
+                  <if test="dire_name !=null and dire_name!=''">
+				and dire_name=#{dire_name}
 			</if>
-                  <if test="direLogo !=null">
-				and dire_logo=#{direLogo}
+                  <if test="dire_logo !=null">
+				and dire_logo=#{dire_logo}
 			</if>
-                  <if test="direTeamComplete !=null">
-				and dire_team_complete=#{direTeamComplete}
+                  <if test="dire_team_complete !=null">
+				and dire_team_complete=#{dire_team_complete}
 			</if>
-                  <if test="radiantCaptain !=null">
-				and radiant_captain=#{radiantCaptain}
+                  <if test="radiant_captain !=null">
+				and radiant_captain=#{radiant_captain}
 			</if>
-                  <if test="direCaptain !=null">
-				and dire_captain=#{direCaptain}
+                  <if test="dire_captain !=null">
+				and dire_captain=#{dire_captain}
 			</if>
-                  <if test="players !=null and players!=''">
-				and players=#{players}
+                  <if test="player !=null and player!=''">
+				and player=#{player}
 			</if>
-                  <if test="picksBans !=null and picksBans!=''">
-				and picks_bans=#{picksBans}
+                  <if test="picks_ban !=null and picks_ban!=''">
+				and picks_ban=#{picks_ban}
 			</if>
 		</where>
 	</select>
 	
 	<!--更新  -->
-	<update id="updateDota2MatchDetails" parameterType="com.cc.dota2.entity.Dota2MatchDetails">
+	<update id="updateDota2MatchDetails" parameterType="com.cc.entity.Dota2MatchDetails">
 		UPDATE dota2_match_details 
 		SET
-		match_id=#{matchId}, radiant_win=#{radiantWin}, duration=#{duration}, season=#{season}, start_time=#{startTime}, match_seq_num=#{matchSeqNum}, tower_status_radiant=#{towerStatusRadiant}, tower_status_dire=#{towerStatusDire}, barracks_status_radiant=#{barracksStatusRadiant}, barracks_status_dire=#{barracksStatusDire}, cluster=#{cluster}, first_blood_time=#{firstBloodTime}, lobby_type=#{lobbyType}, human_players=#{humanPlayers}, leagueid=#{leagueid}, positive_votes=#{positiveVotes}, negative_votes=#{negativeVotes}, game_mode=#{gameMode}, flags=#{flags}, engine=#{engine}, radiant_score=#{radiantScore}, dire_score=#{direScore}, radiant_team_id=#{radiantTeamId}, radiant_name=#{radiantName}, radiant_logo=#{radiantLogo}, radiant_team_complete=#{radiantTeamComplete}, dire_team_id=#{direTeamId}, dire_name=#{direName}, dire_logo=#{direLogo}, dire_team_complete=#{direTeamComplete}, radiant_captain=#{radiantCaptain}, dire_captain=#{direCaptain}, players=#{players}, picks_bans=#{picksBans}
+		match_id=#{match_id}, radiant_win=#{radiant_win}, duration=#{duration}, season=#{season}, start_time=#{start_time}, match_seq_num=#{match_seq_num}, tower_status_radiant=#{tower_status_radiant}, tower_status_dire=#{tower_status_dire}, barracks_status_radiant=#{barracks_status_radiant}, barracks_status_dire=#{barracks_status_dire}, cluster=#{cluster}, first_blood_time=#{first_blood_time}, lobby_type=#{lobby_type}, human_players=#{human_players}, leagueid=#{leagueid}, positive_votes=#{positive_votes}, negative_votes=#{negative_votes}, game_mode=#{game_mode}, flags=#{flags}, engine=#{engine}, radiant_score=#{radiant_score}, dire_score=#{dire_score}, radiant_team_id=#{radiant_team_id}, radiant_name=#{radiant_name}, radiant_logo=#{radiant_logo}, radiant_team_complete=#{radiant_team_complete}, dire_team_id=#{dire_team_id}, dire_name=#{dire_name}, dire_logo=#{dire_logo}, dire_team_complete=#{dire_team_complete}, radiant_captain=#{radiant_captain}, dire_captain=#{dire_captain}, player=#{player}, picks_ban=#{picks_ban}
 		WHERE
 		match_id=#{matchId}
 	</update>
 		<!--根据条件update  -->
-    <update id="updateByPrimaryKeySelective" parameterType="com.cc.dota2.entity.Dota2MatchDetails" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.Dota2MatchDetails" >
 	  UPDATE dota2_match_details 
 		<set>
-                  <if test="matchId !=null">
-			    match_id =  #{matchId},
+                  <if test="match_id !=null">
+			    match_id =  #{match_id},
 			</if>
-                  <if test="radiantWin !=null and radiantWin!=''">
-			    radiant_win =  #{radiantWin},
+                  <if test="radiant_win !=null and radiant_win!=''">
+			    radiant_win =  #{radiant_win},
 			</if>
                   <if test="duration !=null">
 			    duration =  #{duration},
@@ -529,47 +529,47 @@
                   <if test="season !=null and season!=''">
 			    season =  #{season},
 			</if>
-                  <if test="startTime !=null">
-			    start_time =  #{startTime},
+                  <if test="start_time !=null">
+			    start_time =  #{start_time},
 			</if>
-                  <if test="matchSeqNum !=null">
-			    match_seq_num =  #{matchSeqNum},
+                  <if test="match_seq_num !=null">
+			    match_seq_num =  #{match_seq_num},
 			</if>
-                  <if test="towerStatusRadiant !=null">
-			    tower_status_radiant =  #{towerStatusRadiant},
+                  <if test="tower_status_radiant !=null">
+			    tower_status_radiant =  #{tower_status_radiant},
 			</if>
-                  <if test="towerStatusDire !=null">
-			    tower_status_dire =  #{towerStatusDire},
+                  <if test="tower_status_dire !=null">
+			    tower_status_dire =  #{tower_status_dire},
 			</if>
-                  <if test="barracksStatusRadiant !=null">
-			    barracks_status_radiant =  #{barracksStatusRadiant},
+                  <if test="barracks_status_radiant !=null">
+			    barracks_status_radiant =  #{barracks_status_radiant},
 			</if>
-                  <if test="barracksStatusDire !=null">
-			    barracks_status_dire =  #{barracksStatusDire},
+                  <if test="barracks_status_dire !=null">
+			    barracks_status_dire =  #{barracks_status_dire},
 			</if>
                   <if test="cluster !=null">
 			    cluster =  #{cluster},
 			</if>
-                  <if test="firstBloodTime !=null">
-			    first_blood_time =  #{firstBloodTime},
+                  <if test="first_blood_time !=null">
+			    first_blood_time =  #{first_blood_time},
 			</if>
-                  <if test="lobbyType !=null">
-			    lobby_type =  #{lobbyType},
+                  <if test="lobby_type !=null">
+			    lobby_type =  #{lobby_type},
 			</if>
-                  <if test="humanPlayers !=null">
-			    human_players =  #{humanPlayers},
+                  <if test="human_players !=null">
+			    human_players =  #{human_players},
 			</if>
                   <if test="leagueid !=null">
 			    leagueid =  #{leagueid},
 			</if>
-                  <if test="positiveVotes !=null">
-			    positive_votes =  #{positiveVotes},
+                  <if test="positive_votes !=null">
+			    positive_votes =  #{positive_votes},
 			</if>
-                  <if test="negativeVotes !=null">
-			    negative_votes =  #{negativeVotes},
+                  <if test="negative_votes !=null">
+			    negative_votes =  #{negative_votes},
 			</if>
-                  <if test="gameMode !=null">
-			    game_mode =  #{gameMode},
+                  <if test="game_mode !=null">
+			    game_mode =  #{game_mode},
 			</if>
                   <if test="flags !=null">
 			    flags =  #{flags},
@@ -577,47 +577,47 @@
                   <if test="engine !=null">
 			    engine =  #{engine},
 			</if>
-                  <if test="radiantScore !=null">
-			    radiant_score =  #{radiantScore},
+                  <if test="radiant_score !=null">
+			    radiant_score =  #{radiant_score},
 			</if>
-                  <if test="direScore !=null">
-			    dire_score =  #{direScore},
+                  <if test="dire_score !=null">
+			    dire_score =  #{dire_score},
 			</if>
-                  <if test="radiantTeamId !=null">
-			    radiant_team_id =  #{radiantTeamId},
+                  <if test="radiant_team_id !=null">
+			    radiant_team_id =  #{radiant_team_id},
 			</if>
-                  <if test="radiantName !=null and radiantName!=''">
-			    radiant_name =  #{radiantName},
+                  <if test="radiant_name !=null and radiant_name!=''">
+			    radiant_name =  #{radiant_name},
 			</if>
-                  <if test="radiantLogo !=null">
-			    radiant_logo =  #{radiantLogo},
+                  <if test="radiant_logo !=null">
+			    radiant_logo =  #{radiant_logo},
 			</if>
-                  <if test="radiantTeamComplete !=null">
-			    radiant_team_complete =  #{radiantTeamComplete},
+                  <if test="radiant_team_complete !=null">
+			    radiant_team_complete =  #{radiant_team_complete},
 			</if>
-                  <if test="direTeamId !=null">
-			    dire_team_id =  #{direTeamId},
+                  <if test="dire_team_id !=null">
+			    dire_team_id =  #{dire_team_id},
 			</if>
-                  <if test="direName !=null and direName!=''">
-			    dire_name =  #{direName},
+                  <if test="dire_name !=null and dire_name!=''">
+			    dire_name =  #{dire_name},
 			</if>
-                  <if test="direLogo !=null">
-			    dire_logo =  #{direLogo},
+                  <if test="dire_logo !=null">
+			    dire_logo =  #{dire_logo},
 			</if>
-                  <if test="direTeamComplete !=null">
-			    dire_team_complete =  #{direTeamComplete},
+                  <if test="dire_team_complete !=null">
+			    dire_team_complete =  #{dire_team_complete},
 			</if>
-                  <if test="radiantCaptain !=null">
-			    radiant_captain =  #{radiantCaptain},
+                  <if test="radiant_captain !=null">
+			    radiant_captain =  #{radiant_captain},
 			</if>
-                  <if test="direCaptain !=null">
-			    dire_captain =  #{direCaptain},
+                  <if test="dire_captain !=null">
+			    dire_captain =  #{dire_captain},
 			</if>
-                  <if test="players !=null and players!=''">
-			    players =  #{players},
+                  <if test="player !=null and player!=''">
+			    player =  #{player},
 			</if>
-                  <if test="picksBans !=null and picksBans!=''">
-			    picks_bans =  #{picksBans},
+                  <if test="picks_ban !=null and picks_ban!=''">
+			    picks_ban =  #{picks_ban},
 			</if>
 	   </set>
 		WHERE
@@ -626,14 +626,14 @@
 	
 	
 	<!--根据条件删除  -->
-	<delete id="deleteDota2MatchDetails" parameterType="com.cc.dota2.entity.Dota2MatchDetails">
+	<delete id="deleteDota2MatchDetails" parameterType="com.cc.entity.Dota2MatchDetails">
 		delete from dota2_match_details 
 	<where>
-                  <if test="matchId !=null">
-				and match_id =  #{matchId}
+                  <if test="match_id !=null">
+				and match_id =  #{match_id}
 			</if>
-                  <if test="radiantWin !=null and radiantWin!=''">
-				and radiant_win =  #{radiantWin}
+                  <if test="radiant_win !=null and radiant_win!=''">
+				and radiant_win =  #{radiant_win}
 			</if>
                   <if test="duration !=null">
 				and duration =  #{duration}
@@ -641,47 +641,47 @@
                   <if test="season !=null and season!=''">
 				and season =  #{season}
 			</if>
-                  <if test="startTime !=null">
-				and start_time =  #{startTime}
+                  <if test="start_time !=null">
+				and start_time =  #{start_time}
 			</if>
-                  <if test="matchSeqNum !=null">
-				and match_seq_num =  #{matchSeqNum}
+                  <if test="match_seq_num !=null">
+				and match_seq_num =  #{match_seq_num}
 			</if>
-                  <if test="towerStatusRadiant !=null">
-				and tower_status_radiant =  #{towerStatusRadiant}
+                  <if test="tower_status_radiant !=null">
+				and tower_status_radiant =  #{tower_status_radiant}
 			</if>
-                  <if test="towerStatusDire !=null">
-				and tower_status_dire =  #{towerStatusDire}
+                  <if test="tower_status_dire !=null">
+				and tower_status_dire =  #{tower_status_dire}
 			</if>
-                  <if test="barracksStatusRadiant !=null">
-				and barracks_status_radiant =  #{barracksStatusRadiant}
+                  <if test="barracks_status_radiant !=null">
+				and barracks_status_radiant =  #{barracks_status_radiant}
 			</if>
-                  <if test="barracksStatusDire !=null">
-				and barracks_status_dire =  #{barracksStatusDire}
+                  <if test="barracks_status_dire !=null">
+				and barracks_status_dire =  #{barracks_status_dire}
 			</if>
                   <if test="cluster !=null">
 				and cluster =  #{cluster}
 			</if>
-                  <if test="firstBloodTime !=null">
-				and first_blood_time =  #{firstBloodTime}
+                  <if test="first_blood_time !=null">
+				and first_blood_time =  #{first_blood_time}
 			</if>
-                  <if test="lobbyType !=null">
-				and lobby_type =  #{lobbyType}
+                  <if test="lobby_type !=null">
+				and lobby_type =  #{lobby_type}
 			</if>
-                  <if test="humanPlayers !=null">
-				and human_players =  #{humanPlayers}
+                  <if test="human_players !=null">
+				and human_players =  #{human_players}
 			</if>
                   <if test="leagueid !=null">
 				and leagueid =  #{leagueid}
 			</if>
-                  <if test="positiveVotes !=null">
-				and positive_votes =  #{positiveVotes}
+                  <if test="positive_votes !=null">
+				and positive_votes =  #{positive_votes}
 			</if>
-                  <if test="negativeVotes !=null">
-				and negative_votes =  #{negativeVotes}
+                  <if test="negative_votes !=null">
+				and negative_votes =  #{negative_votes}
 			</if>
-                  <if test="gameMode !=null">
-				and game_mode =  #{gameMode}
+                  <if test="game_mode !=null">
+				and game_mode =  #{game_mode}
 			</if>
                   <if test="flags !=null">
 				and flags =  #{flags}
@@ -689,47 +689,47 @@
                   <if test="engine !=null">
 				and engine =  #{engine}
 			</if>
-                  <if test="radiantScore !=null">
-				and radiant_score =  #{radiantScore}
+                  <if test="radiant_score !=null">
+				and radiant_score =  #{radiant_score}
 			</if>
-                  <if test="direScore !=null">
-				and dire_score =  #{direScore}
+                  <if test="dire_score !=null">
+				and dire_score =  #{dire_score}
 			</if>
-                  <if test="radiantTeamId !=null">
-				and radiant_team_id =  #{radiantTeamId}
+                  <if test="radiant_team_id !=null">
+				and radiant_team_id =  #{radiant_team_id}
 			</if>
-                  <if test="radiantName !=null and radiantName!=''">
-				and radiant_name =  #{radiantName}
+                  <if test="radiant_name !=null and radiant_name!=''">
+				and radiant_name =  #{radiant_name}
 			</if>
-                  <if test="radiantLogo !=null">
-				and radiant_logo =  #{radiantLogo}
+                  <if test="radiant_logo !=null">
+				and radiant_logo =  #{radiant_logo}
 			</if>
-                  <if test="radiantTeamComplete !=null">
-				and radiant_team_complete =  #{radiantTeamComplete}
+                  <if test="radiant_team_complete !=null">
+				and radiant_team_complete =  #{radiant_team_complete}
 			</if>
-                  <if test="direTeamId !=null">
-				and dire_team_id =  #{direTeamId}
+                  <if test="dire_team_id !=null">
+				and dire_team_id =  #{dire_team_id}
 			</if>
-                  <if test="direName !=null and direName!=''">
-				and dire_name =  #{direName}
+                  <if test="dire_name !=null and dire_name!=''">
+				and dire_name =  #{dire_name}
 			</if>
-                  <if test="direLogo !=null">
-				and dire_logo =  #{direLogo}
+                  <if test="dire_logo !=null">
+				and dire_logo =  #{dire_logo}
 			</if>
-                  <if test="direTeamComplete !=null">
-				and dire_team_complete =  #{direTeamComplete}
+                  <if test="dire_team_complete !=null">
+				and dire_team_complete =  #{dire_team_complete}
 			</if>
-                  <if test="radiantCaptain !=null">
-				and radiant_captain =  #{radiantCaptain}
+                  <if test="radiant_captain !=null">
+				and radiant_captain =  #{radiant_captain}
 			</if>
-                  <if test="direCaptain !=null">
-				and dire_captain =  #{direCaptain}
+                  <if test="dire_captain !=null">
+				and dire_captain =  #{dire_captain}
 			</if>
-                  <if test="players !=null and players!=''">
-				and players =  #{players}
+                  <if test="player !=null and player!=''">
+				and player =  #{player}
 			</if>
-                  <if test="picksBans !=null and picksBans!=''">
-				and picks_bans =  #{picksBans}
+                  <if test="picks_ban !=null and picks_ban!=''">
+				and picks_ban =  #{picks_ban}
 			</if>
 		</where> 
 		 

@@ -1,9 +1,8 @@
-package com.cc.dota2.util
+package com.cc.util
 
-
-import org.springframework.beans.factory.annotation.{Autowired, Value}
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import org.springframework.web.client.{RestOperations, RestTemplate}
+import org.springframework.web.client.RestTemplate
 
 
 /**
@@ -15,9 +14,6 @@ class Dota2Util {
   @Value("${steam.key}")
   val steamKey: String = "";
 
-  @Autowired
-  private val restTemplate: RestTemplate = null
-
 
   def get(u: String, map: Map[String, String]) = {
 
@@ -25,10 +21,14 @@ class Dota2Util {
     val str = new StringBuilder;
     str.append(url)
     map.map(t => str.append("&" + t._1 + "=" + t._2))
+    val restTemplate = new RestTemplate();
+
     restTemplate.getForObject(str.toString(), classOf[String])
 
 
   }
+
+
 
 
 }
