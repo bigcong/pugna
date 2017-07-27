@@ -28,7 +28,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.annotation.PreDestroy;
 
 
-@MapperScan("com.cc.mapper")
+@MapperScan("com.cc.*")
 @SpringBootApplication
 @EnableCaching
 @EnableScheduling
