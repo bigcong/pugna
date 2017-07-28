@@ -17,7 +17,7 @@ public class Task {
     Dota2MatchDetailsService dota2MatchDetailsService;
 
 
-    @Scheduled(cron = "0/60 * * * * ?") // 每2分钟执行一次
+    @Scheduled(cron = "0/600 * * * * ?") // 每2分钟执行一次
     public void scanMessage() {
         System.out.println("开始时间为:" + new Date());
         dota2MatchDetailsService.matchHistory();
