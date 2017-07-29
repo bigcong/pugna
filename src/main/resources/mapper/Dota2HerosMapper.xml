@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.Dota2HerosMapper">
+	     <!-- 结果对应-->
+	<resultMap id="Dota2HerosMap" type="com.cc.entity.Dota2Heros">
+		   <result property="id" column="id" /> <!-- -->
+		   <result property="name" column="name" /> <!-- -->
+		   <result property="localized_name" column="localized_name" /> <!-- -->
+		   <result property="sb_png" column="sb_png" /> <!-- -->
+		   <result property="lg_png" column="lg_png" /> <!-- -->
+		   <result property="full_png" column="full_png" /> <!-- -->
+		   <result property="vert_jpg" column="vert_jpg" /> <!-- -->
+	</resultMap>
+	
+	
+	<sql id="Dota2HerosColumns">
+		  id, name, localized_name, sb_png, lg_png, full_png, vert_jpg
+    </sql>
+	
+    <!-- 分页条件查询-->
+	<select id="listPageDota2Heros" resultMap="Dota2HerosMap" 
+	parameterType="com.cc.entity.Dota2Heros">
+		select
+		<include refid="Dota2HerosColumns" />
+		from dota2_heros 
+		 <where>
+                  <if test="id !=null">
+			           and id=#{id}
+			      </if>
+                  <if test="name !=null and name!=''">
+			           and name=#{name}
+			      </if>
+                  <if test="localized_name !=null and localized_name!=''">
+			           and localized_name=#{localized_name}
+			      </if>
+                  <if test="sb_png !=null and sb_png!=''">
+			           and sb_png=#{sb_png}
+			      </if>
+                  <if test="lg_png !=null and lg_png!=''">
+			           and lg_png=#{lg_png}
+			      </if>
+                  <if test="full_png !=null and full_png!=''">
+			           and full_png=#{full_png}
+			      </if>
+                  <if test="vert_jpg !=null and vert_jpg!=''">
+			           and vert_jpg=#{vert_jpg}
+			      </if>
+		</where>
+	</select>
+	
+	<!-- 查询dota2_heros的数量-->
+	<select id="getDota2HerosCount" resultType="Integer">
+		select count(*)
+		from dota2_heros
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="Dota2Heros" 
+	  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO dota2_heros (
+			name, localized_name, sb_png, lg_png, full_png, vert_jpg
+		) VALUES (
+			#{name}, #{localized_name}, #{sb_png}, #{lg_png}, #{full_png}, #{vert_jpg}
+		)
+	</insert>
+	<!-- 有条件的插入 -->
+	<insert id="insertSelective" parameterType="com.cc.entity.Dota2Heros" useGeneratedKeys="true" keyProperty="id">
+		insert into dota2_heros
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+                  <if test="id !=null">
+		      id,
+		    </if>
+                  <if test="name !=null and name!=''">
+		      name,
+		    </if>
+                  <if test="localized_name !=null and localized_name!=''">
+		      localized_name,
+		    </if>
+                  <if test="sb_png !=null and sb_png!=''">
+		      sb_png,
+		    </if>
+                  <if test="lg_png !=null and lg_png!=''">
+		      lg_png,
+		    </if>
+                  <if test="full_png !=null and full_png!=''">
+		      full_png,
+		    </if>
+                  <if test="vert_jpg !=null and vert_jpg!=''">
+		      vert_jpg,
+		    </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		     <if test="id !=null">
+		     #{id},
+		    </if>
+		    <if test="name !=null and name!=''">
+		     #{name},
+		    </if>
+		    <if test="localized_name !=null and localized_name!=''">
+		     #{localized_name},
+		    </if>
+		    <if test="sb_png !=null and sb_png!=''">
+		     #{sb_png},
+		    </if>
+		    <if test="lg_png !=null and lg_png!=''">
+		     #{lg_png},
+		    </if>
+		    <if test="full_png !=null and full_png!=''">
+		     #{full_png},
+		    </if>
+		    <if test="vert_jpg !=null and vert_jpg!=''">
+		     #{vert_jpg},
+		    </if>
+		</trim>
+	</insert>	
+	
+	<!-- 根据主键查询(唯一)-->
+	<select id="getDota2HerosById" parameterType="Integer" resultMap="Dota2HerosMap">
+		select 
+		<include refid="Dota2HerosColumns" /> 
+		from dota2_heros where 
+		  	id=#{id}
+	</select>
+	
+	<!-- 根据条件查询 dota2_heros  -->
+	<select id="listDota2Heros" resultMap="Dota2HerosMap" parameterType="com.cc.entity.Dota2Heros">
+		select
+		<include refid="Dota2HerosColumns" />
+		from dota2_heros 
+		<where>
+                  <if test="id !=null">
+				and id=#{id}
+			</if>
+                  <if test="name !=null and name!=''">
+				and name=#{name}
+			</if>
+                  <if test="localized_name !=null and localized_name!=''">
+				and localized_name=#{localized_name}
+			</if>
+                  <if test="sb_png !=null and sb_png!=''">
+				and sb_png=#{sb_png}
+			</if>
+                  <if test="lg_png !=null and lg_png!=''">
+				and lg_png=#{lg_png}
+			</if>
+                  <if test="full_png !=null and full_png!=''">
+				and full_png=#{full_png}
+			</if>
+                  <if test="vert_jpg !=null and vert_jpg!=''">
+				and vert_jpg=#{vert_jpg}
+			</if>
+		</where>
+	</select>
+	
+	<!--更新  -->
+	<update id="updateDota2Heros" parameterType="com.cc.entity.Dota2Heros">
+		UPDATE dota2_heros 
+		SET
+		id=#{id}, name=#{name}, localized_name=#{localized_name}, sb_png=#{sb_png}, lg_png=#{lg_png}, full_png=#{full_png}, vert_jpg=#{vert_jpg}
+		WHERE
+		id=#{id}
+	</update>
+		<!--根据条件update  -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.Dota2Heros" >
+	  UPDATE dota2_heros 
+		<set>
+                  <if test="id !=null">
+			    id =  #{id},
+			</if>
+                  <if test="name !=null and name!=''">
+			    name =  #{name},
+			</if>
+                  <if test="localized_name !=null and localized_name!=''">
+			    localized_name =  #{localized_name},
+			</if>
+                  <if test="sb_png !=null and sb_png!=''">
+			    sb_png =  #{sb_png},
+			</if>
+                  <if test="lg_png !=null and lg_png!=''">
+			    lg_png =  #{lg_png},
+			</if>
+                  <if test="full_png !=null and full_png!=''">
+			    full_png =  #{full_png},
+			</if>
+                  <if test="vert_jpg !=null and vert_jpg!=''">
+			    vert_jpg =  #{vert_jpg},
+			</if>
+	   </set>
+		WHERE
+	id=#{id}
+	</update>
+	
+	
+	<!--根据条件删除  -->
+	<delete id="deleteDota2Heros" parameterType="com.cc.entity.Dota2Heros">
+		delete from dota2_heros 
+	<where>
+                  <if test="id !=null">
+				and id =  #{id}
+			</if>
+                  <if test="name !=null and name!=''">
+				and name =  #{name}
+			</if>
+                  <if test="localized_name !=null and localized_name!=''">
+				and localized_name =  #{localized_name}
+			</if>
+                  <if test="sb_png !=null and sb_png!=''">
+				and sb_png =  #{sb_png}
+			</if>
+                  <if test="lg_png !=null and lg_png!=''">
+				and lg_png =  #{lg_png}
+			</if>
+                  <if test="full_png !=null and full_png!=''">
+				and full_png =  #{full_png}
+			</if>
+                  <if test="vert_jpg !=null and vert_jpg!=''">
+				and vert_jpg =  #{vert_jpg}
+			</if>
+		</where> 
+		 
+	</delete>
+</mapper>

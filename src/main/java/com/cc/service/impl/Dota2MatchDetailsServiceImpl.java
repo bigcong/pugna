@@ -1,14 +1,19 @@
 package com.cc.service.impl;
 
+import com.cc.entity.Dota2Heros;
 import com.cc.entity.Dota2MatchDetails;
 import com.cc.mapper.Dota2MatchDetailsMapper;
+import com.cc.service.Dota2HerosService;
 import com.cc.service.Dota2MatchDetailsService;
 import com.cc.util.Dota2Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -25,6 +30,11 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
     @Autowired
     private Dota2Utils dota2Utils;
+    @Autowired
+    private Dota2HerosService dota2HerosService;
+
+    @Value("${dota2.heros.image_url}")
+    private String imageUrl;
 
     @Override
     public List<Dota2MatchDetails> listPageDota2MatchDetails(Dota2MatchDetails dota2MatchDetails) {
@@ -76,11 +86,11 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
         dota2MatchDetailsMapper.updateByPrimaryKeySelective(dota2MatchDetails);
     }
 
-
+    @Async
     public void matchDetails(Long match_id) {
         Map<String, Object> map = new HashMap<>();
         map.put("match_id", match_id);
-        String g = dota2Utils.get("GetMatchDetails", map);
+        String g = dota2Utils.get("IDOTA2Match_570/GetMatchDetails", map);
         Gson gg = new Gson();
         JsonObject s = gg.fromJson(g, JsonObject.class);
         JsonObject result = s.get("result").getAsJsonObject();
@@ -112,7 +122,7 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
         //map.put("start_at_match_id", avg.longValue());
 
 
-        String g = dota2Utils.get("GetMatchHistory", map);
+        String g = dota2Utils.get("IDOTA2Match_570/GetMatchHistory", map);
 
 
         Gson gg = new Gson();
@@ -130,6 +140,42 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
             matchDetails(match_id);
 
         }
+
+
+    }
+
+    public void heroes() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("language", "zh_cn");
+
+        String g = dota2Utils.get("IEconDOTA2_570/GetHeroes", map);
+
+
+        Gson gg = new Gson();
+
+        JsonObject s = gg.fromJson(g, JsonObject.class);
+
+        System.out.println(g);
+
+
+        JsonArray heroes = s.get("result").getAsJsonObject().get("heroes").getAsJsonArray();
+
+        List<Dota2Heros> list = gg.fromJson(heroes, new TypeToken<List<Dota2Heros>>() {
+        }.getType());
+
+        for (Dota2Heros h : list) {
+            String heroName = imageUrl + h.getName().replace("npc_dota_hero_", "");
+            h.setFullPng(heroName + "_full.png");
+            h.setLgPng(heroName + "_lg.png");
+            h.setSbPng(heroName + "_sb.png");
+            h.setVertJpg(heroName + "_vert.jpg");
+            dota2HerosService.insertSelective(h);
+
+        }
+
+
+
+        System.out.println(g);
 
 
     }

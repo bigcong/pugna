@@ -67,4 +67,7 @@ public interface Dota2MatchDetailsService {
     public void matchHistory();
 
 
+    public void heroes();
+
+
 }

@@ -102,7 +102,7 @@ public class Dota2Utils {
     public String get(String u, Map<String, Object> map) {
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "http://api.steampowered.com/IDOTA2Match_570/" + u + "/v1?key=" + steamKey;
+        String url = "http://api.steampowered.com/" + u + "/v1?key=" + steamKey;
         StringBuilder str = new StringBuilder();
         str.append(url);
 
