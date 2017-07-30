@@ -20,7 +20,7 @@ public class Task {
     @Scheduled(cron = "0/600 * * * * ?") // 每2分钟执行一次
     public void matchHistory() {
         System.out.println("开始时间为:" + new Date());
-        //dota2MatchDetailsService.matchHistory();
+        dota2MatchDetailsService.matchHistory();
 
 
         System.out.println("结束时间为:" + new Date());
