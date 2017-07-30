@@ -69,5 +69,6 @@ public interface Dota2MatchDetailsService {
 
     public void heroes();
 
+    public void gameItems();
 
 }

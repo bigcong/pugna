@@ -38,4 +38,17 @@ public class Task {
         System.out.println("结束时间为:" + new Date());
 
     }
+
+
+    @Scheduled(cron = "0 0 23 ? * WED") //
+    public void gameItems() {
+        System.out.println("开始时间为:" + new Date());
+        dota2MatchDetailsService.gameItems();
+
+
+        System.out.println("结束时间为:" + new Date());
+
+    }
+
+
 }

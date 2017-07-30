@@ -110,7 +110,18 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
         }
 
         if (j.getDuration() > 600) {
-            dota2MatchDetailsMapper.insertSelective(j);
+
+
+            try {
+                dota2MatchDetailsMapper.insertSelective(j);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+
+            }
+
+
         }
 
 
@@ -174,7 +185,17 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
             h.setLgPng(heroName + "_lg.png");
             h.setSbPng(heroName + "_sb.png");
             h.setVertJpg(heroName + "_vert.jpg");
-            dota2HerosService.insertSelective(h);
+
+
+            try {
+                dota2HerosService.insertSelective(h);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+
+            }
 
         }
 
@@ -194,13 +215,20 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
         Gson gg = new Gson();
 
         JsonObject s = gg.fromJson(g, JsonObject.class);
-        JsonArray heroes = s.get("result").getAsJsonObject().get("heroes").getAsJsonArray();
+        JsonArray heroes = s.get("result").getAsJsonObject().get("items").getAsJsonArray();
 
         List<Dota2GameItems> list = gg.fromJson(heroes, new TypeToken<List<Dota2GameItems>>() {
         }.getType());
 
         for (Dota2GameItems items : list) {
-            dota2GameItemsService.insertSelective(items);
+            try {
+                dota2GameItemsService.insertSelective(items);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+
+            }
         }
 
 
