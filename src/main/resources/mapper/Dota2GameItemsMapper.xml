@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.Dota2GameItemsMapper">
+	     <!-- 结果对应-->
+	<resultMap id="Dota2GameItemsMap" type="com.cc.entity.Dota2GameItems">
+		   <result property="id" column="id" /> <!-- -->
+		   <result property="name" column="name" /> <!-- -->
+		   <result property="cost" column="cost" /> <!-- -->
+		   <result property="secret_shop" column="secret_shop" /> <!-- -->
+		   <result property="side_shop" column="side_shop" /> <!-- -->
+		   <result property="recipe" column="recipe" /> <!-- -->
+		   <result property="localized_name" column="localized_name" /> <!-- -->
+	</resultMap>
+	
+	
+	<sql id="Dota2GameItemsColumns">
+		  id, name, cost, secret_shop, side_shop, recipe, localized_name
+    </sql>
+	
+    <!-- 分页条件查询-->
+	<select id="listPageDota2GameItems" resultMap="Dota2GameItemsMap" 
+	parameterType="com.cc.entity.Dota2GameItems">
+		select
+		<include refid="Dota2GameItemsColumns" />
+		from dota2_game_items 
+		 <where>
+                  <if test="id !=null">
+			           and id=#{id}
+			      </if>
+                  <if test="name !=null and name!=''">
+			           and name=#{name}
+			      </if>
+                  <if test="cost !=null">
+			           and cost=#{cost}
+			      </if>
+                  <if test="secret_shop !=null">
+			           and secret_shop=#{secret_shop}
+			      </if>
+                  <if test="side_shop !=null">
+			           and side_shop=#{side_shop}
+			      </if>
+                  <if test="recipe !=null">
+			           and recipe=#{recipe}
+			      </if>
+                  <if test="localized_name !=null and localized_name!=''">
+			           and localized_name=#{localized_name}
+			      </if>
+		</where>
+	</select>
+	
+	<!-- 查询dota2_game_items的数量-->
+	<select id="getDota2GameItemsCount" resultType="Integer">
+		select count(*)
+		from dota2_game_items
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="Dota2GameItems" 
+	  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO dota2_game_items (
+			name, cost, secret_shop, side_shop, recipe, localized_name
+		) VALUES (
+			#{name}, #{cost}, #{secret_shop}, #{side_shop}, #{recipe}, #{localized_name}
+		)
+	</insert>
+	<!-- 有条件的插入 -->
+	<insert id="insertSelective" parameterType="com.cc.entity.Dota2GameItems" useGeneratedKeys="true" keyProperty="id">
+		insert into dota2_game_items
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+                  <if test="id !=null">
+		      id,
+		    </if>
+                  <if test="name !=null and name!=''">
+		      name,
+		    </if>
+                  <if test="cost !=null">
+		      cost,
+		    </if>
+                  <if test="secret_shop !=null">
+		      secret_shop,
+		    </if>
+                  <if test="side_shop !=null">
+		      side_shop,
+		    </if>
+                  <if test="recipe !=null">
+		      recipe,
+		    </if>
+                  <if test="localized_name !=null and localized_name!=''">
+		      localized_name,
+		    </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		     <if test="id !=null">
+		     #{id},
+		    </if>
+		    <if test="name !=null and name!=''">
+		     #{name},
+		    </if>
+		     <if test="cost !=null">
+		     #{cost},
+		    </if>
+		     <if test="secret_shop !=null">
+		     #{secret_shop},
+		    </if>
+		     <if test="side_shop !=null">
+		     #{side_shop},
+		    </if>
+		     <if test="recipe !=null">
+		     #{recipe},
+		    </if>
+		    <if test="localized_name !=null and localized_name!=''">
+		     #{localized_name},
+		    </if>
+		</trim>
+	</insert>	
+	
+	<!-- 根据主键查询(唯一)-->
+	<select id="getDota2GameItemsById" parameterType="Integer" resultMap="Dota2GameItemsMap">
+		select 
+		<include refid="Dota2GameItemsColumns" /> 
+		from dota2_game_items where 
+		  	id=#{id}
+	</select>
+	
+	<!-- 根据条件查询 dota2_game_items  -->
+	<select id="listDota2GameItems" resultMap="Dota2GameItemsMap" parameterType="com.cc.entity.Dota2GameItems">
+		select
+		<include refid="Dota2GameItemsColumns" />
+		from dota2_game_items 
+		<where>
+                  <if test="id !=null">
+				and id=#{id}
+			</if>
+                  <if test="name !=null and name!=''">
+				and name=#{name}
+			</if>
+                  <if test="cost !=null">
+				and cost=#{cost}
+			</if>
+                  <if test="secret_shop !=null">
+				and secret_shop=#{secret_shop}
+			</if>
+                  <if test="side_shop !=null">
+				and side_shop=#{side_shop}
+			</if>
+                  <if test="recipe !=null">
+				and recipe=#{recipe}
+			</if>
+                  <if test="localized_name !=null and localized_name!=''">
+				and localized_name=#{localized_name}
+			</if>
+		</where>
+	</select>
+	
+	<!--更新  -->
+	<update id="updateDota2GameItems" parameterType="com.cc.entity.Dota2GameItems">
+		UPDATE dota2_game_items 
+		SET
+		id=#{id}, name=#{name}, cost=#{cost}, secret_shop=#{secret_shop}, side_shop=#{side_shop}, recipe=#{recipe}, localized_name=#{localized_name}
+		WHERE
+		id=#{id}
+	</update>
+		<!--根据条件update  -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.Dota2GameItems" >
+	  UPDATE dota2_game_items 
+		<set>
+                  <if test="id !=null">
+			    id =  #{id},
+			</if>
+                  <if test="name !=null and name!=''">
+			    name =  #{name},
+			</if>
+                  <if test="cost !=null">
+			    cost =  #{cost},
+			</if>
+                  <if test="secret_shop !=null">
+			    secret_shop =  #{secret_shop},
+			</if>
+                  <if test="side_shop !=null">
+			    side_shop =  #{side_shop},
+			</if>
+                  <if test="recipe !=null">
+			    recipe =  #{recipe},
+			</if>
+                  <if test="localized_name !=null and localized_name!=''">
+			    localized_name =  #{localized_name},
+			</if>
+	   </set>
+		WHERE
+	id=#{id}
+	</update>
+	
+	
+	<!--根据条件删除  -->
+	<delete id="deleteDota2GameItems" parameterType="com.cc.entity.Dota2GameItems">
+		delete from dota2_game_items 
+	<where>
+                  <if test="id !=null">
+				and id =  #{id}
+			</if>
+                  <if test="name !=null and name!=''">
+				and name =  #{name}
+			</if>
+                  <if test="cost !=null">
+				and cost =  #{cost}
+			</if>
+                  <if test="secret_shop !=null">
+				and secret_shop =  #{secret_shop}
+			</if>
+                  <if test="side_shop !=null">
+				and side_shop =  #{side_shop}
+			</if>
+                  <if test="recipe !=null">
+				and recipe =  #{recipe}
+			</if>
+                  <if test="localized_name !=null and localized_name!=''">
+				and localized_name =  #{localized_name}
+			</if>
+		</where> 
+		 
+	</delete>
+</mapper>

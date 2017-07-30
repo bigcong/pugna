@@ -1,8 +1,10 @@
 package com.cc.service.impl;
 
+import com.cc.entity.Dota2GameItems;
 import com.cc.entity.Dota2Heros;
 import com.cc.entity.Dota2MatchDetails;
 import com.cc.mapper.Dota2MatchDetailsMapper;
+import com.cc.service.Dota2GameItemsService;
 import com.cc.service.Dota2HerosService;
 import com.cc.service.Dota2MatchDetailsService;
 import com.cc.util.Dota2Utils;
@@ -32,6 +34,9 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
     private Dota2Utils dota2Utils;
     @Autowired
     private Dota2HerosService dota2HerosService;
+
+    @Autowired
+    private Dota2GameItemsService dota2GameItemsService;
 
     @Value("${dota2.heros.image_url}")
     private String imageUrl;
@@ -174,8 +179,29 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
         }
 
 
-
         System.out.println(g);
+
+
+    }
+
+
+    public void gameItems() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("language", "zh_cn");
+
+        String g = dota2Utils.get("IEconDOTA2_570/GetGameItems", map);
+        System.out.println(g);
+        Gson gg = new Gson();
+
+        JsonObject s = gg.fromJson(g, JsonObject.class);
+        JsonArray heroes = s.get("result").getAsJsonObject().get("heroes").getAsJsonArray();
+
+        List<Dota2GameItems> list = gg.fromJson(heroes, new TypeToken<List<Dota2GameItems>>() {
+        }.getType());
+
+        for (Dota2GameItems items : list) {
+            dota2GameItemsService.insertSelective(items);
+        }
 
 
     }
