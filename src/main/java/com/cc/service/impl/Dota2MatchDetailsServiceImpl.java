@@ -13,8 +13,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -116,8 +118,16 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
                 dota2MatchDetailsMapper.insertSelective(j);
 
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e.getClass().getSimpleName());
+                System.out.println(e instanceof MySQLIntegrityConstraintViolationException);
 
+
+                if (e instanceof DuplicateKeyException) {
+
+                } else {
+                    e.printStackTrace();
+
+                }
 
             }
 
@@ -192,8 +202,12 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
 
             } catch (Exception e) {
-                e.printStackTrace();
+                if (e instanceof DuplicateKeyException) {
 
+                } else {
+                    e.printStackTrace();
+
+                }
 
             }
 
@@ -225,8 +239,13 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
                 dota2GameItemsService.insertSelective(items);
 
             } catch (Exception e) {
-                e.printStackTrace();
 
+                if (e instanceof DuplicateKeyException) {
+
+                } else {
+                    e.printStackTrace();
+
+                }
 
             }
         }
