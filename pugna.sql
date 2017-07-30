@@ -9,7 +9,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 07/29/2017 12:07:16 PM
+ Date: 07/30/2017 18:20:34 PM
 */
 
 SET NAMES utf8;
@@ -118,6 +118,21 @@ CREATE TABLE `contact` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`contact_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+--  Table structure for `dota2_game_items`
+-- ----------------------------
+DROP TABLE IF EXISTS `dota2_game_items`;
+CREATE TABLE `dota2_game_items` (
+  `id` smallint(6) NOT NULL,
+  `name` char(20) DEFAULT NULL,
+  `cost` smallint(6) DEFAULT NULL,
+  `secret_shop` bit(1) DEFAULT NULL,
+  `side_shop` bit(1) DEFAULT NULL,
+  `recipe` bit(1) DEFAULT NULL,
+  `localized_name` char(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `dota2_heros`
