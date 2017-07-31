@@ -125,6 +125,7 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
                 if (e instanceof DuplicateKeyException) {
 
                 } else {
+                    System.out.println(g);
                     e.printStackTrace();
 
                 }
@@ -155,7 +156,6 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
         JsonObject s = gg.fromJson(g, JsonObject.class);
 
-        System.out.println(g);
 
 
         JsonArray matches = s.get("result").getAsJsonObject().get("matches").getAsJsonArray();
