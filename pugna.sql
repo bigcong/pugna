@@ -9,11 +9,36 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 07/30/2017 18:20:34 PM
+ Date: 08/01/2017 16:35:00 PM
 */
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+--  Table structure for `bills`
+-- ----------------------------
+DROP TABLE IF EXISTS `bills`;
+CREATE TABLE `bills` (
+  `交易号` char(50) NOT NULL,
+  `商户订单号` varchar(100) DEFAULT NULL,
+  `交易创建时间` datetime DEFAULT NULL,
+  `付款时间` datetime DEFAULT NULL,
+  `最近修改时间` datetime DEFAULT NULL,
+  `交易来源地` varchar(20) DEFAULT NULL,
+  `类型` varchar(10) DEFAULT NULL,
+  `交易对方` varchar(50) DEFAULT NULL,
+  `商品名称` varchar(200) DEFAULT NULL,
+  `金额` double DEFAULT NULL,
+  `收支` char(2) DEFAULT NULL,
+  `交易状态` varchar(20) DEFAULT NULL,
+  `服务费` double DEFAULT NULL,
+  `成功退款` double DEFAULT NULL,
+  `备注` varchar(200) DEFAULT NULL,
+  `资金状态` varchar(20) DEFAULT NULL,
+  `账户` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`交易号`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `blog`

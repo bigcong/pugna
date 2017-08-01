@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.BillsMapper">
+	     <!-- 结果对应-->
+	<resultMap id="BillsMap" type="com.cc.entity.Bills">
+		   <result property="交易号" column="交易号" /> <!-- -->
+		   <result property="商户订单号" column="商户订单号" /> <!-- -->
+		   <result property="交易创建时间" column="交易创建时间" /> <!-- -->
+		   <result property="付款时间" column="付款时间" /> <!-- -->
+		   <result property="最近修改时间" column="最近修改时间" /> <!-- -->
+		   <result property="交易来源地" column="交易来源地" /> <!-- -->
+		   <result property="类型" column="类型" /> <!-- -->
+		   <result property="交易对方" column="交易对方" /> <!-- -->
+		   <result property="商品名称" column="商品名称" /> <!-- -->
+		   <result property="金额" column="金额" /> <!-- -->
+		   <result property="收支" column="收支" /> <!-- -->
+		   <result property="交易状态" column="交易状态" /> <!-- -->
+		   <result property="服务费" column="服务费" /> <!-- -->
+		   <result property="成功退款" column="成功退款" /> <!-- -->
+		   <result property="备注" column="备注" /> <!-- -->
+		   <result property="资金状态" column="资金状态" /> <!-- -->
+		   <result property="账户" column="账户" /> <!-- -->
+	</resultMap>
+	
+	
+	<sql id="BillsColumns">
+		  交易号, 商户订单号, 交易创建时间, 付款时间, 最近修改时间, 交易来源地, 类型, 交易对方, 商品名称, 金额, 收支, 交易状态, 服务费, 成功退款, 备注, 资金状态, 账户
+    </sql>
+	
+    <!-- 分页条件查询-->
+	<select id="listPageBills" resultMap="BillsMap" 
+	parameterType="com.cc.entity.Bills">
+		select
+		<include refid="BillsColumns" />
+		from bills 
+		 <where>
+                  <if test="交易号 !=null and 交易号!=''">
+			           and 交易号=#{交易号}
+			      </if>
+                  <if test="商户订单号 !=null and 商户订单号!=''">
+			           and 商户订单号=#{商户订单号}
+			      </if>
+                  <if test="交易创建时间 !=null and 交易创建时间!=''">
+			           and 交易创建时间=#{交易创建时间}
+			      </if>
+                  <if test="付款时间 !=null and 付款时间!=''">
+			           and 付款时间=#{付款时间}
+			      </if>
+                  <if test="最近修改时间 !=null and 最近修改时间!=''">
+			           and 最近修改时间=#{最近修改时间}
+			      </if>
+                  <if test="交易来源地 !=null and 交易来源地!=''">
+			           and 交易来源地=#{交易来源地}
+			      </if>
+                  <if test="类型 !=null and 类型!=''">
+			           and 类型=#{类型}
+			      </if>
+                  <if test="交易对方 !=null and 交易对方!=''">
+			           and 交易对方=#{交易对方}
+			      </if>
+                  <if test="商品名称 !=null and 商品名称!=''">
+			           and 商品名称=#{商品名称}
+			      </if>
+                  <if test="金额 !=null">
+			           and 金额=#{金额}
+			      </if>
+                  <if test="收支 !=null and 收支!=''">
+			           and 收支=#{收支}
+			      </if>
+                  <if test="交易状态 !=null and 交易状态!=''">
+			           and 交易状态=#{交易状态}
+			      </if>
+                  <if test="服务费 !=null">
+			           and 服务费=#{服务费}
+			      </if>
+                  <if test="成功退款 !=null">
+			           and 成功退款=#{成功退款}
+			      </if>
+                  <if test="备注 !=null and 备注!=''">
+			           and 备注=#{备注}
+			      </if>
+                  <if test="资金状态 !=null and 资金状态!=''">
+			           and 资金状态=#{资金状态}
+			      </if>
+                  <if test="账户 !=null and 账户!=''">
+			           and 账户=#{账户}
+			      </if>
+		</where>
+	</select>
+	
+	<!-- 查询bills的数量-->
+	<select id="getBillsCount" resultType="Integer">
+		select count(*)
+		from bills
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="Bills" 
+	  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO bills (
+			交易号, 商户订单号, 交易创建时间, 付款时间, 最近修改时间, 交易来源地, 类型, 交易对方, 商品名称, 金额, 收支, 交易状态, 服务费, 成功退款, 备注, 资金状态, 账户
+		) VALUES (
+			#{交易号}, #{商户订单号}, #{交易创建时间}, #{付款时间}, #{最近修改时间}, #{交易来源地}, #{类型}, #{交易对方}, #{商品名称}, #{金额}, #{收支}, #{交易状态}, #{服务费}, #{成功退款}, #{备注}, #{资金状态}, #{账户}
+		)
+	</insert>
+	<!-- 有条件的插入 -->
+	<insert id="insertSelective" parameterType="com.cc.entity.Bills" useGeneratedKeys="true" keyProperty="交易号">
+		insert into bills
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+                  <if test="交易号 !=null and 交易号!=''">
+		      交易号,
+		    </if>
+                  <if test="商户订单号 !=null and 商户订单号!=''">
+		      商户订单号,
+		    </if>
+                  <if test="交易创建时间 !=null and 交易创建时间!=''">
+		      交易创建时间,
+		    </if>
+                  <if test="付款时间 !=null and 付款时间!=''">
+		      付款时间,
+		    </if>
+                  <if test="最近修改时间 !=null and 最近修改时间!=''">
+		      最近修改时间,
+		    </if>
+                  <if test="交易来源地 !=null and 交易来源地!=''">
+		      交易来源地,
+		    </if>
+                  <if test="类型 !=null and 类型!=''">
+		      类型,
+		    </if>
+                  <if test="交易对方 !=null and 交易对方!=''">
+		      交易对方,
+		    </if>
+                  <if test="商品名称 !=null and 商品名称!=''">
+		      商品名称,
+		    </if>
+                  <if test="金额 !=null">
+		      金额,
+		    </if>
+                  <if test="收支 !=null and 收支!=''">
+		      收支,
+		    </if>
+                  <if test="交易状态 !=null and 交易状态!=''">
+		      交易状态,
+		    </if>
+                  <if test="服务费 !=null">
+		      服务费,
+		    </if>
+                  <if test="成功退款 !=null">
+		      成功退款,
+		    </if>
+                  <if test="备注 !=null and 备注!=''">
+		      备注,
+		    </if>
+                  <if test="资金状态 !=null and 资金状态!=''">
+		      资金状态,
+		    </if>
+                  <if test="账户 !=null and 账户!=''">
+		      账户,
+		    </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		    <if test="交易号 !=null and 交易号!=''">
+		     #{交易号},
+		    </if>
+		    <if test="商户订单号 !=null and 商户订单号!=''">
+		     #{商户订单号},
+		    </if>
+		    <if test="交易创建时间 !=null and 交易创建时间!=''">
+		     #{交易创建时间},
+		    </if>
+		    <if test="付款时间 !=null and 付款时间!=''">
+		     #{付款时间},
+		    </if>
+		    <if test="最近修改时间 !=null and 最近修改时间!=''">
+		     #{最近修改时间},
+		    </if>
+		    <if test="交易来源地 !=null and 交易来源地!=''">
+		     #{交易来源地},
+		    </if>
+		    <if test="类型 !=null and 类型!=''">
+		     #{类型},
+		    </if>
+		    <if test="交易对方 !=null and 交易对方!=''">
+		     #{交易对方},
+		    </if>
+		    <if test="商品名称 !=null and 商品名称!=''">
+		     #{商品名称},
+		    </if>
+		     <if test="金额 !=null">
+		     #{金额},
+		    </if>
+		    <if test="收支 !=null and 收支!=''">
+		     #{收支},
+		    </if>
+		    <if test="交易状态 !=null and 交易状态!=''">
+		     #{交易状态},
+		    </if>
+		     <if test="服务费 !=null">
+		     #{服务费},
+		    </if>
+		     <if test="成功退款 !=null">
+		     #{成功退款},
+		    </if>
+		    <if test="备注 !=null and 备注!=''">
+		     #{备注},
+		    </if>
+		    <if test="资金状态 !=null and 资金状态!=''">
+		     #{资金状态},
+		    </if>
+		    <if test="账户 !=null and 账户!=''">
+		     #{账户},
+		    </if>
+		</trim>
+	</insert>	
+	
+	<!-- 根据主键查询(唯一)-->
+	<select id="getBillsById" parameterType="Integer" resultMap="BillsMap">
+		select 
+		<include refid="BillsColumns" /> 
+		from bills where 
+		  	交易号=#{交易号}
+	</select>
+	
+	<!-- 根据条件查询 bills  -->
+	<select id="listBills" resultMap="BillsMap" parameterType="com.cc.entity.Bills">
+		select
+		<include refid="BillsColumns" />
+		from bills 
+		<where>
+                  <if test="交易号 !=null and 交易号!=''">
+				and 交易号=#{交易号}
+			</if>
+                  <if test="商户订单号 !=null and 商户订单号!=''">
+				and 商户订单号=#{商户订单号}
+			</if>
+                  <if test="交易创建时间 !=null and 交易创建时间!=''">
+				and 交易创建时间=#{交易创建时间}
+			</if>
+                  <if test="付款时间 !=null and 付款时间!=''">
+				and 付款时间=#{付款时间}
+			</if>
+                  <if test="最近修改时间 !=null and 最近修改时间!=''">
+				and 最近修改时间=#{最近修改时间}
+			</if>
+                  <if test="交易来源地 !=null and 交易来源地!=''">
+				and 交易来源地=#{交易来源地}
+			</if>
+                  <if test="类型 !=null and 类型!=''">
+				and 类型=#{类型}
+			</if>
+                  <if test="交易对方 !=null and 交易对方!=''">
+				and 交易对方=#{交易对方}
+			</if>
+                  <if test="商品名称 !=null and 商品名称!=''">
+				and 商品名称=#{商品名称}
+			</if>
+                  <if test="金额 !=null">
+				and 金额=#{金额}
+			</if>
+                  <if test="收支 !=null and 收支!=''">
+				and 收支=#{收支}
+			</if>
+                  <if test="交易状态 !=null and 交易状态!=''">
+				and 交易状态=#{交易状态}
+			</if>
+                  <if test="服务费 !=null">
+				and 服务费=#{服务费}
+			</if>
+                  <if test="成功退款 !=null">
+				and 成功退款=#{成功退款}
+			</if>
+                  <if test="备注 !=null and 备注!=''">
+				and 备注=#{备注}
+			</if>
+                  <if test="资金状态 !=null and 资金状态!=''">
+				and 资金状态=#{资金状态}
+			</if>
+                  <if test="账户 !=null and 账户!=''">
+				and 账户=#{账户}
+			</if>
+		</where>
+	</select>
+	
+	<!--更新  -->
+	<update id="updateBills" parameterType="com.cc.entity.Bills">
+		UPDATE bills 
+		SET
+		交易号=#{交易号}, 商户订单号=#{商户订单号}, 交易创建时间=#{交易创建时间}, 付款时间=#{付款时间}, 最近修改时间=#{最近修改时间}, 交易来源地=#{交易来源地}, 类型=#{类型}, 交易对方=#{交易对方}, 商品名称=#{商品名称}, 金额=#{金额}, 收支=#{收支}, 交易状态=#{交易状态}, 服务费=#{服务费}, 成功退款=#{成功退款}, 备注=#{备注}, 资金状态=#{资金状态}, 账户=#{账户}
+		WHERE
+		交易号=#{交易号}
+	</update>
+		<!--根据条件update  -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.Bills" >
+	  UPDATE bills 
+		<set>
+                  <if test="交易号 !=null and 交易号!=''">
+			    交易号 =  #{交易号},
+			</if>
+                  <if test="商户订单号 !=null and 商户订单号!=''">
+			    商户订单号 =  #{商户订单号},
+			</if>
+                  <if test="交易创建时间 !=null and 交易创建时间!=''">
+			    交易创建时间 =  #{交易创建时间},
+			</if>
+                  <if test="付款时间 !=null and 付款时间!=''">
+			    付款时间 =  #{付款时间},
+			</if>
+                  <if test="最近修改时间 !=null and 最近修改时间!=''">
+			    最近修改时间 =  #{最近修改时间},
+			</if>
+                  <if test="交易来源地 !=null and 交易来源地!=''">
+			    交易来源地 =  #{交易来源地},
+			</if>
+                  <if test="类型 !=null and 类型!=''">
+			    类型 =  #{类型},
+			</if>
+                  <if test="交易对方 !=null and 交易对方!=''">
+			    交易对方 =  #{交易对方},
+			</if>
+                  <if test="商品名称 !=null and 商品名称!=''">
+			    商品名称 =  #{商品名称},
+			</if>
+                  <if test="金额 !=null">
+			    金额 =  #{金额},
+			</if>
+                  <if test="收支 !=null and 收支!=''">
+			    收支 =  #{收支},
+			</if>
+                  <if test="交易状态 !=null and 交易状态!=''">
+			    交易状态 =  #{交易状态},
+			</if>
+                  <if test="服务费 !=null">
+			    服务费 =  #{服务费},
+			</if>
+                  <if test="成功退款 !=null">
+			    成功退款 =  #{成功退款},
+			</if>
+                  <if test="备注 !=null and 备注!=''">
+			    备注 =  #{备注},
+			</if>
+                  <if test="资金状态 !=null and 资金状态!=''">
+			    资金状态 =  #{资金状态},
+			</if>
+                  <if test="账户 !=null and 账户!=''">
+			    账户 =  #{账户},
+			</if>
+	   </set>
+		WHERE
+	交易号=#{交易号}
+	</update>
+	
+	
+	<!--根据条件删除  -->
+	<delete id="deleteBills" parameterType="com.cc.entity.Bills">
+		delete from bills 
+	<where>
+                  <if test="交易号 !=null and 交易号!=''">
+				and 交易号 =  #{交易号}
+			</if>
+                  <if test="商户订单号 !=null and 商户订单号!=''">
+				and 商户订单号 =  #{商户订单号}
+			</if>
+                  <if test="交易创建时间 !=null and 交易创建时间!=''">
+				and 交易创建时间 =  #{交易创建时间}
+			</if>
+                  <if test="付款时间 !=null and 付款时间!=''">
+				and 付款时间 =  #{付款时间}
+			</if>
+                  <if test="最近修改时间 !=null and 最近修改时间!=''">
+				and 最近修改时间 =  #{最近修改时间}
+			</if>
+                  <if test="交易来源地 !=null and 交易来源地!=''">
+				and 交易来源地 =  #{交易来源地}
+			</if>
+                  <if test="类型 !=null and 类型!=''">
+				and 类型 =  #{类型}
+			</if>
+                  <if test="交易对方 !=null and 交易对方!=''">
+				and 交易对方 =  #{交易对方}
+			</if>
+                  <if test="商品名称 !=null and 商品名称!=''">
+				and 商品名称 =  #{商品名称}
+			</if>
+                  <if test="金额 !=null">
+				and 金额 =  #{金额}
+			</if>
+                  <if test="收支 !=null and 收支!=''">
+				and 收支 =  #{收支}
+			</if>
+                  <if test="交易状态 !=null and 交易状态!=''">
+				and 交易状态 =  #{交易状态}
+			</if>
+                  <if test="服务费 !=null">
+				and 服务费 =  #{服务费}
+			</if>
+                  <if test="成功退款 !=null">
+				and 成功退款 =  #{成功退款}
+			</if>
+                  <if test="备注 !=null and 备注!=''">
+				and 备注 =  #{备注}
+			</if>
+                  <if test="资金状态 !=null and 资金状态!=''">
+				and 资金状态 =  #{资金状态}
+			</if>
+                  <if test="账户 !=null and 账户!=''">
+				and 账户 =  #{账户}
+			</if>
+		</where> 
+		 
+	</delete>
+</mapper>
