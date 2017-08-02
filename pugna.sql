@@ -1,15 +1,15 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : localhost
- Source Server Version : 50718
- Source Host           : localhost
+ Source Server         : 192.168.199.112
+ Source Server Version : 50719
+ Source Host           : 192.168.199.112
  Source Database       : pugna
 
- Target Server Version : 50718
+ Target Server Version : 50719
  File Encoding         : utf-8
 
- Date: 08/01/2017 16:35:00 PM
+ Date: 08/02/2017 23:06:43 PM
 */
 
 SET NAMES utf8;
@@ -150,7 +150,7 @@ CREATE TABLE `contact` (
 DROP TABLE IF EXISTS `dota2_game_items`;
 CREATE TABLE `dota2_game_items` (
   `id` smallint(6) NOT NULL,
-  `name` char(20) DEFAULT NULL,
+  `name` char(50) DEFAULT NULL,
   `cost` smallint(6) DEFAULT NULL,
   `secret_shop` bit(1) DEFAULT NULL,
   `side_shop` bit(1) DEFAULT NULL,
