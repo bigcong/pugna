@@ -115,6 +115,8 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
 
             try {
+
+
                 dota2MatchDetailsMapper.insertSelective(j);
 
             } catch (Exception e) {
@@ -157,14 +159,24 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
         JsonObject s = gg.fromJson(g, JsonObject.class);
 
 
-
         JsonArray matches = s.get("result").getAsJsonObject().get("matches").getAsJsonArray();
 
 
         for (int i = 0; i < matches.size(); i++) {
+
+
             long match_id = matches.get(i).getAsJsonObject().get("match_id").getAsLong();
+
+            Dota2MatchDetails dota2MatchDetails = new Dota2MatchDetails();
+            dota2MatchDetails.setMatchId(match_id);
+
+
+            List<Dota2MatchDetails> list = listDota2MatchDetails(dota2MatchDetails);
+            if (list != null && list.size() > 0) {
+                continue;
+            }
             try {
-                Thread.sleep(10000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
