@@ -163,6 +163,11 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
         for (int i = 0; i < matches.size(); i++) {
             long match_id = matches.get(i).getAsJsonObject().get("match_id").getAsLong();
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             matchDetails(match_id);
 
         }
