@@ -11,11 +11,22 @@ spring:
   redis:
     host: localhost
     port: 6379
+  application:
+    name: pugna
 steam:
   key: 8CD1268BDB73A449446863EEC2DE17D0
 dota2:
   heros:
     image_url: http://cdn.dota2.com/apps/dota2/images/heroes/
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/
 
 
 
