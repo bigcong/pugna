@@ -147,18 +147,25 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
 
     public void matchHistory() {
-        Double avg = dota2MatchDetailsMapper.avg();
+        Gson gg = new Gson();
+
+        java.util.HashMap map2 = dota2MatchDetailsMapper.avg();
+
+        long max = (long) map2.get("max");
+        long min = (long) map2.get("min") / 2;
+        double random = Math.random() * max + min;
+
+
         Map<String, Object> map = new HashMap<>();
         map.put("matches_requested", 100);
         map.put("game_mode", 2);
         map.put("min_players", 10);
         map.put("tournament_games_only", 1);
+        map.put("start_at_match_id", Double.valueOf(random).longValue());
 
 
         String g = dota2Utils.get("IDOTA2Match_570/GetMatchHistory", map);
 
-
-        Gson gg = new Gson();
 
         JsonObject s = gg.fromJson(g, JsonObject.class);
 

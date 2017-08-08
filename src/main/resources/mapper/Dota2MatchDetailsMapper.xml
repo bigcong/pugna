@@ -736,8 +736,8 @@
 
     </delete>
 
-    <select id="avg"  resultType="Double">
-        SELECT avg(match_id) from dota2_match_details
+    <select id="avg"  resultType="java.util.HashMap">
+        SELECT min(match_id) min,max(match_id) max from dota2_match_details
     </select>
 
 

@@ -62,6 +62,6 @@ public interface Dota2MatchDetailsMapper {
      */
     public void deleteDota2MatchDetailsByIds(String[] id);
 
-    public Double avg();
+    public java.util.HashMap avg();
 
 }
