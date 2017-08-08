@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.Dota2LeaguesMapper">
+    <!-- 结果对应-->
+    <resultMap id="Dota2LeaguesMap" type="com.cc.entity.Dota2Leagues">
+        <result property="leagueid" column="leagueid"/> <!-- -->
+        <result property="name" column="name"/> <!-- -->
+        <result property="description" column="description"/> <!-- -->
+        <result property="tournament_url" column="tournament_url"/> <!-- -->
+        <result property="itemdef" column="itemdef"/> <!-- -->
+    </resultMap>
+
+
+    <sql id="Dota2LeaguesColumns">
+		  leagueid, name, description, tournament_url, itemdef
+    </sql>
+
+    <!-- 分页条件查询-->
+    <select id="listPageDota2Leagues" resultMap="Dota2LeaguesMap"
+            parameterType="com.cc.entity.Dota2Leagues">
+        select
+        <include refid="Dota2LeaguesColumns"/>
+        from dota2_leagues
+        <where>
+            <if test="leagueid !=null">
+                and leagueid=#{leagueid}
+            </if>
+            <if test="name !=null and name!=''">
+                and name=#{name}
+            </if>
+            <if test="description !=null and description!=''">
+                and description=#{description}
+            </if>
+            <if test="tournament_url !=null and tournament_url!=''">
+                and tournament_url=#{tournament_url}
+            </if>
+            <if test="itemdef !=null">
+                and itemdef=#{itemdef}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询dota2_leagues的数量-->
+    <select id="getDota2LeaguesCount" resultType="Integer">
+		select count(*)
+		from dota2_leagues
+	</select>
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="Dota2Leagues"
+            useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO dota2_leagues (
+			leagueid, name, description, tournament_url, itemdef
+		) VALUES (
+			#{leagueid}, #{name}, #{description}, #{tournament_url}, #{itemdef}
+		)
+	</insert>
+    <!-- 有条件的插入 -->
+    <insert id="insertSelective" parameterType="com.cc.entity.Dota2Leagues" useGeneratedKeys="true"
+            keyProperty="leagueid">
+        insert into dota2_leagues
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="leagueid !=null">
+                leagueid,
+            </if>
+            <if test="name !=null and name!=''">
+                name,
+            </if>
+            <if test="description !=null and description!=''">
+                description,
+            </if>
+            <if test="tournament_url !=null and tournament_url!=''">
+                tournament_url,
+            </if>
+            <if test="itemdef !=null">
+                itemdef,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="leagueid !=null">
+                #{leagueid},
+            </if>
+            <if test="name !=null and name!=''">
+                #{name},
+            </if>
+            <if test="description !=null and description!=''">
+                #{description},
+            </if>
+            <if test="tournament_url !=null and tournament_url!=''">
+                #{tournament_url},
+            </if>
+            <if test="itemdef !=null">
+                #{itemdef},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键查询(唯一)-->
+    <select id="getDota2LeaguesById" parameterType="Integer" resultMap="Dota2LeaguesMap">
+        select
+        <include refid="Dota2LeaguesColumns"/>
+        from dota2_leagues where
+        leagueid=#{leagueid}
+    </select>
+
+    <!-- 根据条件查询 dota2_leagues  -->
+    <select id="listDota2Leagues" resultMap="Dota2LeaguesMap" parameterType="com.cc.entity.Dota2Leagues">
+        select
+        <include refid="Dota2LeaguesColumns"/>
+        from dota2_leagues
+        <where>
+            <if test="leagueid !=null">
+                and leagueid=#{leagueid}
+            </if>
+            <if test="name !=null and name!=''">
+                and name=#{name}
+            </if>
+            <if test="description !=null and description!=''">
+                and description=#{description}
+            </if>
+            <if test="tournament_url !=null and tournament_url!=''">
+                and tournament_url=#{tournament_url}
+            </if>
+            <if test="itemdef !=null">
+                and itemdef=#{itemdef}
+            </if>
+        </where>
+    </select>
+
+    <!--更新  -->
+    <update id="updateDota2Leagues" parameterType="com.cc.entity.Dota2Leagues">
+		UPDATE dota2_leagues 
+		SET
+		leagueid=#{leagueid}, name=#{name}, description=#{description}, tournament_url=#{tournament_url}, itemdef=#{itemdef}
+		WHERE
+		leagueid=#{leagueid}
+	</update>
+    <!--根据条件update  -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.Dota2Leagues">
+        UPDATE dota2_leagues
+        <set>
+            <if test="leagueid !=null">
+                leagueid = #{leagueid},
+            </if>
+            <if test="name !=null and name!=''">
+                name = #{name},
+            </if>
+            <if test="description !=null and description!=''">
+                description = #{description},
+            </if>
+            <if test="tournament_url !=null and tournament_url!=''">
+                tournament_url = #{tournament_url},
+            </if>
+            <if test="itemdef !=null">
+                itemdef = #{itemdef},
+            </if>
+        </set>
+        WHERE
+        leagueid=#{leagueid}
+    </update>
+
+
+    <!--根据条件删除  -->
+    <delete id="deleteDota2Leagues" parameterType="com.cc.entity.Dota2Leagues">
+        delete from dota2_leagues
+        <where>
+            <if test="leagueid !=null">
+                and leagueid = #{leagueid}
+            </if>
+            <if test="name !=null and name!=''">
+                and name = #{name}
+            </if>
+            <if test="description !=null and description!=''">
+                and description = #{description}
+            </if>
+            <if test="tournament_url !=null and tournament_url!=''">
+                and tournament_url = #{tournament_url}
+            </if>
+            <if test="itemdef !=null">
+                and itemdef = #{itemdef}
+            </if>
+        </where>
+
+    </delete>
+</mapper>

@@ -71,4 +71,6 @@ public interface Dota2MatchDetailsService {
 
     public void gameItems();
 
+    void leagues();
+
 }

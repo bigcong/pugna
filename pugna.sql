@@ -1,15 +1,15 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : 192.168.199.112
- Source Server Version : 50719
- Source Host           : 192.168.199.112
+ Source Server         : localhost
+ Source Server Version : 50718
+ Source Host           : localhost
  Source Database       : pugna
 
- Target Server Version : 50719
+ Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 08/02/2017 23:06:43 PM
+ Date: 08/08/2017 18:12:29 PM
 */
 
 SET NAMES utf8;
@@ -172,6 +172,19 @@ CREATE TABLE `dota2_heros` (
   `full_png` varchar(100) DEFAULT NULL,
   `vert_jpg` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `dota2_leagues`
+-- ----------------------------
+DROP TABLE IF EXISTS `dota2_leagues`;
+CREATE TABLE `dota2_leagues` (
+  `leagueid` int(11) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `description` text,
+  `tournament_url` varchar(200) DEFAULT NULL,
+  `itemdef` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`leagueid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

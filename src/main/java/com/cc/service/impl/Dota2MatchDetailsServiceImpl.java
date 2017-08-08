@@ -2,10 +2,12 @@ package com.cc.service.impl;
 
 import com.cc.entity.Dota2GameItems;
 import com.cc.entity.Dota2Heros;
+import com.cc.entity.Dota2Leagues;
 import com.cc.entity.Dota2MatchDetails;
 import com.cc.mapper.Dota2MatchDetailsMapper;
 import com.cc.service.Dota2GameItemsService;
 import com.cc.service.Dota2HerosService;
+import com.cc.service.Dota2LeaguesService;
 import com.cc.service.Dota2MatchDetailsService;
 import com.cc.util.Dota2Utils;
 import com.google.gson.Gson;
@@ -39,6 +41,9 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
     @Autowired
     private Dota2GameItemsService dota2GameItemsService;
+
+    @Autowired
+    private Dota2LeaguesService dota2LeaguesService;
 
     @Value("${dota2.heros.image_url}")
     private String imageUrl;
@@ -145,10 +150,9 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
         Double avg = dota2MatchDetailsMapper.avg();
         Map<String, Object> map = new HashMap<>();
         map.put("matches_requested", 100);
-        map.put("game_mode", 16);
+        map.put("game_mode", 2);
         map.put("min_players", 10);
-        map.put("skill", 3);
-        //map.put("start_at_match_id", avg.longValue());
+        map.put("tournament_games_only", 1);
 
 
         String g = dota2Utils.get("IDOTA2Match_570/GetMatchHistory", map);
@@ -254,6 +258,41 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
         for (Dota2GameItems items : list) {
             try {
                 dota2GameItemsService.insertSelective(items);
+
+            } catch (Exception e) {
+
+                if (e instanceof DuplicateKeyException) {
+
+                } else {
+                    e.printStackTrace();
+
+                }
+
+            }
+        }
+
+
+    }
+
+    @Override
+    public void leagues() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("language", "zh_cn");
+
+        String g = dota2Utils.get("IDOTA2Match_570/GetLeagueListing", map);
+
+        System.out.println(g);
+        Gson gg = new Gson();
+
+        JsonObject s = gg.fromJson(g, JsonObject.class);
+        JsonArray heroes = s.get("result").getAsJsonObject().get("leagues").getAsJsonArray();
+
+        List<Dota2Leagues> list = gg.fromJson(heroes, new TypeToken<List<Dota2Leagues>>() {
+        }.getType());
+
+        for (Dota2Leagues leagues : list) {
+            try {
+                dota2LeaguesService.insertSelective(leagues);
 
             } catch (Exception e) {
 
