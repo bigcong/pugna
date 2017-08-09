@@ -4,6 +4,7 @@ import com.cc.entity.Dota2MatchDetails;
 import com.cc.service.Dota2MatchDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -89,4 +90,55 @@ public class Dota2MatchDetailsController {
 		dota2MatchDetailsService.deleteDota2MatchDetails(dota2MatchDetails);
 		return "success";
 	}
+	@RequestMapping(value = "/matchHistory")
+	public void matchHistory() {
+		System.out.println("开始时间为:" + new Date());
+		dota2MatchDetailsService.matchHistory();
+
+
+		System.out.println("结束时间为:" + new Date());
+
+	}
+
+
+
+	@RequestMapping(value = "/leagues")
+	public void leagues() {
+		System.out.println("开始时间为:" + new Date());
+		dota2MatchDetailsService.leagues();
+
+
+		System.out.println("结束时间为:" + new Date());
+
+	}
+
+
+
+	/**
+	 * 表示每个星期三中午12点
+	 */
+	@RequestMapping(value = "/heros")
+	public void heros() {
+		System.out.println("开始时间为:" + new Date());
+		dota2MatchDetailsService.heroes();
+
+		System.out.println("结束时间为:" + new Date());
+
+	}
+
+
+	@RequestMapping(value = "/gameItems")
+	public void gameItems() {
+		System.out.println("开始时间为:" + new Date());
+		dota2MatchDetailsService.gameItems();
+
+
+		System.out.println("结束时间为:" + new Date());
+
+	}
+
+
+
+
+
 }

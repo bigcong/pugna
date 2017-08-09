@@ -1,6 +1,5 @@
 server:
   port: 8090
-  context-path: /pugna
   max-http-header-size: 88192
 spring:
   datasource:
