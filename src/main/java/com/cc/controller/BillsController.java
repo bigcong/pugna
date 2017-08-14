@@ -15,10 +15,9 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static java.util.stream.Collectors.*;
 
 @RestController
 @RequestMapping(value = "/bills")
@@ -48,6 +47,19 @@ public class BillsController {
         map.put("page", bills);
         return map;
     }
+
+    @RequestMapping("chart")
+    public Map chart(Bills bills) {
+
+        List<Bills> billsList = billsService.listPageBills(bills);
+
+
+        Map<Boolean, Double> collect = billsList.stream().collect(partitioningBy(e -> e.get金额() > 10000, summingDouble(Bills::get金额)));
+
+
+        return collect;
+    }
+
 
     /**
      * curl -F "file=@/Users/cong/Downloads/1.txt" http://localhost:8090/pugna/bills/upload
