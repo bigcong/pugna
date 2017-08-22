@@ -51,7 +51,7 @@ public class Page {
 
     public String getPageStr() {
         StringBuffer sb = new StringBuffer();
-        /*if (currentPage > getTotalPage())
+        if (currentPage > getTotalPage())
             currentPage = getTotalPage();
         if (totalResult > 0) {
             sb.append("	<ul>\n");
@@ -111,7 +111,7 @@ public class Page {
             sb.append("	}\n");
             sb.append("}\n");
             sb.append("</script>\n");
-        }*/
+        }
         pageStr = sb.toString();
         return pageStr;
     }

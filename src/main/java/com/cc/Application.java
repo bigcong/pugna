@@ -21,6 +21,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableCaching
 //@EnableDiscoveryClient
 //@EnableFeignClients
+@EnableScheduling
 public class Application {
     private final RedisSerializer serializer = new StringRedisSerializer();
 

@@ -5,16 +5,16 @@
 <mapper namespace="com.cc.mapper.ConfigMapper">
 	     <!-- 结果对应-->
 	<resultMap id="ConfigMap" type="com.cc.entity.Config">
-		   <result property="configId" column="config_id" /> <!-- 主键自增-->
-		   <result property="type" column="type" /> <!-- -->
-		   <result property="typeName" column="type_name" /> <!-- type  中文描述-->
-		   <result property="valueName" column="value_name" /> <!-- value 中文描述-->
-		   <result property="value" column="value" /> <!-- -->
+		   <result property="config_id" column="config_id" /> <!-- 主键id-->
+		   <result property="config_type" column="config_type" /> <!-- 类型code-->
+		   <result property="config_name" column="config_name" /> <!-- 类型名称-->
+		   <result property="config_value" column="config_value" /> <!-- 值-->
+		   <result property="config_status" column="config_status" /> <!-- 是否启用-->
 	</resultMap>
 	
 	
 	<sql id="ConfigColumns">
-		  config_id, type, type_name, value_name, value
+		  config_id, config_type, config_name, config_value, config_status
     </sql>
 	
     <!-- 分页条件查询-->
@@ -24,20 +24,20 @@
 		<include refid="ConfigColumns" />
 		from config 
 		 <where>
-                  <if test="configId !=null">
-			           and config_id=#{configId}
+                  <if test="config_id !=null">
+			           and config_id=#{config_id}
 			      </if>
-                  <if test="type !=null and type!=''">
-			           and type=#{type}
+                  <if test="config_type !=null and config_type!=''">
+			           and config_type=#{config_type}
 			      </if>
-                  <if test="typeName !=null and typeName!=''">
-			           and type_name=#{typeName}
+                  <if test="config_name !=null and config_name!=''">
+			           and config_name=#{config_name}
 			      </if>
-                  <if test="valueName !=null and valueName!=''">
-			           and value_name=#{valueName}
+                  <if test="config_value !=null and config_value!=''">
+			           and config_value=#{config_value}
 			      </if>
-                  <if test="value !=null and value!=''">
-			           and value=#{value}
+                  <if test="config_status !=null and config_status!=''">
+			           and config_status=#{config_status}
 			      </if>
 		</where>
 	</select>
@@ -52,46 +52,46 @@
 	<insert id="insert" parameterType="Config" 
 	  useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO config (
-			config_id, type, type_name, value_name, value
+			config_id, config_type, config_name, config_value, config_status
 		) VALUES (
-			#{configId}, #{type}, #{typeName}, #{valueName}, #{value}
+			#{config_id}, #{config_type}, #{config_name}, #{config_value}, #{config_status}
 		)
 	</insert>
 	<!-- 有条件的插入 -->
 	<insert id="insertSelective" parameterType="com.cc.entity.Config" useGeneratedKeys="true" keyProperty="configId">
 		insert into config
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-                  <if test="configId !=null">
+                  <if test="config_id !=null">
 		      config_id,
 		    </if>
-                  <if test="type !=null and type!=''">
-		      type,
+                  <if test="config_type !=null and config_type!=''">
+		      config_type,
 		    </if>
-                  <if test="typeName !=null and typeName!=''">
-		      type_name,
+                  <if test="config_name !=null and config_name!=''">
+		      config_name,
 		    </if>
-                  <if test="valueName !=null and valueName!=''">
-		      value_name,
+                  <if test="config_value !=null and config_value!=''">
+		      config_value,
 		    </if>
-                  <if test="value !=null and value!=''">
-		      value,
+                  <if test="config_status !=null and config_status!=''">
+		      config_status,
 		    </if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-		     <if test="configId !=null">
-		     #{configId},
+		     <if test="config_id !=null">
+		     #{config_id},
 		    </if>
-		    <if test="type !=null and type!=''">
-		     #{type},
+		    <if test="config_type !=null and config_type!=''">
+		     #{config_type},
 		    </if>
-		    <if test="typeName !=null and typeName!=''">
-		     #{typeName},
+		    <if test="config_name !=null and config_name!=''">
+		     #{config_name},
 		    </if>
-		    <if test="valueName !=null and valueName!=''">
-		     #{valueName},
+		    <if test="config_value !=null and config_value!=''">
+		     #{config_value},
 		    </if>
-		    <if test="value !=null and value!=''">
-		     #{value},
+		    <if test="config_status !=null and config_status!=''">
+		     #{config_status},
 		    </if>
 		</trim>
 	</insert>	
@@ -110,20 +110,20 @@
 		<include refid="ConfigColumns" />
 		from config 
 		<where>
-                  <if test="configId !=null">
-				and config_id=#{configId}
+                  <if test="config_id !=null">
+				and config_id=#{config_id}
 			</if>
-                  <if test="type !=null and type!=''">
-				and type=#{type}
+                  <if test="config_type !=null and config_type!=''">
+				and config_type=#{config_type}
 			</if>
-                  <if test="typeName !=null and typeName!=''">
-				and type_name=#{typeName}
+                  <if test="config_name !=null and config_name!=''">
+				and config_name=#{config_name}
 			</if>
-                  <if test="valueName !=null and valueName!=''">
-				and value_name=#{valueName}
+                  <if test="config_value !=null and config_value!=''">
+				and config_value=#{config_value}
 			</if>
-                  <if test="value !=null and value!=''">
-				and value=#{value}
+                  <if test="config_status !=null and config_status!=''">
+				and config_status=#{config_status}
 			</if>
 		</where>
 	</select>
@@ -132,7 +132,7 @@
 	<update id="updateConfig" parameterType="com.cc.entity.Config">
 		UPDATE config 
 		SET
-		config_id=#{configId}, type=#{type}, type_name=#{typeName}, value_name=#{valueName}, value=#{value}
+		config_id=#{config_id}, config_type=#{config_type}, config_name=#{config_name}, config_value=#{config_value}, config_status=#{config_status}
 		WHERE
 		config_id=#{configId}
 	</update>
@@ -140,20 +140,20 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.Config" >
 	  UPDATE config 
 		<set>
-                  <if test="configId !=null">
-			    config_id =  #{configId},
+                  <if test="config_id !=null">
+			    config_id =  #{config_id},
 			</if>
-                  <if test="type !=null and type!=''">
-			    type =  #{type},
+                  <if test="config_type !=null and config_type!=''">
+			    config_type =  #{config_type},
 			</if>
-                  <if test="typeName !=null and typeName!=''">
-			    type_name =  #{typeName},
+                  <if test="config_name !=null and config_name!=''">
+			    config_name =  #{config_name},
 			</if>
-                  <if test="valueName !=null and valueName!=''">
-			    value_name =  #{valueName},
+                  <if test="config_value !=null and config_value!=''">
+			    config_value =  #{config_value},
 			</if>
-                  <if test="value !=null and value!=''">
-			    value =  #{value},
+                  <if test="config_status !=null and config_status!=''">
+			    config_status =  #{config_status},
 			</if>
 	   </set>
 		WHERE
@@ -165,20 +165,20 @@
 	<delete id="deleteConfig" parameterType="com.cc.entity.Config">
 		delete from config 
 	<where>
-                  <if test="configId !=null">
-				and config_id =  #{configId}
+                  <if test="config_id !=null">
+				and config_id =  #{config_id}
 			</if>
-                  <if test="type !=null and type!=''">
-				and type =  #{type}
+                  <if test="config_type !=null and config_type!=''">
+				and config_type =  #{config_type}
 			</if>
-                  <if test="typeName !=null and typeName!=''">
-				and type_name =  #{typeName}
+                  <if test="config_name !=null and config_name!=''">
+				and config_name =  #{config_name}
 			</if>
-                  <if test="valueName !=null and valueName!=''">
-				and value_name =  #{valueName}
+                  <if test="config_value !=null and config_value!=''">
+				and config_value =  #{config_value}
 			</if>
-                  <if test="value !=null and value!=''">
-				and value =  #{value}
+                  <if test="config_status !=null and config_status!=''">
+				and config_status =  #{config_status}
 			</if>
 		</where> 
 		 
