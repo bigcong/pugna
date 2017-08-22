@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,7 +87,6 @@ public class CurrencyServiceImpl implements CurrencyService {
         Map<String, Currency> map = new HashMap<>();
 
         for (String str : runShell(str1)) {
-            System.out.println(str);
             Currency currency = new Currency();
 
             String[] split = str.split("\t");
@@ -110,7 +110,6 @@ public class CurrencyServiceImpl implements CurrencyService {
 
 
         for (String str : runShell(str2)) {
-            System.out.println(str);
 
             Currency currency = new Currency();
             currency.setCreateTime(create_time);
@@ -130,7 +129,6 @@ public class CurrencyServiceImpl implements CurrencyService {
 
 
         for (String str : runShell(str3)) {
-            System.out.println(str);
 
             Currency currency = new Currency();
 
@@ -146,8 +144,14 @@ public class CurrencyServiceImpl implements CurrencyService {
             map.put(split[0], currency);
 
         }
-        map.values().stream().forEach(t -> insertSelective(t));
 
+        double sum = map.values().stream().filter(t -> t.getCurrencyId() != 1).mapToDouble(t -> t.getAmount() * t.getPrice()).sum();
+        double sum1 = map.values().stream().filter(t -> t.getCurrencyId() == 1).mapToDouble(t -> t.getAmount() * t.getPrice()).sum();
+        System.out.println("----------------------------------");
+        System.out.println(BigDecimal.valueOf(sum-sum1).toPlainString());
+
+
+        map.values().stream().forEach(t -> insertSelective(t));
 
 
     }
