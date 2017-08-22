@@ -51,10 +51,9 @@ public class BillsController {
     @RequestMapping("chart")
     public Map chart(Bills bills) {
 
-        List<Bills> billsList = billsService.listPageBills(bills);
+        List<Bills> billsList = billsService.listBills(bills);
 
-
-        Map<Boolean, Double> collect = billsList.stream().collect(partitioningBy(e -> e.get金额() > 10000, summingDouble(Bills::get金额)));
+        Map<Boolean, Map<String, Long>> collect = billsList.stream().collect(partitioningBy(e -> e.get金额() > 1000, groupingBy(Bills::get交易对方, counting())));
 
 
         return collect;
