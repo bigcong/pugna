@@ -1,7 +1,9 @@
 package com.cc.service.impl;
 
 import com.cc.entity.Currency;
+import com.cc.entity.Distance;
 import com.cc.mapper.CurrencyMapper;
+import com.cc.mapper.DistanceMapper;
 import com.cc.service.CurrencyService;
 import com.cc.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,10 @@ import static com.cc.util.ShellUtil.runShell;
 public class CurrencyServiceImpl implements CurrencyService {
     @Autowired
     private CurrencyMapper currencyMapper;
+
+
+    @Autowired
+    private DistanceMapper distanceMapper;
 
     @Override
     public List<Currency> listPageCurrency(Currency currency) {
@@ -148,7 +154,11 @@ public class CurrencyServiceImpl implements CurrencyService {
         double sum = map.values().stream().filter(t -> t.getCurrencyId() != 1).mapToDouble(t -> t.getAmount() * t.getPrice()).sum();
         double sum1 = map.values().stream().filter(t -> t.getCurrencyId() == 1).mapToDouble(t -> t.getAmount() * t.getPrice()).sum();
         System.out.println("----------------------------------");
-        System.out.println(BigDecimal.valueOf(sum-sum1).toPlainString());
+        System.out.println(BigDecimal.valueOf(sum - sum1).toPlainString());
+        Distance distance = new Distance();
+        distance.setCreateTime(create_time);
+        distance.setAmount(sum - sum1);
+        distanceMapper.insertSelective(distance);
 
 
         map.values().stream().forEach(t -> insertSelective(t));

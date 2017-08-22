@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.mapper.DistanceMapper">
+	     <!-- 结果对应-->
+	<resultMap id="DistanceMap" type="com.cc.entity.Distance">
+		   <result property="createTime" column="create_time" /> <!-- -->
+		   <result property="amount" column="amount" /> <!-- -->
+	</resultMap>
+	
+	
+	<sql id="DistanceColumns">
+		  create_time, amount
+    </sql>
+	
+    <!-- 分页条件查询-->
+	<select id="listPageDistance" resultMap="DistanceMap" 
+	parameterType="com.cc.entity.Distance">
+		select
+		<include refid="DistanceColumns" />
+		from distance 
+		 <where>
+                  <if test="createTime !=null and createTime!=''">
+			           and create_time=#{createTime}
+			      </if>
+                  <if test="amount !=null">
+			           and amount=#{amount}
+			      </if>
+		</where>
+	</select>
+	
+	<!-- 查询distance的数量-->
+	<select id="getDistanceCount" resultType="Integer">
+		select count(*)
+		from distance
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="Distance" 
+	  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO distance (
+			create_time, amount
+		) VALUES (
+			#{createTime}, #{amount}
+		)
+	</insert>
+	<!-- 有条件的插入 -->
+	<insert id="insertSelective" parameterType="com.cc.entity.Distance" useGeneratedKeys="true" keyProperty="createTime">
+		insert into distance
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+                  <if test="createTime !=null and createTime!=''">
+		      create_time,
+		    </if>
+                  <if test="amount !=null">
+		      amount,
+		    </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		    <if test="createTime !=null and createTime!=''">
+		     #{createTime},
+		    </if>
+		     <if test="amount !=null">
+		     #{amount},
+		    </if>
+		</trim>
+	</insert>	
+	
+	<!-- 根据主键查询(唯一)-->
+	<select id="getDistanceById" parameterType="java.lang.String" resultMap="DistanceMap">
+		select 
+		<include refid="DistanceColumns" /> 
+		from distance where 
+		  	create_time=#{createTime}
+	</select>
+	
+	<!-- 根据条件查询 distance  -->
+	<select id="listDistance" resultMap="DistanceMap" parameterType="com.cc.entity.Distance">
+		select
+		<include refid="DistanceColumns" />
+		from distance 
+		<where>
+                  <if test="createTime !=null and createTime!=''">
+				and create_time=#{createTime}
+			</if>
+                  <if test="amount !=null">
+				and amount=#{amount}
+			</if>
+		</where>
+	</select>
+	
+	<!--更新  -->
+	<update id="updateDistance" parameterType="com.cc.entity.Distance">
+		UPDATE distance 
+		SET
+		create_time=#{createTime}, amount=#{amount}
+		WHERE
+		create_time=#{createTime}
+	</update>
+		<!--根据条件update  -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.entity.Distance" >
+	  UPDATE distance 
+		<set>
+                  <if test="createTime !=null and createTime!=''">
+			    create_time =  #{createTime},
+			</if>
+                  <if test="amount !=null">
+			    amount =  #{amount},
+			</if>
+	   </set>
+		WHERE
+	create_time=#{createTime}
+	</update>
+	
+	
+	<!--根据条件删除  -->
+	<delete id="deleteDistance" parameterType="com.cc.entity.Distance">
+		delete from distance 
+	<where>
+                  <if test="createTime !=null and createTime!=''">
+				and create_time =  #{createTime}
+			</if>
+                  <if test="amount !=null">
+				and amount =  #{amount}
+			</if>
+		</where> 
+		 
+	</delete>
+</mapper>
