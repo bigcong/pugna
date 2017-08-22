@@ -9,7 +9,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 08/08/2017 18:12:29 PM
+ Date: 08/22/2017 18:21:36 PM
 */
 
 SET NAMES utf8;
@@ -39,25 +39,6 @@ CREATE TABLE `bills` (
   `账户` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`交易号`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Table structure for `blog`
--- ----------------------------
-DROP TABLE IF EXISTS `blog`;
-CREATE TABLE `blog` (
-  `blog_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '博客id（主键）',
-  `blog_title` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '博客标题',
-  `blog_description` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '博文描述',
-  `create_user` int(11) DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_user` int(11) DEFAULT NULL COMMENT '跟新人',
-  `update_time` datetime DEFAULT NULL COMMENT '跟新时间',
-  `blogger` int(11) DEFAULT NULL COMMENT '博客作者',
-  `blog_type` int(11) DEFAULT NULL COMMENT '博客类型',
-  `start` int(11) DEFAULT NULL,
-  `blog_content` varchar(10000) CHARACTER SET utf8 DEFAULT NULL COMMENT '文章内容',
-  PRIMARY KEY (`blog_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `call_records`
@@ -111,26 +92,23 @@ CREATE TABLE `config` (
   `config_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `config_type` varchar(20) NOT NULL COMMENT '类型code',
   `config_name` varchar(50) NOT NULL COMMENT '类型名称',
-  `config_value` varchar(20) DEFAULT NULL COMMENT '值',
+  `config_value` varchar(225) NOT NULL COMMENT '值',
   `config_status` varchar(10) NOT NULL COMMENT '是否启用',
   PRIMARY KEY (`config_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
---  Table structure for `config_detail`
+--  Table structure for `config_attribute`
 -- ----------------------------
-DROP TABLE IF EXISTS `config_detail`;
-CREATE TABLE `config_detail` (
-  `detail_id` int(11) NOT NULL AUTO_INCREMENT,
-  `config_id` int(11) NOT NULL COMMENT '外键',
-  `detail_code` varchar(20) NOT NULL COMMENT '编码',
-  `detail_value` varchar(20) NOT NULL COMMENT '值',
-  `detail_name` varchar(20) NOT NULL COMMENT '名称',
-  `enable_flag` varchar(10) NOT NULL COMMENT '是否有效',
-  `note` varchar(10) NOT NULL COMMENT '备注',
-  `sort` int(10) NOT NULL DEFAULT '0' COMMENT '排序',
-  PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+DROP TABLE IF EXISTS `config_attribute`;
+CREATE TABLE `config_attribute` (
+  `attribute_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `config_id` bigint(20) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` varchar(255) NOT NULL,
+  `attribute_desc` varchar(255) NOT NULL,
+  PRIMARY KEY (`attribute_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `contact`
@@ -145,12 +123,30 @@ CREATE TABLE `contact` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
+--  Table structure for `currency`
+-- ----------------------------
+DROP TABLE IF EXISTS `currency`;
+CREATE TABLE `currency` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `currency_id` smallint(6) DEFAULT NULL,
+  `currency_name` varchar(255) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `prepare_sub_amount` double DEFAULT NULL,
+  `freeze_cash_amount` double DEFAULT NULL,
+  `cash_amount` double DEFAULT NULL,
+  `price` double DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique` (`currency_id`,`create_time`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=366 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 --  Table structure for `dota2_game_items`
 -- ----------------------------
 DROP TABLE IF EXISTS `dota2_game_items`;
 CREATE TABLE `dota2_game_items` (
   `id` smallint(6) NOT NULL,
-  `name` char(50) DEFAULT NULL,
+  `name` char(20) DEFAULT NULL,
   `cost` smallint(6) DEFAULT NULL,
   `secret_shop` bit(1) DEFAULT NULL,
   `side_shop` bit(1) DEFAULT NULL,
@@ -253,16 +249,6 @@ CREATE TABLE `file` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
---  Table structure for `hour`
--- ----------------------------
-DROP TABLE IF EXISTS `hour`;
-CREATE TABLE `hour` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `hour` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
-
--- ----------------------------
 --  Table structure for `location`
 -- ----------------------------
 DROP TABLE IF EXISTS `location`;
@@ -275,72 +261,6 @@ CREATE TABLE `location` (
   `address` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户足迹表';
-
--- ----------------------------
---  Table structure for `menu`
--- ----------------------------
-DROP TABLE IF EXISTS `menu`;
-CREATE TABLE `menu` (
-  `menu_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '菜单id',
-  `menu_name` varchar(100) DEFAULT NULL COMMENT '菜单名字',
-  `menu_url` varchar(100) DEFAULT NULL COMMENT '菜单url',
-  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `update_person` varchar(100) DEFAULT NULL COMMENT '修改人',
-  `update_person_id` int(10) DEFAULT NULL COMMENT '更新人',
-  `level` int(10) DEFAULT NULL COMMENT '等级',
-  `p_id` int(10) DEFAULT NULL COMMENT '父id',
-  `is_locked` varchar(10) DEFAULT '' COMMENT '是否锁住能否被删除修改',
-  `enable_flag` varchar(10) DEFAULT NULL COMMENT '是否可用',
-  `menu_sort` varchar(10) DEFAULT NULL COMMENT '菜单排序',
-  PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
---  Table structure for `message_board`
--- ----------------------------
-DROP TABLE IF EXISTS `message_board`;
-CREATE TABLE `message_board` (
-  `board_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `message_content` varchar(500) DEFAULT NULL COMMENT '留言板内容',
-  `creat_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `ip` varchar(255) DEFAULT NULL,
-  `ip_city` varchar(255) DEFAULT NULL COMMENT '城市',
-  `user_id` int(11) DEFAULT NULL COMMENT '关联user表',
-  `ip_country` varchar(255) DEFAULT NULL COMMENT '国家',
-  `lat` varchar(255) DEFAULT NULL COMMENT '纬度',
-  `lon` varchar(255) DEFAULT NULL COMMENT '经度',
-  `country_code` varchar(255) DEFAULT NULL COMMENT '国家编号',
-  `region` varchar(255) DEFAULT NULL COMMENT '地区',
-  `regionName` varchar(255) DEFAULT NULL COMMENT '地区名字',
-  `status` varchar(255) DEFAULT NULL COMMENT '状态',
-  `status_type` varchar(255) DEFAULT NULL COMMENT '状态类型 关联config表',
-  PRIMARY KEY (`board_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
---  Table structure for `module`
--- ----------------------------
-DROP TABLE IF EXISTS `module`;
-CREATE TABLE `module` (
-  `module_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '模块id',
-  `module_code` varchar(100) DEFAULT NULL COMMENT '模块code',
-  `module_name` varchar(100) DEFAULT NULL COMMENT '模块名字',
-  `module_url` varchar(100) DEFAULT NULL COMMENT '模块url',
-  `enable_flag` varchar(10) DEFAULT NULL COMMENT '是否可用',
-  PRIMARY KEY (`module_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
---  Table structure for `permissions`
--- ----------------------------
-DROP TABLE IF EXISTS `permissions`;
-CREATE TABLE `permissions` (
-  `pri_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `pri_code` varchar(100) DEFAULT NULL COMMENT '权限code',
-  `pri_name` varchar(100) DEFAULT NULL COMMENT '权限名字',
-  `enable_flag` varchar(10) DEFAULT NULL COMMENT '是否可用',
-  PRIMARY KEY (`pri_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Table structure for `plan`
@@ -356,32 +276,6 @@ CREATE TABLE `plan` (
   `create_people` int(11) DEFAULT NULL,
   `update_people` int(11) DEFAULT NULL,
   PRIMARY KEY (`plan_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
---  Table structure for `role`
--- ----------------------------
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE `role` (
-  `role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主机id',
-  `role_name` varchar(100) DEFAULT NULL COMMENT '角色名字',
-  `role_code` varchar(100) DEFAULT NULL COMMENT '角色编码',
-  `enable_flag` varchar(100) DEFAULT '' COMMENT '是否可用',
-  `is_locked` varchar(10) DEFAULT '' COMMENT '是否锁住（能否能被修改和删除）',
-  PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
---  Table structure for `role_menu`
--- ----------------------------
-DROP TABLE IF EXISTS `role_menu`;
-CREATE TABLE `role_menu` (
-  `menu_role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `menu_id` int(11) NOT NULL COMMENT '菜单Id',
-  `role_id` int(11) NOT NULL COMMENT '用户Id',
-  `permission_type` int(11) DEFAULT NULL COMMENT '操作权限  1：录入 2：浏览 3：修改 4：删除 ',
-  `remark` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`menu_role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
@@ -427,33 +321,143 @@ CREATE TABLE `system_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
---  Table structure for `user`
+--  Table structure for `t_authentication`
 -- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键Id',
-  `user_name` varchar(100) NOT NULL DEFAULT '' COMMENT '用户名',
-  `password` varchar(100) NOT NULL DEFAULT '' COMMENT '密码',
-  `name` varchar(100) DEFAULT '' COMMENT '用户真实姓名',
-  `is_locked` varchar(10) DEFAULT NULL COMMENT '是否锁住能否被删除',
-  `enable_flag` varchar(10) DEFAULT NULL COMMENT '是否可用',
-  `sex` varchar(10) DEFAULT NULL COMMENT '性别',
-  `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
-  `address` varchar(100) DEFAULT NULL COMMENT '地址',
-  `tel` varchar(100) DEFAULT NULL COMMENT '电话号',
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `user_name` (`user_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+DROP TABLE IF EXISTS `t_authentication`;
+CREATE TABLE `t_authentication` (
+  `id` varchar(25) NOT NULL,
+  `person_id` varchar(25) DEFAULT NULL COMMENT '拥有者',
+  `auth_type` tinyint(4) DEFAULT NULL COMMENT '认证类别:1,个人；2，单位；',
+  `name` varchar(20) DEFAULT NULL COMMENT '姓名',
+  `mobile` varchar(26) DEFAULT NULL COMMENT '手机号',
+  `address` varchar(200) DEFAULT NULL COMMENT '地址',
+  `office_address` varchar(200) DEFAULT NULL COMMENT '办公地址',
+  `auth_status` tinyint(4) DEFAULT NULL COMMENT '认证状态：1，未认证；2，认证审核中；3，认证审核通过；4，认证审核不通过；',
+  `img_front_id` varchar(25) DEFAULT NULL COMMENT '前图片ID',
+  `img_back_id` varchar(25) DEFAULT NULL COMMENT '后图片ID',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='认证表';
 
 -- ----------------------------
---  Table structure for `user_role`
+--  Table structure for `t_authority_authority`
 -- ----------------------------
-DROP TABLE IF EXISTS `user_role`;
-CREATE TABLE `user_role` (
-  `user_role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `user_id` int(11) NOT NULL COMMENT '用户id',
-  `role_id` int(11) NOT NULL COMMENT '角色id',
-  PRIMARY KEY (`user_role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+DROP TABLE IF EXISTS `t_authority_authority`;
+CREATE TABLE `t_authority_authority` (
+  `id` varchar(25) NOT NULL COMMENT '权限ID',
+  `code` varchar(200) DEFAULT NULL COMMENT '权限编码',
+  `relative_url` varchar(256) DEFAULT NULL COMMENT '菜单相对url是不含系统url的部分',
+  `descr` varchar(40) DEFAULT NULL COMMENT '描述',
+  `authority_group` varchar(100) DEFAULT NULL COMMENT '权限组:系统设置权限组等等，通过枚举类统一定义',
+  `authority_type` tinyint(4) DEFAULT NULL COMMENT '权限类型:1.纯权限点;2后端菜（点击菜单通过controller控制)；3前端菜单(前后分离时view层定义菜单,无相对url,点击菜单不受controller控制，前端js自行控制)；',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限表(权限)';
+
+-- ----------------------------
+--  Table structure for `t_menu_authority`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_menu_authority`;
+CREATE TABLE `t_menu_authority` (
+  `id` varchar(25) NOT NULL COMMENT '菜单ID',
+  `show_chars` varchar(40) DEFAULT NULL COMMENT '菜单名称',
+  `code` varchar(200) DEFAULT NULL COMMENT '权限编码:同权限表中权限编码',
+  `p_menu_id` varchar(25) DEFAULT NULL COMMENT '上级菜单ID',
+  `order_num` int(11) DEFAULT NULL COMMENT '排序号',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单表(权限)';
+
+-- ----------------------------
+--  Table structure for `t_org_authority`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_org_authority`;
+CREATE TABLE `t_org_authority` (
+  `id` varchar(25) NOT NULL COMMENT '组织ID',
+  `name` varchar(20) DEFAULT NULL COMMENT '组织名称：各组织或部门名称或楼栋、楼层',
+  `order_num` int(11) DEFAULT NULL COMMENT '排序号',
+  `p_org_id` varchar(25) DEFAULT NULL COMMENT '上级组织ID',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织表(权限)';
+
+-- ----------------------------
+--  Table structure for `t_person_authority`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_person_authority`;
+CREATE TABLE `t_person_authority` (
+  `id` varchar(25) NOT NULL COMMENT '用户ID',
+  `login_name` varchar(40) DEFAULT NULL COMMENT '登录名',
+  `nickname` varchar(40) DEFAULT NULL COMMENT '昵称',
+  `pwd` varchar(40) DEFAULT NULL COMMENT '密码',
+  `role_code` varchar(200) DEFAULT NULL COMMENT '人员类型（角色）',
+  `head_pic` varchar(500) DEFAULT NULL COMMENT '头像图片路径',
+  `tel` varchar(15) DEFAULT NULL COMMENT '电话',
+  `mobile` varchar(15) DEFAULT NULL COMMENT '手机',
+  `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
+  `birthday` date DEFAULT NULL COMMENT '生日',
+  `auth_status` tinyint(4) DEFAULT NULL COMMENT '认证状态:1，未认证；2，认证审核中；3，认证审核通过；4，认证审核不通过；',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_unique_personauthority_login_name` (`login_name`),
+  UNIQUE KEY `index_unique_personauthority_email` (`email`),
+  UNIQUE KEY `index_unique_personauthority_mobile` (`mobile`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人员表(权限)';
+
+-- ----------------------------
+--  Table structure for `t_person_org_relation_authority`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_person_org_relation_authority`;
+CREATE TABLE `t_person_org_relation_authority` (
+  `id` varchar(25) NOT NULL COMMENT '人员组织关系ID',
+  `persoin_id` varchar(25) DEFAULT NULL COMMENT '人员ID',
+  `org_id` varchar(25) DEFAULT NULL COMMENT '组织ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人员组织关系表(权限)';
+
+-- ----------------------------
+--  Table structure for `t_person_role_relation_authority`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_person_role_relation_authority`;
+CREATE TABLE `t_person_role_relation_authority` (
+  `id` varchar(25) NOT NULL COMMENT '关系表ID',
+  `person_id` varchar(25) DEFAULT NULL COMMENT '人员ID',
+  `role_code` varchar(200) DEFAULT NULL COMMENT '角色ID',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人员角色关系表(权限)';
+
+-- ----------------------------
+--  Table structure for `t_role_authority`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_role_authority`;
+CREATE TABLE `t_role_authority` (
+  `id` varchar(25) NOT NULL COMMENT '角色ID',
+  `code` varchar(200) DEFAULT NULL COMMENT '角色编号：admin等，编号唯一不重复',
+  `name` varchar(20) DEFAULT NULL COMMENT '角色名称:超级管理员',
+  `descr` varchar(200) DEFAULT NULL COMMENT '角色描述',
+  `order_num` int(11) DEFAULT NULL COMMENT '排序号',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_roleauthority_code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表(权限)';
+
+-- ----------------------------
+--  Table structure for `t_role_authority_relation_authority`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_role_authority_relation_authority`;
+CREATE TABLE `t_role_authority_relation_authority` (
+  `id` varchar(25) NOT NULL COMMENT '关系表ID',
+  `role_code` varchar(200) DEFAULT NULL COMMENT '角色编号',
+  `authority_code` varchar(200) DEFAULT NULL COMMENT '权限编号',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限关系表(权限)';
 
 SET FOREIGN_KEY_CHECKS = 1;
