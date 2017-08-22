@@ -6,29 +6,29 @@ package com.cc.entity;
 public class ConfigAttribute {
 
 	/**
-	   主键
+	   
 	 */
-	private Long attributeId;
+	private Long attribute_id;
 	
 	/**
-	   key 列名
+	   
 	 */
-	private String attributeKey;
+	private Long config_id;
 	
 	/**
-	   列值
+	   
 	 */
-	private String attributeValue;
+	private String attribute_name;
 	
 	/**
-	   外键
+	   
 	 */
-	private Long configId;
+	private String attribute_value;
 	
 	/**
-	   key 的 中文描述
+	   
 	 */
-	private String attributeName;
+	private String attribute_desc;
 	
 		
 	//分页
@@ -37,43 +37,43 @@ public class ConfigAttribute {
 	
 	
 	public Long getAttributeId() {
-		return attributeId;
+		return attribute_id;
 	}
 
-	public void setAttributeId(Long attributeId) {
-		this.attributeId = attributeId;
-	} 
-	
-	public String getAttributeKey() {
-		return attributeKey;
-	}
-
-	public void setAttributeKey(String attributeKey) {
-		this.attributeKey = attributeKey;
-	} 
-	
-	public String getAttributeValue() {
-		return attributeValue;
-	}
-
-	public void setAttributeValue(String attributeValue) {
-		this.attributeValue = attributeValue;
+	public void setAttributeId(Long attribute_id) {
+		this.attribute_id = attribute_id;
 	} 
 	
 	public Long getConfigId() {
-		return configId;
+		return config_id;
 	}
 
-	public void setConfigId(Long configId) {
-		this.configId = configId;
+	public void setConfigId(Long config_id) {
+		this.config_id = config_id;
 	} 
 	
 	public String getAttributeName() {
-		return attributeName;
+		return attribute_name;
 	}
 
-	public void setAttributeName(String attributeName) {
-		this.attributeName = attributeName;
+	public void setAttributeName(String attribute_name) {
+		this.attribute_name = attribute_name;
+	} 
+	
+	public String getAttributeValue() {
+		return attribute_value;
+	}
+
+	public void setAttributeValue(String attribute_value) {
+		this.attribute_value = attribute_value;
+	} 
+	
+	public String getAttributeDesc() {
+		return attribute_desc;
+	}
+
+	public void setAttributeDesc(String attribute_desc) {
+		this.attribute_desc = attribute_desc;
 	} 
 	
 	public Page getPage() {

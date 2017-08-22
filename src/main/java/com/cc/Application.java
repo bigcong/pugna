@@ -19,8 +19,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.cc.mapper")
 @SpringBootApplication
 @EnableCaching
-@EnableDiscoveryClient
-@EnableFeignClients
+//@EnableDiscoveryClient
+//@EnableFeignClients
+@EnableScheduling
 public class Application {
     private final RedisSerializer serializer = new StringRedisSerializer();
 
