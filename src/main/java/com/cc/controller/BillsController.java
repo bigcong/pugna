@@ -50,13 +50,14 @@ public class BillsController {
 
     @RequestMapping("chart")
     public Map chart(Bills bills) {
+        bills.set交易状态("交易成功");
 
         List<Bills> billsList = billsService.listBills(bills);
 
-        Map<Boolean, Map<String, Long>> collect = billsList.stream().collect(partitioningBy(e -> e.get金额() > 1000, groupingBy(Bills::get交易对方, counting())));
+        //Map<Boolean, Map<String, Long>> collect = billsList.stream().collect(partitioningBy(e -> e.get金额() > 1000, groupingBy(Bills::get交易对方, summingInt())));
 
 
-        return collect;
+        return null;
     }
 
 
