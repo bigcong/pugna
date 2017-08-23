@@ -1,9 +1,11 @@
 package com.cc.service.impl;
 
+import com.cc.entity.Config;
 import com.cc.entity.Currency;
 import com.cc.entity.Distance;
 import com.cc.mapper.CurrencyMapper;
 import com.cc.mapper.DistanceMapper;
+import com.cc.service.ConfigService;
 import com.cc.service.CurrencyService;
 import com.cc.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ import static com.cc.util.ShellUtil.runShell;
 public class CurrencyServiceImpl implements CurrencyService {
     @Autowired
     private CurrencyMapper currencyMapper;
+    @Autowired
+    private ConfigService configService;
 
 
     @Autowired
@@ -82,6 +86,13 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     @Scheduled(cron = "0 0/1 * * * ?")// 每2分钟执行一次
     public void autoInsert() throws Exception {
+        Config c = new Config();
+        c.setConfigName("ssh");
+        c.setConfigType("ssh");
+
+        List<Config> configs = configService.listConfig(c);
+        String ssh = configs.get(0).getConfigValue();
+
 
         String str1 = "select currency_id,  SUM(amount) amount,sum(prepare_sub_amount) prepare_sub_amount,SUM(freeze_cash_amount) freeze_cash_amount, sum(cash_amount) cash_amount from ct_customer_account_ctb  group by currency_id";
 
@@ -92,7 +103,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
         Map<String, Currency> map = new HashMap<>();
 
-        for (String str : runShell(str1)) {
+        for (String str : runShell(ssh, str1)) {
             Currency currency = new Currency();
 
             String[] split = str.split("\t");
@@ -115,7 +126,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         }
 
 
-        for (String str : runShell(str2)) {
+        for (String str : runShell(ssh, str2)) {
 
             Currency currency = new Currency();
             currency.setCreateTime(create_time);
@@ -134,7 +145,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         }
 
 
-        for (String str : runShell(str3)) {
+        for (String str : runShell(ssh, str3)) {
 
             Currency currency = new Currency();
 
@@ -158,7 +169,10 @@ public class CurrencyServiceImpl implements CurrencyService {
         Distance distance = new Distance();
         distance.setCreateTime(create_time);
         distance.setAmount(sum - sum1);
-        distanceMapper.insertSelective(distance);
+        if (distance.getAmount() != 0) {
+            distanceMapper.insertSelective(distance);
+
+        }
 
 
         map.values().stream().forEach(t -> insertSelective(t));
