@@ -32,17 +32,6 @@ public class LoginController {
         return u;
     }
 
-    @RequestMapping("listMenuByUser")
-    public List<Menu> listMenuByUser(HttpServletRequest reques) {
-        User user = (User) reques.getSession().getAttribute("user");
-        List<Menu> listMenu = loginService.ListMenuByUserId(user);
-        return listMenu;
-    }
 
-    @RequestMapping("getUser")
-    public User getUser(HttpServletRequest reques) {
-        User user = (User) reques.getSession().getAttribute("user");
-        return user;
-    }
 
 }
