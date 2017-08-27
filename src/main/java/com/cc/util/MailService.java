@@ -2,7 +2,6 @@ package com.cc.util;
 
 import com.cc.entity.Config;
 import com.cc.service.ConfigService;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
