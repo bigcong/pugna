@@ -8,11 +8,13 @@ import com.cc.mapper.DistanceMapper;
 import com.cc.service.ConfigService;
 import com.cc.service.CurrencyService;
 import com.cc.util.DateUtil;
+import com.cc.util.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,8 @@ public class CurrencyServiceImpl implements CurrencyService {
     private CurrencyMapper currencyMapper;
     @Autowired
     private ConfigService configService;
+    @Autowired
+    private MailService mailService;
 
 
     @Autowired
@@ -169,13 +173,25 @@ public class CurrencyServiceImpl implements CurrencyService {
         Distance distance = new Distance();
         distance.setCreateTime(create_time);
         distance.setAmount(sum - sum1);
-        if (distance.getAmount() != 0) {
-            distanceMapper.insertSelective(distance);
-
-        }
 
 
         map.values().stream().forEach(t -> insertSelective(t));
+
+        if (distance.getAmount() != 0) {
+            distanceMapper.insertSelective(distance);
+
+
+            DoubleSummaryStatistics doubleSummaryStatistics = distanceMapper.listDistance(new Distance()).stream().mapToDouble(t -> t.getAmount()).summaryStatistics();
+            if (distance.getAmount() > doubleSummaryStatistics.getMax() * 0.9) {
+                mailService.sendSimpleMail(create_time + "->卖", "最大值->" + doubleSummaryStatistics.getMax() + ",当前值->" + distance.getAmount());
+
+            } else if (distance.getAmount() < doubleSummaryStatistics.getMin() * 1.1) {
+                mailService.sendSimpleMail(create_time + "->买", "最小值->" + doubleSummaryStatistics.getMin() + ",当前值->" + distance.getAmount());
+
+            }
+
+
+        }
 
 
     }

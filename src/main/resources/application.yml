@@ -13,6 +13,15 @@ spring:
     port: 6379
   application:
     name: pugna
+  mail:
+    host: smtp.163.com
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 steam:
   key: 8CD1268BDB73A449446863EEC2DE17D0
 dota2:
