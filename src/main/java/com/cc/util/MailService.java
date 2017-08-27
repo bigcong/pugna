@@ -27,7 +27,6 @@ public class MailService {
     @Autowired
     private ConfigService configService;
 
-    @Value("${spring.mail.username}")
     private String from;
 
     /**
@@ -48,7 +47,7 @@ public class MailService {
 
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
+        message.setFrom(username);
         message.setTo(to);
         message.setSubject(subject);
         message.setText(content);
