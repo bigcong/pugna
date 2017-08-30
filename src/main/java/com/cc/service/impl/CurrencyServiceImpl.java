@@ -10,6 +10,7 @@ import com.cc.service.CurrencyService;
 import com.cc.util.DateUtil;
 import com.cc.util.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static com.cc.util.ShellUtil.runShell;
 
@@ -36,6 +38,10 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Autowired
     private DistanceMapper distanceMapper;
+
+
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @Override
     public List<Currency> listPageCurrency(Currency currency) {
@@ -179,14 +185,31 @@ public class CurrencyServiceImpl implements CurrencyService {
 
         if (distance.getAmount() != 0) {
             distanceMapper.insertSelective(distance);
+            double maxm = 0, minm = 0;
+            Object max = redisTemplate.opsForValue().get("max");
+
+            Object min = redisTemplate.opsForValue().get("min");
 
 
-            DoubleSummaryStatistics doubleSummaryStatistics = distanceMapper.listDistance(new Distance()).stream().mapToDouble(t -> t.getAmount()).summaryStatistics();
-            if (distance.getAmount() > doubleSummaryStatistics.getMax() * 0.95) {
-                mailService.sendSimpleMail(create_time + "->卖", "最大值->" + BigDecimal.valueOf(doubleSummaryStatistics.getMax()).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
+            if (max == null && min == null) {
 
-            } else if (distance.getAmount() < doubleSummaryStatistics.getMin() * 1.05) {
-                mailService.sendSimpleMail(create_time + "->买", "最小值->" + BigDecimal.valueOf(doubleSummaryStatistics.getMax()).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
+
+                DoubleSummaryStatistics doubleSummaryStatistics = distanceMapper.listDistance(new Distance()).stream().mapToDouble(t -> t.getAmount()).summaryStatistics();
+                maxm = (double) max;
+                minm = (double) min;
+                if (distance.getAmount() > maxm * 0.85) {
+                    mailService.sendSimpleMail(create_time + "->卖", "最大值->" + BigDecimal.valueOf(doubleSummaryStatistics.getMax()).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
+
+                } else if (distance.getAmount() < minm * 1.15) {
+                    mailService.sendSimpleMail(create_time + "->买", "最小值->" + BigDecimal.valueOf(doubleSummaryStatistics.getMax()).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
+
+                }
+
+
+                redisTemplate.opsForValue().set("max",maxm,5, TimeUnit.MINUTES);
+                redisTemplate.opsForValue().set("min",minm,5, TimeUnit.MINUTES);
+
+
 
             }
 
