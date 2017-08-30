@@ -195,8 +195,8 @@ public class CurrencyServiceImpl implements CurrencyService {
 
 
                 DoubleSummaryStatistics doubleSummaryStatistics = distanceMapper.listDistance(new Distance()).stream().mapToDouble(t -> t.getAmount()).summaryStatistics();
-                maxm = (double) max;
-                minm = (double) min;
+                maxm = doubleSummaryStatistics.getMax();
+                minm = doubleSummaryStatistics.getMin();
                 if (distance.getAmount() > maxm * 0.85) {
                     mailService.sendSimpleMail(create_time + "->卖", "最大值->" + BigDecimal.valueOf(doubleSummaryStatistics.getMax()).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
 
