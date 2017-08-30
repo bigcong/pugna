@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +29,10 @@ public class MailService {
     @Autowired
     private ConfigService configService;
 
+
+    @Autowired
+    RedisTemplate redisTemplate;
+
     private String from;
 
     /**
@@ -37,28 +43,39 @@ public class MailService {
      */
     public void sendSimpleMail(String subject, String content) {
 
-        Config config = new Config();
-        config.setConfigType("mail");
+        String key = "mail";
+        Object o = redisTemplate.opsForValue().get(key);
 
-        List<Config> configs = configService.listConfig(config);
-        String username = configs.stream().filter(t -> t.getConfigName().equals("username")).collect(Collectors.toList()).get(0).getConfigValue();
-        String passwd = configs.stream().filter(t -> t.getConfigName().equals("passwd")).collect(Collectors.toList()).get(0).getConfigValue();
-        String to = configs.stream().filter(t -> t.getConfigName().equals("to")).collect(Collectors.toList()).get(0).getConfigValue();
+        if (o == null) {
 
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(username);
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(content);
+            Config config = new Config();
+            config.setConfigType("mail");
 
-        try {
-            sender.setPassword(passwd);
-            sender.setUsername(username);
-            sender.send(message);
-            logger.info("简单邮件已经发送。");
-        } catch (Exception e) {
-            logger.error("发送简单邮件时发生异常！", e);
+            List<Config> configs = configService.listConfig(config);
+            String username = configs.stream().filter(t -> t.getConfigName().equals("username")).collect(Collectors.toList()).get(0).getConfigValue();
+            String passwd = configs.stream().filter(t -> t.getConfigName().equals("passwd")).collect(Collectors.toList()).get(0).getConfigValue();
+            String to = configs.stream().filter(t -> t.getConfigName().equals("to")).collect(Collectors.toList()).get(0).getConfigValue();
+
+
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(username);
+            message.setTo(to);
+            message.setSubject(subject);
+            message.setText(content);
+
+
+            try {
+                sender.setPassword(passwd);
+                sender.setUsername(username);
+
+
+                sender.send(message);
+                logger.info("简单邮件已经发送。");
+                redisTemplate.opsForValue().set(key, 1, 5, TimeUnit.MINUTES);
+            } catch (Exception e) {
+                logger.error("发送简单邮件时发生异常！", e);
+            }
         }
     }
 

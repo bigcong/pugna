@@ -197,19 +197,29 @@ public class CurrencyServiceImpl implements CurrencyService {
                 DoubleSummaryStatistics doubleSummaryStatistics = distanceMapper.listDistance(new Distance()).stream().mapToDouble(t -> t.getAmount()).summaryStatistics();
                 maxm = doubleSummaryStatistics.getMax();
                 minm = doubleSummaryStatistics.getMin();
-                if (distance.getAmount() > maxm * 0.85) {
-                    mailService.sendSimpleMail(create_time + "->卖", "最大值->" + BigDecimal.valueOf(doubleSummaryStatistics.getMax()).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
 
-                } else if (distance.getAmount() < minm * 1.15) {
-                    mailService.sendSimpleMail(create_time + "->买", "最小值->" + BigDecimal.valueOf(doubleSummaryStatistics.getMax()).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
 
+            } else {
+                maxm = (double) max;
+                minm = (double) min;
+                if (distance.getAmount() > maxm) {
+                    maxm = distance.getAmount();
+                }
+
+                if (distance.getAmount() < minm) {
+                    minm = distance.getAmount();
                 }
 
 
-                redisTemplate.opsForValue().set("max",maxm,5, TimeUnit.MINUTES);
-                redisTemplate.opsForValue().set("min",minm,5, TimeUnit.MINUTES);
+            }
+            redisTemplate.opsForValue().set("max", maxm);
+            redisTemplate.opsForValue().set("min", minm);
 
+            if (distance.getAmount() > maxm * 0.9) {
+                mailService.sendSimpleMail(create_time + "->卖", "最大值->" + BigDecimal.valueOf(maxm).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
 
+            } else if (distance.getAmount() < minm * 1.1) {
+                mailService.sendSimpleMail(create_time + "->买", "最小值->" + BigDecimal.valueOf(minm).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
 
             }
 
