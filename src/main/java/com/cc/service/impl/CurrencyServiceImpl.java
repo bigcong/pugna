@@ -3,6 +3,7 @@ package com.cc.service.impl;
 import com.cc.entity.Config;
 import com.cc.entity.Currency;
 import com.cc.entity.Distance;
+import com.cc.entity.Page;
 import com.cc.mapper.CurrencyMapper;
 import com.cc.mapper.DistanceMapper;
 import com.cc.service.ConfigService;
@@ -191,29 +192,25 @@ public class CurrencyServiceImpl implements CurrencyService {
             Object min = redisTemplate.opsForValue().get("min");
 
 
-            if (max == null && min == null) {
+            if (max == null || min == null) {
+                Distance d = new Distance();
+                Page page = new Page();
+                page.setShowCount(7 * 3600);
+                d.setPage(page);
 
 
-                DoubleSummaryStatistics doubleSummaryStatistics = distanceMapper.listDistance(new Distance()).stream().mapToDouble(t -> t.getAmount()).summaryStatistics();
+                DoubleSummaryStatistics doubleSummaryStatistics = distanceMapper.listPageDistance(d).stream().mapToDouble(t -> t.getAmount()).summaryStatistics();
                 maxm = doubleSummaryStatistics.getMax();
                 minm = doubleSummaryStatistics.getMin();
+                redisTemplate.opsForValue().set("max", maxm, 1, TimeUnit.DAYS);
+                redisTemplate.opsForValue().set("min", minm, 1, TimeUnit.DAYS);
 
 
             } else {
                 maxm = (double) max;
                 minm = (double) min;
-                if (distance.getAmount() > maxm) {
-                    maxm = distance.getAmount();
-                }
-
-                if (distance.getAmount() < minm) {
-                    minm = distance.getAmount();
-                }
-
 
             }
-            redisTemplate.opsForValue().set("max", maxm);
-            redisTemplate.opsForValue().set("min", minm);
 
             if (distance.getAmount() > maxm * 0.9) {
                 mailService.sendSimpleMail(create_time + "->卖", "最大值->" + BigDecimal.valueOf(maxm).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());

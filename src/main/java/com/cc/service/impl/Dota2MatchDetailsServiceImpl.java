@@ -20,11 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * dota2_match_details
@@ -145,15 +144,18 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
     }
 
-
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void matchHistory() {
         Gson gg = new Gson();
+        Dota2Leagues dota2Leagues = new Dota2Leagues();
+        List<Dota2Leagues> dota2Leagues1 = dota2LeaguesService.listDota2Leagues(dota2Leagues);
+        List<Dota2Leagues> leagues = new ArrayList<>();
+        if (dota2Leagues1.size() > 100) {
+            leagues = dota2Leagues1;
 
-        java.util.HashMap map2 = dota2MatchDetailsMapper.avg();
-
-        long max = (long) map2.get("max");
-        long min = (long) map2.get("min") / 2;
-        double random = Math.random() * max + min;
+        } else {
+            leagues = dota2Leagues1.subList(dota2Leagues1.size() - 100, dota2Leagues1.size());
+        }
 
 
         Map<String, Object> map = new HashMap<>();
@@ -161,7 +163,7 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
         map.put("game_mode", 2);
         map.put("min_players", 10);
         map.put("tournament_games_only", 1);
-        map.put("start_at_match_id", Double.valueOf(random).longValue());
+        map.put("league_id", leagues.get(new Random().nextInt(leagues.size())).getLeagueid());
 
 
         String g = dota2Utils.get("IDOTA2Match_570/GetMatchHistory", map);
@@ -282,6 +284,7 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
     }
 
     @Override
+    @Scheduled(cron = "50 27 23 * * ?")
     public void leagues() {
         Map<String, Object> map = new HashMap<>();
         map.put("language", "zh_cn");
