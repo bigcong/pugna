@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static com.cc.util.ShellUtil.runShell;
 
@@ -110,6 +111,12 @@ public class CurrencyServiceImpl implements CurrencyService {
         String str2 = "select   SUM(amount) amount,sum(prepare_sub_amount) prepare_sub_amount,SUM(freeze_cash_amount) freeze_cash_amount, sum(cash_amount)  cash_amount from ca_customer_account;";
 
         String str3 = "select  coin_code,current_amount from qt_current_quote;";
+
+
+        String str4 = "select currency_id,currency_name from ct_currency;";
+
+        Map<String, String> collect = runShell(ssh, str4).stream().collect(Collectors.toMap(t -> (t.split("\t")[0]), v -> v.split("\t")[1]));
+        System.out.println(collect);
         String create_time = DateUtil.nowDate();
 
         Map<String, Currency> map = new HashMap<>();
@@ -152,6 +159,8 @@ public class CurrencyServiceImpl implements CurrencyService {
             currency.setFreezeCashAmount(Double.valueOf(split[2]));
             currency.setCashAmount(Double.valueOf(split[3]));
             currency.setPrice(Double.valueOf(1));
+            currency.setCurrencyName(collect.get(currency.getCurrencyId().toString()));
+
             map.put("1", currency);
         }
 
@@ -167,11 +176,12 @@ public class CurrencyServiceImpl implements CurrencyService {
             if (map.containsKey(split[0].trim())) {
                 currency = map.get(split[0]);
             }
-
+            currency.setCurrencyName(collect.get(currency.getCurrencyId().toString()));
             currency.setPrice(Double.valueOf(split[1]));
             map.put(split[0], currency);
 
         }
+
 
         double sum = map.values().stream().filter(t -> t.getCurrencyId() != 1).mapToDouble(t -> t.getAmount() * t.getPrice()).sum();
         double sum1 = map.values().stream().filter(t -> t.getCurrencyId() == 1).mapToDouble(t -> t.getAmount() * t.getPrice()).sum();
@@ -215,7 +225,7 @@ public class CurrencyServiceImpl implements CurrencyService {
             if (distance.getAmount() > maxm * 0.9) {
                 mailService.sendSimpleMail(create_time + "->卖", "最大值->" + BigDecimal.valueOf(maxm).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
 
-            } else if (distance.getAmount() < minm * 1.1) {
+            } else if (distance.getAmount() < minm * 1.05) {
                 mailService.sendSimpleMail(create_time + "->买", "最小值->" + BigDecimal.valueOf(minm).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
 
             }
