@@ -72,7 +72,7 @@ public class MailService {
 
                 sender.send(message);
                 logger.info("简单邮件已经发送。");
-                redisTemplate.opsForValue().set(key, 1, 5, TimeUnit.MINUTES);
+                redisTemplate.opsForValue().set(key, 1, 10, TimeUnit.MINUTES);
             } catch (Exception e) {
                 logger.error("发送简单邮件时发生异常！", e);
             }
