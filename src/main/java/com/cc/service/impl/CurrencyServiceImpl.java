@@ -222,10 +222,10 @@ public class CurrencyServiceImpl implements CurrencyService {
 
             }
 
-            if (distance.getAmount() > maxm * 0.96) {
+            if (distance.getAmount() > maxm * 0.95) {
                 mailService.sendSimpleMail(create_time + "->卖", "最大值->" + BigDecimal.valueOf(maxm).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
 
-            } else if (distance.getAmount() < minm * 1.2) {
+            } else if (distance.getAmount() < minm * 1.1) {
                 mailService.sendSimpleMail(create_time + "->买", "最小值->" + BigDecimal.valueOf(minm).toPlainString() + ",当前值->" + BigDecimal.valueOf(distance.getAmount()).toPlainString());
 
             }
