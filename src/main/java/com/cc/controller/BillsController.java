@@ -129,7 +129,11 @@ public class BillsController {
             }
 
             try {
-                billsService.insert(bills);
+                Bills search = new Bills();
+                search.set交易号(bills.get交易号());
+                billsService.deleteBills(search);
+                billsService.insertSelective(bills);
+
 
             } catch (Exception e) {
                 if (e instanceof DuplicateKeyException) {
