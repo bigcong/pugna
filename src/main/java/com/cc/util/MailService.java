@@ -51,6 +51,8 @@ public class MailService {
             config.setConfigType("mail");
 
             List<Config> configs = configService.listConfig(config);
+
+
             String username = configs.stream().filter(t -> t.getConfigName().equals("username")).collect(Collectors.toList()).get(0).getConfigValue();
             String passwd = configs.stream().filter(t -> t.getConfigName().equals("passwd")).collect(Collectors.toList()).get(0).getConfigValue();
             String to = configs.stream().filter(t -> t.getConfigName().equals("to")).collect(Collectors.toList()).get(0).getConfigValue();

@@ -144,7 +144,10 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
     }
 
-    @Scheduled(cron = "0 0/5 * * * ?")
+    /**
+     * 每十分钟执行一次
+     */
+    @Scheduled(cron = "0 0/10 * * * ?")
     public void matchHistory() {
         Gson gg = new Gson();
         Dota2Leagues dota2Leagues = new Dota2Leagues();
@@ -200,6 +203,10 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
     }
 
+    /**
+     * 表示每个星期三中午12点
+     */
+    @Scheduled(cron = "0 0 11 ? * WED")
     public void heroes() {
         Map<String, Object> map = new HashMap<>();
         map.put("language", "zh_cn");
@@ -249,7 +256,10 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
     }
 
-
+    /**
+     * 周一至周五的上午10:15触发
+     */
+    @Scheduled(cron = "0 15 10 ? * MON-FRI")
     public void gameItems() {
         Map<String, Object> map = new HashMap<>();
         map.put("language", "zh_cn");
@@ -283,8 +293,12 @@ public class Dota2MatchDetailsServiceImpl implements Dota2MatchDetailsService {
 
     }
 
+
+    /**
+     * 表示每个星期三中午12点
+     */
     @Override
-    @Scheduled(cron = "50 27 23 * * ?")
+    @Scheduled(cron = "0 0 12 ? * WED")
     public void leagues() {
         Map<String, Object> map = new HashMap<>();
         map.put("language", "zh_cn");
