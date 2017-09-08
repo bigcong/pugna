@@ -62,7 +62,7 @@ public class BillsController {
 
 
     /**
-     * curl -F "file=@/Users/cong/Downloads/1.txt" http://192.168.199.112:8090/pugna/bills/upload
+     * curl -F "file=@/Users/cong/Downloads/alipay_record_20170908_1832.txt" http://192.168.199.112:8082/bills/upload
      *
      * @param file
      * @return
