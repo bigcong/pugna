@@ -1,7 +1,9 @@
 package com.cc.controller;
 
 import com.cc.entity.Bills;
+import com.cc.entity.Config;
 import com.cc.service.BillsService;
+import com.cc.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.dao.DuplicateKeyException;
@@ -16,8 +18,7 @@ import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-import static java.util.stream.Collectors.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/bills")
@@ -25,6 +26,9 @@ public class BillsController {
 
     @Autowired
     private BillsService billsService;
+
+    @Autowired
+    private ConfigService configService;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -62,7 +66,7 @@ public class BillsController {
 
 
     /**
-     * curl -F "file=@/Users/cong/Downloads/alipay_record_20170908_1832.txt" http://192.168.199.112:8082/bills/upload
+     * curl -F "file=@/Users/cong/Downloads/alipay_record_20170911_1419.txt" http://localhost:8082/bills/upload
      *
      * @param file
      * @return
@@ -79,6 +83,11 @@ public class BillsController {
         int i = 0;
         String account = "";
         String keys[] = null;
+
+
+        List<Bills> array = new ArrayList<>();
+
+
         while ((lineTxt = bufferedReader.readLine()) != null) {
             i++;
             String values[] = lineTxt.split(",");
@@ -135,6 +144,9 @@ public class BillsController {
                 billsService.insertSelective(bills);
 
 
+                array.add(bills);
+
+
             } catch (Exception e) {
                 if (e instanceof DuplicateKeyException) {
 
@@ -150,6 +162,80 @@ public class BillsController {
 
         }
         read.close();
+
+
+        Map<String, Long> 交易对方 = array.stream().collect(
+                Collectors.groupingBy(
+                        t -> t.get交易对方(), Collectors.counting()
+                )
+        );
+        List<String> collect = 交易对方.entrySet().stream().filter(t -> t.getValue() > 10).map(t -> t.getKey()).collect(Collectors.toList());
+        Config d = new Config();
+        d.setConfigType("交易对方");
+        configService.deleteConfig(d);
+
+
+        for (String c : collect) {
+            Config config = new Config();
+            config.setConfigValue(c);
+            config.setConfigType("交易对方");
+            config.setConfigName(c);
+            config.setConfigStatus("1");
+            configService.insertSelective(config);
+
+
+        }
+
+
+        Map<String, Long> 交易状态 = array.stream().collect(
+                Collectors.groupingBy(
+                        t -> t.get交易状态(), Collectors.counting()
+                )
+        );
+
+        d.setConfigType("交易状态");
+        configService.deleteConfig(d);
+
+
+        for (String c : 交易状态.keySet()) {
+            Config config = new Config();
+            config.setConfigValue(c);
+            config.setConfigType("交易状态");
+            config.setConfigName(c);
+            config.setConfigStatus("1");
+            configService.insertSelective(config);
+
+
+        }
+
+
+        Map<String, Long> 资金状态 = array.stream().filter(t->t.get资金状态()!=null).collect(
+                Collectors.groupingBy(
+                        t -> t.get资金状态(), Collectors.counting()
+                )
+        );
+
+        d.setConfigType("资金状态");
+        configService.deleteConfig(d);
+
+
+        for (String c : 资金状态.keySet()) {
+            Config config = new Config();
+            config.setConfigValue(c);
+            config.setConfigType("资金状态");
+            config.setConfigName(c);
+            config.setConfigStatus("1");
+            configService.insertSelective(config);
+
+
+        }
+
+
+
+
+
+
+
 
         return "成功";
     }
