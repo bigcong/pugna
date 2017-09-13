@@ -70,7 +70,7 @@ public class MailService {
                 sender.setUsername(username);
 
 
-                sender.send(message);
+                //sender.send(message);
                 logger.info("简单邮件已经发送。");
                 redisTemplate.opsForValue().set(key, 1, 10, TimeUnit.MINUTES);
             } catch (Exception e) {
