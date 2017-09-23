@@ -96,7 +96,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    @Scheduled(cron = "0 0/1 * * * ?")// 每2分钟执行一次
+    //@Scheduled(cron = "0 0/1 * * * ?")// 每2分钟执行一次
     public void autoInsert() throws Exception {
         Config c = new Config();
         c.setConfigName("ssh");
